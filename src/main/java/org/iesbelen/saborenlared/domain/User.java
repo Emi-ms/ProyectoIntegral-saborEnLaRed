@@ -43,5 +43,12 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Rate> rates;
 
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.EAGER
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Recipe> recipes;
+
 
 }

@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.context.annotation.EnableMBeanExport;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -57,5 +55,10 @@ public class Recipe {
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Rate> rates;
+
+
+    @ManyToOne()
+    @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_RECIPE_USER"))
+    private User user;
 
 }
