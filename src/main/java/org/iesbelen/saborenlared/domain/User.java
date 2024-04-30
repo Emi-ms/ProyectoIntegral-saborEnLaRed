@@ -11,7 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,6 +24,7 @@ public class User {
     private Long idUser;
     private String userName;
     private String userSurname;
+    @Column(nullable = false)
     private String email;
     private String password;
     private String rol;

@@ -28,8 +28,9 @@ public class SaborEnLaRedApplication {
             RecipeIngredientRepository recipeIngredientRepository
     ) {
         return args -> {
-
+//
 //           User user1 = userRepository.save(new User(null,"Emi","Munoz","emi@emi.com","12345","admin",true, null ,null,null));
+//           User user2 = userRepository.save(new User(null,"Emi2","Munoz2","emi@emi.com","12345","admin",true, null ,null,null));
 //            Recipe recipe1 = recipeRepository.save(new Recipe(null,"receta1","descripcion1","foto",true,null,null,null,null,user1));
 //            Comment comment1 = commentRepository.save(new Comment(null,"comentario 1",true,user1,recipe1) );
 //            Rate rate1 = rateRepository.save(new Rate(null,5.0,user1,recipe1));
