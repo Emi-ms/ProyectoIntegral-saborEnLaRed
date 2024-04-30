@@ -1,0 +1,50 @@
+.white-box{
+  height: 50px;
+}
+
+.hero {
+  background: url("/assets/images/Hero_log_out_April_May_June2.png") center;
+  background-size: cover;
+  height: 700px;
+  width: 100%;
+  font-family: Roboto, serif;
+}
+
+.hero-container {
+  color: #ffffff;
+  margin: 0 auto;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+}
+
+.hero-title {
+  margin-top: 10%;
+  font-size: 60px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero-container h5 {
+  text-align: center;
+  letter-spacing: 5px;
+
+}
+
+.btn-custom{
+  background-color: #54ad22;
+  color: #ffffff;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.btn-custom:hover{
+  background-color: #3c7c19;
+}
