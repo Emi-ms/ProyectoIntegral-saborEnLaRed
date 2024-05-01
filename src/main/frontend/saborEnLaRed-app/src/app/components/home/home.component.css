@@ -1,9 +1,9 @@
-.white-box{
+.white-box {
   height: 50px;
 }
 
 .hero {
-  background: url("/assets/images/Hero_log_out_April_May_June2.png") center;
+  background: url("/assets/images/home/Hero_log_out_April_May_June2.png") center;
   background-size: cover;
   height: 700px;
   width: 100%;
@@ -37,7 +37,7 @@
 
 }
 
-.btn-custom{
+.btn-custom {
   background-color: #54ad22;
   color: #ffffff;
   font-weight: bold;
@@ -45,6 +45,141 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.btn-custom:hover{
+
+.btn-custom:hover {
   background-color: #3c7c19;
+}
+
+.categories {
+  margin: 0 auto;
+  width: 80%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  font-family: Roboto, serif;
+
+}
+
+.home-titles {
+  font-size: 45px;
+  color: #000000A6;
+
+}
+
+
+.categories-cards {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.categories-cards img {
+  border-radius: 50%;
+  border: 5px solid dimgrey;
+
+}
+
+.categories-cards img:hover {
+  /*border-radius: 50%;*/
+  /*border: 5px solid dimgrey;*/
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.mission-container {
+  background-color: #b7e79c;
+  width: 100%;
+}
+
+.mission {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto, serif;
+  gap: 40px;
+
+}
+
+.mission-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.mission-section img {
+  border-radius: 5%;
+  border: 5px solid dimgrey;
+}
+
+.mission-section img:hover {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+
+.mission-section-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+
+}
+
+.partners {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+}
+
+.partners-cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.partner-card img {
+  border: 1px solid black;
+  border-radius: 5%;
+}
+
+.partner-card img:hover {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .categories-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .mission-section {
+    flex-direction: column;
+  }
+
+  .mission-section-text-wrapper {
+    margin-top: 15px;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .partners-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
 }
