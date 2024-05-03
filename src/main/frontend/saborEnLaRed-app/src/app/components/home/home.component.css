@@ -1,6 +1,4 @@
-.white-box {
-  height: 50px;
-}
+
 
 .hero {
   background: url("/assets/images/home/Hero_log_out_April_May_June2.png") center;
@@ -37,18 +35,18 @@
 
 }
 
-.btn-custom {
-  background-color: #54ad22;
-  color: #ffffff;
-  font-weight: bold;
-  letter-spacing: 2px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+/*.btn-custom {*/
+/*  background-color: #54ad22;*/
+/*  color: #ffffff;*/
+/*  font-weight: bold;*/
+/*  letter-spacing: 2px;*/
+/*  padding-top: 10px;*/
+/*  padding-bottom: 10px;*/
+/*}*/
 
-.btn-custom:hover {
-  background-color: #3c7c19;
-}
+/*.btn-custom:hover {*/
+/*  background-color: #3c7c19;*/
+/*}*/
 
 .categories {
   margin: 0 auto;
@@ -65,6 +63,7 @@
 .home-titles {
   font-size: 45px;
   color: #000000A6;
+  margin-bottom: 50px;
 
 }
 
@@ -132,8 +131,10 @@
 .mission-section-text-wrapper {
   display: flex;
   flex-direction: column;
-  width: 40%;
-
+  width: 50%;
+}
+.mission-section-text-wrapper p{
+  font-size: 25px;
 }
 
 .partners {

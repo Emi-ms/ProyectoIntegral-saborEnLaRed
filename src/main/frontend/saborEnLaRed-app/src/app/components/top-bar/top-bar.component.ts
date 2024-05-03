@@ -14,4 +14,5 @@ import {RouterLink} from "@angular/router";
 })
 export class TopBarComponent {
 
+    protected readonly RouterLink = RouterLink;
 }

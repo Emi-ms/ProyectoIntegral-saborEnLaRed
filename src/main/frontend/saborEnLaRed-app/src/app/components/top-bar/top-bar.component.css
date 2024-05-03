@@ -3,7 +3,7 @@
   box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4)
 }
 
-.nav-item a:hover {
+.nav-item .bt:hover {
   font-size: 20px;
   border-radius: 6px;
   background: linear-gradient(145deg, #8be159, #68f119);
@@ -11,7 +11,7 @@
   -4px -4px 8px #f7e5cc;
 }
 
-#neubar .dropdown-menu a:hover {
+#neubar .dropdown-menu .bt:hover {
   color: #454545
 }
 
@@ -20,7 +20,7 @@
   margin: auto 4px;
 }
 
-#neubar a {
+#neubar .bt {
 
   padding-left: 12px;
   padding-right: 12px;
@@ -30,20 +30,20 @@
   background: #b1ec8e
 }
 
-a.navbar-brand {
+.bt.navbar-brand {
   color: #a9a4a4;
   height: 40%;
 }
 
-.btn-custom {
-  background-color: #54ad22;
-  color: #ffffff;
-  font-weight: bold;
-  letter-spacing: 2px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+/*.btn-custom {*/
+/*  background-color: #54ad22;*/
+/*  color: #ffffff;*/
+/*  font-weight: bold;*/
+/*  letter-spacing: 2px;*/
+/*  padding-top: 10px;*/
+/*  padding-bottom: 10px;*/
+/*}*/
 
-.btn-custom:hover {
-  background-color: #3c7c19;
-}
+/*.btn-custom:hover {*/
+/*  background-color: #3c7c19;*/
+/*}*/

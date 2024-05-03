@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -35,21 +36,21 @@ public class User {
             fetch = FetchType.EAGER
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
             fetch = FetchType.EAGER
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Rate> rates;
+    private Set<Rate> rates = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
             fetch = FetchType.EAGER
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Recipe> recipes;
+    private Set<Recipe> recipes = new HashSet<>();
 
 
 }
