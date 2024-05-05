@@ -16,18 +16,18 @@ public class SaborEnLaRedApplication {
         SpringApplication.run(SaborEnLaRedApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(
-
-            UserRepository userRepository,
-            CommentRepository commentRepository,
-            RecipeRepository recipeRepository,
-            RateRepository rateRepository,
-            IngredientRepository ingredientRepository,
-            CategoryRepository categoryRepository,
-            RecipeIngredientRepository recipeIngredientRepository
-    ) {
-        return args -> {
+//    @Bean
+//    CommandLineRunner commandLineRunner(
+//
+//            UserRepository userRepository,
+//            CommentRepository commentRepository,
+//            RecipeRepository recipeRepository,
+//            RateRepository rateRepository,
+//            IngredientRepository ingredientRepository,
+//            CategoryRepository categoryRepository,
+//            RecipeIngredientRepository recipeIngredientRepository
+//    ) {
+//        return args -> {
 //
 //           User user1 = userRepository.save(new User(null,"Emi","Munoz","emi@emi.com","12345","admin",true, null ,null,null));
 //           User user2 = userRepository.save(new User(null,"Emi2","Munoz2","emi@emi.com","12345","admin",true, null ,null,null));
@@ -54,6 +54,6 @@ public class SaborEnLaRedApplication {
 
 
 
-        };
-    }
+//        };
+//    }
 }

@@ -8,6 +8,11 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
+import { nextTick } from 'process';
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -24,6 +29,8 @@ import {UserService} from "../../services/user.service";
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
+
+
 
   constructor(
     public userService: UserService,
@@ -43,17 +50,54 @@ export class SignupComponent implements OnInit {
   });
 
 
-  submit() {
+  // submit() {
+  //   console.log(this.form.value);
+  //   this.userService.registerUser(this.form.value).pipe(
+  //     catchError((error) => {
+  //       Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
+  //       return throwError(error);
+  //     })
+  //   ).subscribe(res => {
+  //     console.log('Usuario creado correctamente!' + res.userName);
+  //     Swal.fire("Enhorabuena!!","Usuario registrado con éxito!!", "success")
+  //     this.router.navigateByUrl('/')
+  //     .then();
+  //   });
+  // }
+
+ submit() {
     console.log(this.form.value);
-
-
-    this.userService.registerUser(this.form.value).subscribe(res => {
-      console.log('Usuario creada correctamente!' + res.userName);
-      this.router.navigateByUrl('/').then();
+    this.userService.registerUser(this.form.value).subscribe({
+      next: (res: any) => {
+        console.log("en el next")
+        console.log("res.body")
+        if (res.status === 200) {
+          console.log('Usuario creado correctamente!' + res.body);
+          Swal.fire("Enhorabuena!!","Usuario registrado con éxito!!", "success")
+          this.router.navigateByUrl('/')
+          .then();
+        } else {
+          console.log("otro tipo de error")
+          console.log(res.status)
+          Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
+        }
+      },
+      error: (error: any) => {
+        if (error.status === 409) {
+          
+          console.log("error 409")
+          console.log(error.status)
+          Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
+        } else {
+          console.log(error.body)
+          console.log("otro tipo de error")
+          console.log(error.status)
+          Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
+        }
+      }
     });
-
+      
   }
-
 
   get f() {
     return this.form.controls;

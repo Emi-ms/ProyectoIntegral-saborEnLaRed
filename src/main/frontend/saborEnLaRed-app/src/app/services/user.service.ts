@@ -9,8 +9,9 @@ import {catchError, Observable, throwError} from "rxjs";
 })
 export class UserService {
 
-  private apiURL = `${baserUrl}/users`;
+  private apiURL = `${baserUrl}/users/signup`;
 
+ 
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -21,24 +22,22 @@ export class UserService {
   }
 
   public registerUser(user: User): Observable<User> {
-    console.log(user);
-    console.log(this.apiURL);
-    console.log(JSON.stringify(user));
     return this.httpClient.post<User>(this.apiURL, JSON.stringify(user), this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
+  
 
+  // errorHandler(error: any) {
+  //   let errorMessage = '';
+  //   if (error.error instanceof ErrorEvent) {
+  //     errorMessage = error.error.message;
+  //   } else {
+  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  //   }
+  //   return throwError(() => errorMessage);
+  // }
 
   errorHandler(error: any) {
-
-    let errorMessage = '';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-
-    return throwError(() => errorMessage);
+    return throwError(error);
   }
 }
