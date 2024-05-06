@@ -32,7 +32,14 @@ export class UserService {
   //   if (error.error instanceof ErrorEvent) {
   //     errorMessage = error.error.message;
   //   } else {
-  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  //     if (error.status === 400 && error.error.message.includes('email')) {
+  //       errorMessage = 'El email ya se encuentra registrado.';
+  //       Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
+  //     } else {
+  //       errorMessage = 'Ocurrió un error al registrar el usuario. Por favor, intenta de nuevo más tarde.';
+  //     }
+
+  //     // errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
   //   }
   //   return throwError(() => errorMessage);
   // }

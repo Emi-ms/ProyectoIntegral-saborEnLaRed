@@ -1,11 +1,10 @@
 package org.iesbelen.saborenlared.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.constantes.FacturaConstantes;
+import org.iesbelen.saborenlared.constantes.SaborEnLaRedConstantes;
 import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.service.ServiceImpl.UserServiceImpl;
-import org.iesbelen.saborenlared.util.FacturaUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.iesbelen.saborenlared.util.ProyectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +37,7 @@ public class UserController {
             e.printStackTrace();
 
         }
-        return FacturaUtils.getResponseEntity(FacturaConstantes.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ProyectUtils.getResponseEntity(SaborEnLaRedConstantes.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

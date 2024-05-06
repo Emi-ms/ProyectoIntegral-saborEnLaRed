@@ -1,14 +1,14 @@
 package org.iesbelen.saborenlared.service.ServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.constantes.FacturaConstantes;
+import org.iesbelen.saborenlared.constantes.SaborEnLaRedConstantes;
 import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.exeption.UserNotFoundException;
 import org.iesbelen.saborenlared.repository.UserRepository;
 import org.iesbelen.saborenlared.security.CustomerDatailsService;
 import org.iesbelen.saborenlared.security.jwt.JwtUtil;
 import org.iesbelen.saborenlared.service.UserService;
-import org.iesbelen.saborenlared.util.FacturaUtils;
+import org.iesbelen.saborenlared.util.ProyectUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,18 +91,18 @@ public class UserServiceImpl implements UserService {
                     userRepository.save(getUserFromMap(requestMap));
                     userRepository.flush();
                     log.info("Usuario registrado con éxito");
-                    return FacturaUtils.getResponseEntity("Usuario registrado con éxito", HttpStatus.OK);
+                    return ProyectUtils.getResponseEntity("Usuario registrado con éxito", HttpStatus.OK);
                 } else {
                     log.info("El usuario con el email ya existe");
-                    return FacturaUtils.getResponseEntity("El usuario con el email ya existe", HttpStatus.BAD_REQUEST);
+                    return ProyectUtils.getResponseEntity("El usuario con el email ya existe", HttpStatus.BAD_REQUEST);
                 }
             } else {
-                return FacturaUtils.getResponseEntity(FacturaConstantes.INVALID_DATA, HttpStatus.BAD_REQUEST);
+                return ProyectUtils.getResponseEntity(SaborEnLaRedConstantes.INVALID_DATA, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
             log.error("Error en signUp", e);
         }
-        return FacturaUtils.getResponseEntity(FacturaConstantes.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ProyectUtils.getResponseEntity(SaborEnLaRedConstantes.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override

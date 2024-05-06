@@ -50,53 +50,26 @@ export class SignupComponent implements OnInit {
   });
 
 
-  // submit() {
-  //   console.log(this.form.value);
-  //   this.userService.registerUser(this.form.value).pipe(
-  //     catchError((error) => {
-  //       Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
-  //       return throwError(error);
-  //     })
-  //   ).subscribe(res => {
-  //     console.log('Usuario creado correctamente!' + res.userName);
-  //     Swal.fire("Enhorabuena!!","Usuario registrado con éxito!!", "success")
-  //     this.router.navigateByUrl('/')
-  //     .then();
-  //   });
-  // }
-
  submit() {
     console.log(this.form.value);
     this.userService.registerUser(this.form.value).subscribe({
       next: (res: any) => {
         console.log("en el next")
-        console.log("res.body")
-        if (res.status === 200) {
-          console.log('Usuario creado correctamente!' + res.body);
+          console.log('Usuario creado correctamente!');
           Swal.fire("Enhorabuena!!","Usuario registrado con éxito!!", "success")
           this.router.navigateByUrl('/')
           .then();
-        } else {
-          console.log("otro tipo de error")
-          console.log(res.status)
-          Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
-        }
       },
       error: (error: any) => {
-        if (error.status === 409) {
-          
-          console.log("error 409")
-          console.log(error.status)
+        console.log(error)
+        if (error.status === 400) {
           Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
         } else {
-          console.log(error.body)
-          console.log("otro tipo de error")
-          console.log(error.status)
+          console.log("otro tipo de error de servidor")
           Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
         }
       }
     });
-      
   }
 
   get f() {
