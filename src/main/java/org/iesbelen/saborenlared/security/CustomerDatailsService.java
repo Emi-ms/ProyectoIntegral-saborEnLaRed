@@ -26,14 +26,14 @@ public class CustomerDatailsService implements UserDetailsService {
         log.info("Dentro de loadUserByUsername", username);
         userDetail = userRepository.findByEmail(username);
 
-        if(!Objects.isNull(userDetail)){
-            return new org.springframework.security.core.userdetails.User(userDetail.getEmail(),userDetail.getPassword(),new ArrayList<>());
-        }else {
+        if (!Objects.isNull(userDetail)) {
+            return new org.springframework.security.core.userdetails.User(userDetail.getEmail(), userDetail.getPassword(), new ArrayList<>());
+        } else {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
     }
 
-    public User getUserDetail(){
+    public User getUserDetail() {
         return userDetail;
     }
 }

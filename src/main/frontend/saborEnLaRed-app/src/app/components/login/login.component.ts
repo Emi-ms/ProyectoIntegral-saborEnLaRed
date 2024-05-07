@@ -42,7 +42,20 @@ export class LoginComponent {
   }
 
   submit() {
-   
+   this.userService.generateToken(this.form.value).subscribe({ 
+      next: (res: any) => {
+        console.log(res);
+        Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
+        this.router.navigateByUrl('/')
+          .then();
+      },
+      error: (error: any) => {
+        console.log(error)
+        if (error.status === 400) {
+          Swal.fire("Lo siento!", "El email no se encuentra registrado", "error")
+        }
+      }
+    });
   }
 
 }

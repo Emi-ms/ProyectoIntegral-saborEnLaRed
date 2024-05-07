@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import baserUrl from "./helper";
-import {User} from "../models/User";
-import {catchError, Observable, throwError} from "rxjs";
+import { User } from "../models/User";
+import { catchError, Observable, throwError } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private apiURL = `${baserUrl}/users/signup`;
+  private apiURL = baserUrl;
 
- 
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -22,29 +22,68 @@ export class UserService {
   }
 
   public registerUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.apiURL, JSON.stringify(user), this.httpOptions)
+    return this.httpClient.post<User>(this.apiURL + "/users/signup", JSON.stringify(user), this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
-  
-
-  // errorHandler(error: any) {
-  //   let errorMessage = '';
-  //   if (error.error instanceof ErrorEvent) {
-  //     errorMessage = error.error.message;
-  //   } else {
-  //     if (error.status === 400 && error.error.message.includes('email')) {
-  //       errorMessage = 'El email ya se encuentra registrado.';
-  //       Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
-  //     } else {
-  //       errorMessage = 'Ocurrió un error al registrar el usuario. Por favor, intenta de nuevo más tarde.';
-  //     }
-
-  //     // errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-  //   }
-  //   return throwError(() => errorMessage);
-  // }
 
   errorHandler(error: any) {
     return throwError(error);
   }
+
+  //generamos el token para el usuario
+  public generateToken(userCredencials: any): Observable<User> {
+    return this.httpClient.post<User>(this.apiURL + "/users/login", JSON.stringify(userCredencials), this.httpOptions)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  //iniciamos sesion y establecemos el token en el localstorage
+  public loginUser(token: any) {
+    localStorage.setItem("token", token);
+  }
+
+  public isLoggedIn() {
+    let tokenStr = localStorage.getItem("token");
+    if (tokenStr === undefined || tokenStr === '' || tokenStr === null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  //cerramos sesion y eliminamos el token del localstorage
+  public logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    return true;
+  }
+
+  //obtenemos el token del localstorage 
+  public getToken() {
+    return localStorage.getItem("token");
+  }
+
+  //guardamos el usuario en el localstorage
+  public setUser(user: User) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  //obtenemos el usuario del localstorage
+  public getUser() {
+    let userStr = localStorage.getItem("user");
+    if (userStr !== null) {
+      return JSON.parse(userStr);
+    } else {
+      this.logout();
+      return null;
+    }
+  }
+
+  //obtenemos el rol del usuario
+  public getUserRole() {
+    let user = this.getUser();
+    return user.role;
+  }
+
+
+
 }

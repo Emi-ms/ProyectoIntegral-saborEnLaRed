@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
-
+    @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private CustomerDatailsService customerDatailsService;
@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService {
 
 
         try {
+            System.out.println(requestMap.get("email") + " " + requestMap.get("password"));
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(requestMap.get("email"), requestMap.get("password"))
             );
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
                 if (customerDatailsService.getUserDetail().isEnabled()) {
                     return new ResponseEntity<String>("{\"token\":\"" +
                             jwtUtil.generateToken(customerDatailsService.getUserDetail().getEmail(),
-                                    customerDatailsService.getUserDetail().getRol()),
+                                    customerDatailsService.getUserDetail().getRol()) + "\"}",
                             HttpStatus.OK);
                 } else {
                     return new ResponseEntity<String>("{\"mensaje\":\"" + "Espere la aprobacion" + "\"}",
