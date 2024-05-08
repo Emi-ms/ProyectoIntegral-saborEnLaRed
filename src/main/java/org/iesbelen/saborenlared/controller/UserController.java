@@ -63,8 +63,9 @@ public class UserController {
 
     @GetMapping("/current-user")
     public User getCurrentUser(Principal principal) {
+        System.out.println(principal.getName());
 
-        return (User) this.customerDatailsService.loadUserByUsername(principal.getName());
+        return (User) this.customerDatailsService.loadUserByUsername2(principal.getName());
     }
 
 

@@ -45,6 +45,16 @@ export class LoginComponent {
    this.userService.generateToken(this.form.value).subscribe({ 
       next: (res: any) => {
         console.log(res);
+        this.userService.loginUser(res.token);
+        this.userService.getCurrentUser().subscribe({
+          next: (res: any) => {
+            console.log(res);
+            localStorage.setItem("user", JSON.stringify(res));
+          },
+          error: (error: any) => {
+            console.log(error)
+          }
+        });
         Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
         this.router.navigateByUrl('/')
           .then();

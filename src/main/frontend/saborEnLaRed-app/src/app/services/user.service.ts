@@ -18,6 +18,13 @@ export class UserService {
     }),
   }
 
+  httpOptionsAuth = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("token")
+    }),
+  }
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -82,6 +89,10 @@ export class UserService {
   public getUserRole() {
     let user = this.getUser();
     return user.role;
+  }
+
+  public getCurrentUser(){
+    return this.httpClient.get(this.apiURL + "/users/current-user", this.httpOptionsAuth)
   }
 
 
