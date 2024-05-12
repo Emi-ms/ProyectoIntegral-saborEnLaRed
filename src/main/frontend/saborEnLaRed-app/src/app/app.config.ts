@@ -4,8 +4,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch } from "@angular/common/http";
-import { AuthInterceptorProviders } from './services/auth.interceptor';
+import { provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
+import { authInterceptor } from './services/auth/auth.interceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
@@ -13,8 +14,10 @@ export const appConfig: ApplicationConfig = {
   provideAnimationsAsync(),
   provideAnimationsAsync(),
   provideAnimationsAsync(),
-  provideHttpClient(withFetch()),
-    AuthInterceptorProviders,
-     
+  provideHttpClient(withFetch(), 
+  
+  // withInterceptors([authInterceptor])
+),
+
   ]
 };

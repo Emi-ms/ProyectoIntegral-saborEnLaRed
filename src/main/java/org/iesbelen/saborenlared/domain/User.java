@@ -7,16 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.iesbelen.saborenlared.security.Authority;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
+//@NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
@@ -24,7 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class User  implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,15 +61,16 @@ public class User implements UserDetails {
     private Set<Recipe> recipes = new HashSet<>();
 
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return List.of(new Authority(rol));
+        return List.of(new SimpleGrantedAuthority(rol));
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.userName;
     }
 
     @Override

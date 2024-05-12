@@ -1,14 +1,55 @@
 package org.iesbelen.saborenlared.service;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.iesbelen.saborenlared.auth.UserRequest;
+import org.iesbelen.saborenlared.auth.UserResponse;
 import org.iesbelen.saborenlared.domain.User;
-import org.springframework.http.ResponseEntity;
+import org.iesbelen.saborenlared.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import org.iesbelen.saborenlared.dto.UserDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Map;
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-public interface UserService {
-    public User saveUser(User user) throws Exception;
+    @Transactional
+    public UserResponse updateUser(UserRequest userRequest) {
 
-    public ResponseEntity<String> signUp(Map<String,String> requestMap);
+        User user = User.builder()
+                .idUser(userRequest.getId())
+                .userName(userRequest.getUserName())
+                .userSurname(userRequest.getUserSurname())
+                .email(userRequest.getEmail())
+                .password(passwordEncoder.encode( userRequest.getPassword()))
+                .rol(userRequest.getRol())
+                .active(userRequest.isActive())
+                .build();
 
-    ResponseEntity<String> login(Map<String,String> requestMap);
+        userRepository.updateUser(user.getIdUser(), user.getUsername(), user.getUserSurname(), user.getEmail(),user.getPassword());
+
+        return new UserResponse("El usuario se actualizó correctamente");
+    }
+
+    public UserDTO getUser(Long id) {
+        User user= userRepository.findById(id).orElse(null);
+
+        if (user!=null)
+        {
+            UserDTO userDTO = UserDTO.builder()
+                    .id(user.getIdUser())
+                    .userName(user.getUsername())
+                    .userSurname(user.getUserSurname())
+                    .email(user.getEmail())
+                    .password(user.getPassword())
+                    .rol(user.getRol())
+                    .active(user.isActive())
+                    .build();
+            return userDTO;
+        }
+        return null;
+    }
 }
