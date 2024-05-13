@@ -54,9 +54,9 @@ export class SignupComponent implements OnInit {
         this.router.navigateByUrl('/')
           .then();
       },
-      error: (error: any) => {
-        console.log(error)
-        if (error.status === 400) {
+      error: (error:any) => {
+        console.log("en el error del registro",error)
+        if (error.status == 400) {
           Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
         } else {
           console.log("otro tipo de error de servidor")

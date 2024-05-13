@@ -28,7 +28,7 @@ import Swal from 'sweetalert2';
   styleUrl: './update-user.component.css'
 })
 export class UpdateUserComponent implements OnInit {
-  idUser:number = 0;
+  id:number = 0;
 
   constructor(public userService: UserService,
     public loginService: LoginService,
@@ -38,15 +38,15 @@ export class UpdateUserComponent implements OnInit {
     this.loginService.currentUser.subscribe({
       next:(currentUser)=>{
         
-        this.idUser = currentUser.idUser;
-        console.log(this.idUser);
+        this.id = currentUser.idUser;
+        console.log(this.id);
       }
     })
 
   }
 
   form: FormGroup = new FormGroup({
-    idUser: new FormControl(''),
+    id: new FormControl(''),
     userName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
     userSurname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
     email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), Validators.maxLength(255)]),
@@ -56,7 +56,7 @@ export class UpdateUserComponent implements OnInit {
 
 
   submit() {
-    this.form.patchValue({idUser: this.idUser});
+    this.form.patchValue({id: this.id});
    
     console.log(this.form.value);
     

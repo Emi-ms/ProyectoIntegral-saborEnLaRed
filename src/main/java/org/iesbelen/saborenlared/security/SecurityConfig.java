@@ -25,20 +25,13 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        http
-                .cors(cors -> {
-                    cors.configurationSource(request -> {
-                        CorsConfiguration corsConfiguration = new CorsConfiguration();
-                        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
-                        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                        corsConfiguration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "accept"));
-                        return corsConfiguration;
-                    });
-                })
-                .csrf(csrf -> csrf.disable())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+    {
+        return http
+                .csrf(csrf ->
+                        csrf
+                                .disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers(HttpMethod.GET).permitAll()
@@ -46,15 +39,46 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .sessionManagement(sessionManager ->
+                .sessionManagement(sessionManager->
                         sessionManager
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
 
-        return http.build();
+
     }
+
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+//        http
+//                .cors(cors -> {
+//                    cors.configurationSource(request -> {
+//                        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//                        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
+//                        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//                        corsConfiguration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "accept"));
+//                        return corsConfiguration;
+//                    });
+//                })
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(authRequest ->
+//                        authRequest
+//                                .requestMatchers(HttpMethod.GET).permitAll()
+//                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
+//                                .requestMatchers("/auth/**").permitAll()
+//                                .anyRequest().authenticated()
+//                )
+//                .sessionManagement(sessionManager ->
+//                        sessionManager
+//                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                )
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
 
 
 

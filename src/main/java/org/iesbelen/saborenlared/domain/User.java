@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
+@NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})

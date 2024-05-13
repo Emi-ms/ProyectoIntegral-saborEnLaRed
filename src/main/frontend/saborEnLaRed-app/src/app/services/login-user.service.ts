@@ -42,7 +42,6 @@ export class LoginService {
   public login(userCredencials: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
       tap((userData) => {
-        console.log(userData);
         sessionStorage.setItem("token", userData.token);
         sessionStorage.setItem("user", JSON.stringify(userData.user));
         this.currentUserLoginOn.next(true);

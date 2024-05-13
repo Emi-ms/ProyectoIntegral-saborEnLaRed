@@ -51,7 +51,7 @@ export class TopBarComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.loginService.currentUserLoginOn.subscribe({
+    this.loginService.currentUserLoginOn.subscribe({    
       next: (loginOn) => {
         this.userLoginOn = loginOn;
       }
