@@ -62,6 +62,8 @@ export class LoginService {
     this.currentUserToken.next("");
     this.currentUser.next({} as User);
 
+    window.location.href = '/';
+
   }
 
   private errorHandler(error: HttpErrorResponse) {

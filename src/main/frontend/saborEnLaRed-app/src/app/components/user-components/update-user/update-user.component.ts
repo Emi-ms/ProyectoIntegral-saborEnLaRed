@@ -28,16 +28,18 @@ import Swal from 'sweetalert2';
   styleUrl: './update-user.component.css'
 })
 export class UpdateUserComponent implements OnInit {
-  id:number = 0;
+  id: number = 0;
 
-  constructor(public userService: UserService,
+  constructor(
+    public userService: UserService,
     public loginService: LoginService,
-    public router: Router) { }
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loginService.currentUser.subscribe({
-      next:(currentUser)=>{
-        
+      next: (currentUser) => {
+
         this.id = currentUser.idUser;
         console.log(this.id);
       }
@@ -56,30 +58,27 @@ export class UpdateUserComponent implements OnInit {
 
 
   submit() {
-    this.form.patchValue({id: this.id});
-   
-    console.log(this.form.value);
-    
+    this.form.patchValue({ id: this.id });
+
     this.userService.updateUser(this.form.value).subscribe({
 
       next: () => {
         Swal.fire({
           icon: 'success',
-          title: 'User updated successfully',
+          title: 'Se han actualizado los datos correctamente',
           showConfirmButton: false,
           timer: 1500
         });
-        this.router.navigate(['/']);
+        this.router.navigate(['/perfil-user']);
       },
       error: (error) => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: 'Algo ha fallado, vuelve a internarlo!',
         });
       }
     });
-
   };
 
   get f() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
 import baserUrl from "./helper";
 import { User } from "../models/User";
-import { catchError, Observable, throwError } from "rxjs";
+import { catchError, Observable, throwError, tap } from "rxjs";
 
 
 @Injectable({
@@ -27,33 +27,44 @@ export class UserService {
 
   }
 
+  public getUserFromSessionStorage(): User {
+    const user = sessionStorage.getItem("user");
+    return  JSON.parse(user || "{}");
+    
+  } 
+
+    
   public registerUser(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiURL + "/auth/register", JSON.stringify(user),{ headers: this.headers})
       .pipe(catchError(this.errorHandler));
   }
 
-
   public updateUser(user: User): Observable<any> {
     // this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
-    console.log("en el update user el user service")
-    console.log(this.headers)
-    console.log(JSON.stringify(user))
+    // console.log("en el update user el user service")
+    // console.log(this.headers)
+    // console.log(JSON.stringify(user))
   
     return this.httpClient.put<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers})
-      .pipe(catchError(this.errorHandler));
+      .pipe(
+        tap(updateUser=>{
+          console.log("updateUser",updateUser)
+          sessionStorage.setItem("user", JSON.stringify(user));
+        }),
+        catchError(this.errorHandler)
+      );
   }
-
 
   private errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
-      console.error("An error occurred:", error.error);
+      console.error("Ha ocurrido un error:", error.error);
     }
     else {
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend codigo de error: ${error.status}, ` +
+        `El cuerpo del error: ${error.error}`);
     }
-    return throwError(() => new Error("Something bad happened; please try again later."));
+    return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
 
 
