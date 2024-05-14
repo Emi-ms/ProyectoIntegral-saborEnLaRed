@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import baserUrl from "./helper";
 import { User } from "../models/User";
 import { catchError, Observable, throwError, tap } from "rxjs";
@@ -30,10 +30,10 @@ export class UserService {
   public getUserFromSessionStorage(): User {
     const user = sessionStorage.getItem("user");
     return  JSON.parse(user || "{}");
-    
-  } 
 
-    
+  }
+
+
   public registerUser(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiURL + "/auth/register", JSON.stringify(user),{ headers: this.headers})
       .pipe(catchError(this.errorHandler));
@@ -44,7 +44,7 @@ export class UserService {
     // console.log("en el update user el user service")
     // console.log(this.headers)
     // console.log(JSON.stringify(user))
-  
+
     return this.httpClient.put<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers})
       .pipe(
         tap(updateUser=>{
