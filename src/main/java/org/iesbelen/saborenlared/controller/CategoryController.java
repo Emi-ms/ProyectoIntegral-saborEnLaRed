@@ -40,6 +40,8 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public Category replaceCategory(@PathVariable("id") Long id, @RequestBody Category category) {
+        System.out.println(id + " en el controlador "+ category.toString());
+
         return this.categoryService.replace(id, category);
     }
 

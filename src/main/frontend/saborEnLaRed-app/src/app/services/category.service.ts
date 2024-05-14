@@ -19,28 +19,28 @@ export class CategoryService {
 
 
   getAll(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(this.apiURL)
+    return this.httpClient.get<Category[]>(this.apiURL+'/categories')
       .pipe(
         catchError(this.errorHandler));
   }
 
-  create(distrito: Category): Observable<Category> {
-    return this.httpClient.post<Category>(this.apiURL, JSON.stringify(distrito), { headers: this.headers})
+  create(category: Category): Observable<Category> {
+    return this.httpClient.post<Category>(this.apiURL+'/categories', JSON.stringify(category), { headers: this.headers})
       .pipe(catchError(this.errorHandler));
   }
 
   find(id: number): Observable<Category> {
-    return this.httpClient.get<Category>(this.apiURL + id)
+    return this.httpClient.get<Category>(this.apiURL+'/categories/' + id)
       .pipe(catchError(this.errorHandler));
   }
 
-  update(id: number, distrito: Category): Observable<Category> {
-    return this.httpClient.put<Category>(this.apiURL + id, JSON.stringify(distrito), { headers: this.headers})
+  update(id: number, category: Category): Observable<Category> {
+    return this.httpClient.put<Category>(this.apiURL+'/categories/' + id, JSON.stringify(category), { headers: this.headers})
       .pipe(catchError(this.errorHandler));
   }
 
   delete(id: number) {
-    return this.httpClient.delete<Category>(this.apiURL + id, { headers: this.headers})
+    return this.httpClient.delete<Category>(this.apiURL+'/categories/' + id, { headers: this.headers})
       .pipe(catchError(this.errorHandler));
   }
 

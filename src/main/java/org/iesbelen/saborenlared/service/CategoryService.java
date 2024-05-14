@@ -30,6 +30,7 @@ public class CategoryService {
     }
 
     public Category replace(Long id, Category category) {
+        System.out.println(id +" en el servicio "+ category.getIdCategory());
         return this.categoryRepository.findById(id).map(p -> (id.equals(category.getIdCategory()) ?
                         this.categoryRepository.save(category) : null))
                 .orElseThrow(() -> new CategoryNotFoundException(id));
