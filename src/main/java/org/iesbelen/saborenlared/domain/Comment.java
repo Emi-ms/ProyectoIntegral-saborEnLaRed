@@ -1,5 +1,6 @@
 package org.iesbelen.saborenlared.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +21,13 @@ public class Comment {
     private String commentText;
     private Boolean active;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_COMMENT_USER"))
     private User user;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "id_recipe", nullable = false, foreignKey = @ForeignKey(name = "FK_COMMENT_RECIPE"))
     private Recipe recipe;
 }

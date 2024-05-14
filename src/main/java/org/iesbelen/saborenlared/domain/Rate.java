@@ -1,5 +1,6 @@
 package org.iesbelen.saborenlared.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,11 +20,13 @@ public class Rate {
     private Long idRate;
     private Double rateValue;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_RATE_USER"))
     private User user;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "id_recipe", nullable = false, foreignKey = @ForeignKey(name = "FK_RATE_RECIPE"))
     private Recipe recipe;
 }
