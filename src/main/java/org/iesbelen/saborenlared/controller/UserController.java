@@ -7,15 +7,12 @@ import org.iesbelen.saborenlared.auth.UserRequest;
 import org.iesbelen.saborenlared.auth.UserResponse;
 
 
-import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.dto.UserDTO;
 import org.iesbelen.saborenlared.service.UserService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @Slf4j
 @RestController

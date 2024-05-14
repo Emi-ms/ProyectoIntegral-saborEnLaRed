@@ -2,9 +2,7 @@ package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Ingredient;
-import org.iesbelen.saborenlared.service.CategoryService;
 import org.iesbelen.saborenlared.service.IngredientService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

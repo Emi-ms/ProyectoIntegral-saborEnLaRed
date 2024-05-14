@@ -1,10 +1,7 @@
 package org.iesbelen.saborenlared.service;
 
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Ingredient;
-import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.exeption.IngredientNotFoundException;
-import org.iesbelen.saborenlared.repository.CategoryRepository;
 import org.iesbelen.saborenlared.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
 
