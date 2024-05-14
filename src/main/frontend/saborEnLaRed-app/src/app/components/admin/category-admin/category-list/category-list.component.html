@@ -1,0 +1,29 @@
+<div class="white-box"></div>
+<div class="container">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-6 mt-5">
+          <h2>Lista de Categorías</h2>
+        </div>
+        <div class="col-md-6 mt-5">
+          <a routerLink="/category/create" class="btn btn-success float-md-end" style="margin-left: 2px; margin-top: 2px;">Crear Nueva Categoría</a>
+        </div>
+      </div>
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of catergories" >
+            <td>{{ category.idCategory }}</td>
+            <td>{{ category.categoryName }}</td>
+            <td><button type="button" [routerLink]="['/category/', 'edit', category.idCategory  ]" class="btn btn-secondary" style="margin-left: 2px; margin-top: 2px;">Editar</button></td>
+            <td><button type="button" (click)="deleteCategory(category.idCategory)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
