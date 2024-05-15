@@ -21,8 +21,10 @@ public class Ingredient {
     private Long idIngredient;
     private String ingredientName;
     private Boolean active;
+    private double quantity;
+    private String unitMeasure;
 
-    @ManyToMany(mappedBy = "ingredients")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "ingredients")
     private Set<Recipe> recipes;
 
 

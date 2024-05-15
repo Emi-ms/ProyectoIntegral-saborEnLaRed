@@ -37,9 +37,9 @@ public class RateService {
                 .orElseThrow(() -> new UserNotFoundException(rate.getUser().getIdUser()));
         Recipe recipe = recipeRepository.findById(rate.getRecipe().getIdRecipe())
                 .orElseThrow(()-> new RecipeNotFoundException(rate.getRecipe().getIdRecipe()));
+
         rate.setUser(user);
         rate.setRecipe(recipe);
-
         return this.rateRepository.save(rate);
     }
 

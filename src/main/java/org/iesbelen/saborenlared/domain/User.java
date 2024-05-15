@@ -1,5 +1,8 @@
 package org.iesbelen.saborenlared.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
+
 
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
@@ -41,21 +45,22 @@ public class User  implements UserDetails {
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
+
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Rate> rates = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Recipe> recipes = new HashSet<>();

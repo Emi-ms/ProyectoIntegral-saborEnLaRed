@@ -2,7 +2,6 @@ package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Comment;
 import org.iesbelen.saborenlared.service.CommentService;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,8 +39,6 @@ public class CommentController {
 
     @PutMapping("/{id}")
     public Comment replaceComment(@PathVariable("id") Long id, @RequestBody Comment comment) {
-        System.out.println(id + " en el controlador "+ comment.toString());
-
         return this.commentService.replace(id, comment);
     }
 

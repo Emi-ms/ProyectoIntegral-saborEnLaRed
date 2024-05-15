@@ -1,5 +1,6 @@
 package org.iesbelen.saborenlared.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
+
 
 @Entity
 @Table(name = "recipe")
@@ -26,7 +28,11 @@ public class Recipe {
     private String photo;
     private Boolean active;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe", cascade = CascadeType.ALL)
+
+    private Set<RecipeIngredient> recipeIngredients;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "recipe_ingredient",
             joinColumns = @JoinColumn(name = "id_recipe", referencedColumnName = "id_recipe"),
@@ -34,7 +40,7 @@ public class Recipe {
     )
     private Set<Ingredient> ingredients;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "recipe_category",
             joinColumns = @JoinColumn(name = "id_recipe", referencedColumnName = "id_recipe"),
@@ -44,20 +50,20 @@ public class Recipe {
 
     @OneToMany(
             mappedBy = "recipe",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Comment> comments;
 
     @OneToMany(
             mappedBy = "recipe",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Rate> rates;
 
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_RECIPE_USER"))
     private User user;
 

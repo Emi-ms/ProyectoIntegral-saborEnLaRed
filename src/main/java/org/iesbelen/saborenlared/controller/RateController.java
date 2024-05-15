@@ -1,8 +1,7 @@
-package org.iesbelen.saborenlared.controller.advices;
+package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.domain.Comment;
 import org.iesbelen.saborenlared.domain.Rate;
 import org.iesbelen.saborenlared.service.RateService;
 import org.springframework.beans.factory.annotation.Value;

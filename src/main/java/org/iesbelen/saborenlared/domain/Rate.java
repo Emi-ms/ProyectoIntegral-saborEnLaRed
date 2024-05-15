@@ -21,12 +21,10 @@ public class Rate {
     private Double rateValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "id_user", nullable = false, foreignKey = @ForeignKey(name = "FK_RATE_USER"))
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "id_recipe", nullable = false, foreignKey = @ForeignKey(name = "FK_RATE_RECIPE"))
     private Recipe recipe;
 }

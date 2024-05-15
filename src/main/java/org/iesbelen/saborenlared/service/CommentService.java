@@ -32,11 +32,14 @@ public class CommentService {
     public Comment save(Comment comment) {
         User user = userRepository.findById(comment.getUser().getIdUser())
                         .orElseThrow(() -> new UserNotFoundException(comment.getUser().getIdUser()));
+        System.out.println(user.toString());
         Recipe recipe = recipeRepository.findById(comment.getRecipe().getIdRecipe())
                         .orElseThrow(()-> new RecipeNotFoundException(comment.getRecipe().getIdRecipe()));
+        System.out.println(recipe.toString());
+
+        comment.setActive(true);
         comment.setUser(user);
         comment.setRecipe(recipe);
-        comment.setActive(true);
         return this.commentRepository.save(comment);
     }
 
