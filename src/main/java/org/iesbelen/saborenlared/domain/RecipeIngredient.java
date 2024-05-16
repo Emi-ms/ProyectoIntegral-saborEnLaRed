@@ -7,27 +7,34 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Table(name = "recipe_ingredient")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//@IdClass(RecipeIngredientKey.class)
 public class RecipeIngredient {
-    @EmbeddedId
-    RecipeIngredientKey id;
+//    @EmbeddedId
+//    RecipeIngredientKey id;
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_recipe_ingredient")
+    private Long idRecipeIngredient;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idRecipe")
     @JoinColumn(name = "id_recipe")
-
     private Recipe recipe;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idIngredient")
-    @JoinColumn(name = "id_ingredient")
-    private  Ingredient ingredient;
+    @JoinColumn(name="id_ingredient")
+    private Ingredient ingredient;
 
-//    private double quantity ;
-//    private String unitMeasure ;
+    private double quantity;
+    private String unitMeasure;
+
+
 }

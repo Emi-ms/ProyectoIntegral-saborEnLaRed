@@ -1,12 +1,12 @@
 package org.iesbelen.saborenlared.service;
 
 import org.iesbelen.saborenlared.domain.*;
+import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
+import org.iesbelen.saborenlared.exeption.IngredientNotFoundException;
 import org.iesbelen.saborenlared.exeption.UserNotFoundException;
-import org.iesbelen.saborenlared.repository.CategoryRepository;
-import org.iesbelen.saborenlared.repository.IngredientRepository;
-import org.iesbelen.saborenlared.repository.RecipeRepository;
-import org.iesbelen.saborenlared.repository.UserRepository;
+import org.iesbelen.saborenlared.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,43 +19,32 @@ public class RecipeService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final IngredientRepository ingredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRespository;
 
-    public RecipeService(RecipeRepository recipeRepository, UserRepository userRepository, CategoryRepository categoryRepository, IngredientRepository ingredientRepository) {
+    public RecipeService(RecipeRepository recipeRepository, UserRepository userRepository, CategoryRepository categoryRepository, IngredientRepository ingredientRepository, RecipeIngredientRepository recipeIngredientRespository) {
         this.recipeRepository = recipeRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.ingredientRepository = ingredientRepository;
+
+        this.recipeIngredientRespository = recipeIngredientRespository;
     }
 
-    public List<Recipe> all(){
-        return  this.recipeRepository.findAll();
+    public List<Recipe> all() {
+        return this.recipeRepository.findAll();
     }
 
-
-    public Recipe save(Recipe recipe){
-        User user = userRepository.findById(recipe.getUser().getIdUser())
-                .orElseThrow(()->new UserNotFoundException(recipe.getUser().getIdUser()));
-
-        Set<Long> ingredientsIds = recipe.getIngredients().stream()
-                .map(Ingredient::getIdIngredient)
-                .collect(Collectors.toSet());
-        List<Ingredient> ingredientsList =  ingredientRepository.findAllById(ingredientsIds);
-        Set<Ingredient> ingredientSet = new HashSet<>(ingredientsList);
-
-        Set<Long> categoriesIds = recipe.getCategories().stream()
-                .map(Category::getIdCategory)
-                .collect(Collectors.toSet());
-        List<Category> categoryList = categoryRepository.findAllById(categoriesIds);
-        Set<Category> categorySet = new HashSet<>(categoryList);
-
-
-
-        recipe.setUser(user);
-        recipe.setIngredients(ingredientSet);
-        recipe.setCategories(categorySet);
+    public Recipe save(Recipe recipe) {
+//        User user = userRepository.findById(recipe.getUser().getIdUser())
+//                .orElseThrow(() -> new UserNotFoundException(recipe.getUser().getIdUser()));
+//
+//        Recipe recipeSave = new Recipe();
+//        recipeSave.setUser(user);
+        for (RecipeIngredient recipeIngredient : recipe.getRecipeIngredients()) {
+            recipeIngredient.setRecipe(recipe);
+        }
 
         return recipeRepository.save(recipe);
-
     }
 
 

@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,11 +24,13 @@ public class Ingredient {
     private Long idIngredient;
     private String ingredientName;
     private Boolean active;
-    private double quantity;
-    private String unitMeasure;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "ingredients")
-    private Set<Recipe> recipes;
+//    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "ingredients")
+//    private Set<Recipe> recipes=new HashSet<>();
 
-
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "ingredient"
+    )
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 }
