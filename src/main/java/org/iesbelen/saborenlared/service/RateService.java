@@ -1,11 +1,7 @@
 package org.iesbelen.saborenlared.service;
 
 import org.iesbelen.saborenlared.domain.Rate;
-import org.iesbelen.saborenlared.domain.Recipe;
-import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.exeption.RateNotFoundException;
-import org.iesbelen.saborenlared.exeption.RecipeNotFoundException;
-import org.iesbelen.saborenlared.exeption.UserNotFoundException;
 import org.iesbelen.saborenlared.repository.RateRepository;
 
 import org.iesbelen.saborenlared.repository.RecipeRepository;
@@ -32,14 +28,14 @@ public class RateService {
     }
 
     public Rate save(Rate rate) {
-        System.out.println(rate.toString());
+      /*  System.out.println(rate.toString());
         User user = userRepository.findById(rate.getUser().getIdUser())
                 .orElseThrow(() -> new UserNotFoundException(rate.getUser().getIdUser()));
         Recipe recipe = recipeRepository.findById(rate.getRecipe().getIdRecipe())
                 .orElseThrow(()-> new RecipeNotFoundException(rate.getRecipe().getIdRecipe()));
 
         rate.setUser(user);
-        rate.setRecipe(recipe);
+        rate.setRecipe(recipe);*/
         return this.rateRepository.save(rate);
     }
 

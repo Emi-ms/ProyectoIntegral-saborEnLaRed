@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDTO {
-    private Long idComment;
-    private String commentText;
-    private boolean active;
-    private String userName;
-
+public class CategoryDTO {
+    private Long idCategory;
+    private String categoryName;
 }
-

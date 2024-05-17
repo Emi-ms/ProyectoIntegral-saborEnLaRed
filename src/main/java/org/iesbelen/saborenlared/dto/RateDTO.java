@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDTO {
-    private Long idComment;
-    private String commentText;
-    private boolean active;
+public class RateDTO {
+    private Long idRate;
+    private Double rateValue;
     private String userName;
-
 }
-

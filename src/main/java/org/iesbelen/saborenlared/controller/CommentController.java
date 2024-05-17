@@ -6,6 +6,7 @@ import org.iesbelen.saborenlared.domain.Comment;
 import org.iesbelen.saborenlared.service.CommentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +23,16 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Comment> all() {
         log.info("Accediendo a todas los comentarios");
         return this.commentService.all();
     }
-    @PostMapping({"","/"})
-    public Comment newComment(@RequestBody Comment comment) {
-        return this.commentService.save(comment);
+
+    @PostMapping({"", "/"})
+    public ResponseEntity<Comment> newComment(@RequestBody Comment comment) {
+        Comment savedComment = this.commentService.save(comment);
+        return  ResponseEntity.ok(savedComment);
     }
 
     @GetMapping("/{id}")

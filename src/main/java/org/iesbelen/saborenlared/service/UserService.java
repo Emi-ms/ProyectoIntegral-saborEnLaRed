@@ -4,15 +4,18 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.iesbelen.saborenlared.auth.UserRequest;
 import org.iesbelen.saborenlared.auth.UserResponse;
-import org.iesbelen.saborenlared.domain.Comment;
+import org.iesbelen.saborenlared.domain.Recipe;
 import org.iesbelen.saborenlared.domain.User;
+import org.iesbelen.saborenlared.dto.RecipeDTO;
+import org.iesbelen.saborenlared.dto.RecipeIngredientDTO;
 import org.iesbelen.saborenlared.exeption.UserNotFoundException;
+import org.iesbelen.saborenlared.repository.RecipeIngredientRepository;
+import org.iesbelen.saborenlared.repository.RecipeRepository;
 import org.iesbelen.saborenlared.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.iesbelen.saborenlared.dto.UserDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +26,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CommentService commentService;
+    private final RecipeRepository recipeRepository;
+    private final RecipeIngredientRepository recipeIngredientRespository;
 
     @Transactional
     public UserResponse updateUser(UserRequest userRequest) {
@@ -45,7 +50,53 @@ public class UserService {
     public UserDTO getUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
 
+
         if (user != null) {
+            Set<Recipe> recipes = recipeRepository.findRecipesByUserId(user.getIdUser());
+    /*        List<RecipeDTO> recipeDTOS = recipes.stream()
+                    .map(recipe -> RecipeDTO.builder()
+                            .idRecipe(recipe.getIdRecipe())
+                            .recipeName(recipe.getRecipeName())
+                            .description(recipe.getDescription())
+                            .photo(recipe.getPhoto())
+                            .active(recipe.getActive())
+                            .recipeIngredients(()->{
+                                recipeIngredientRespository.findRecipeIngredientByRecipeId(recipe.getIdRecipe()).stream()
+                                        .map(recipeIngredient -> RecipeIngredientDTO.builder()
+                                                .idRecipeIngredient(recipeIngredient.getIdRecipeIngredient())
+                                                .ingredient(recipeIngredient.getIngredient())
+                                                .quantity(recipeIngredient.getQuantity())
+                                                .unitMeasure(recipeIngredient.getUnitMeasure())
+                                                .build())
+                                        .collect(Collectors.toList()).
+                                    }
+                            )
+                            .build())
+                    .toList(); */
+            List<RecipeDTO> recipeDTOS = recipes.stream()
+                    .map(recipe -> {
+                        List<RecipeIngredientDTO> recipeIngredients = recipeIngredientRespository.findRecipeIngredientByRecipeId(recipe.getIdRecipe()).stream()
+                                .map(recipeIngredient -> RecipeIngredientDTO.builder()
+                                        .idRecipeIngredient(recipeIngredient.getIdRecipeIngredient())
+                                        .ingredientName(recipeIngredient.getIngredient().getIngredientName())
+                                        .quantity(recipeIngredient.getQuantity())
+                                        .unitMeasure(recipeIngredient.getUnitMeasure())
+                                        .build())
+                                .collect(Collectors.toList());
+
+                        return RecipeDTO.builder()
+                                .idRecipe(recipe.getIdRecipe())
+                                .recipeName(recipe.getRecipeName())
+                                .description(recipe.getDescription())
+                                .photo(recipe.getPhoto())
+                                .active(recipe.getActive())
+                                .recipeIngredients(recipeIngredients)
+                                .build();
+                    })
+                    .collect(Collectors.toList());
+
+
+
             UserDTO userDTO = UserDTO.builder()
                     .id(user.getIdUser())
                     .userName(user.getUsername())
@@ -54,6 +105,7 @@ public class UserService {
                     .password(user.getPassword())
                     .rol(user.getRol())
                     .active(user.isActive())
+                    .recipes(recipeDTOS)
                     .build();
             return userDTO;
         }
