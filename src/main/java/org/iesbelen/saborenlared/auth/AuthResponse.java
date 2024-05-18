@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.iesbelen.saborenlared.dto.UserDTO;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Builder
