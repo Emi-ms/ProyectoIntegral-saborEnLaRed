@@ -1,0 +1,23 @@
+<div class="white-box"></div>
+
+
+<div id="detail-div">
+    <div id="detail-header">
+        <img [src]="'assets/images/recipes/'+recipe?.photo" alt="imagen">
+    </div>
+    <div id="detail-body">
+
+
+        <div id="contact-div" >
+            <h3>INGREDIENTES</h3>
+            <ul>
+                <li *ngFor="let ingredient of recipe?.recipeIngredients">{{ ingredient.ingredientName }}: {{ ingredient.quantity }} {{ ingredient.unitMeasure }}  </li>
+            </ul>
+
+        </div>
+                <div id="description-div">
+                    <p>{{ recipe?.description }}</p>
+                </div>
+        
+    </div>
+</div>

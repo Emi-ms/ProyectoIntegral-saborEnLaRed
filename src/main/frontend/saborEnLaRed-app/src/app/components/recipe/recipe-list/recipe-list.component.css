@@ -1,0 +1,15 @@
+.container {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    margin: 50px auto 0;
+  }
+  .card:hover {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 1.2);
+    transition: 0.3s;
+  }
