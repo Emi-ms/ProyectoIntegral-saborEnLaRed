@@ -22,12 +22,13 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Category> all() {
         log.info("Accediendo a todas las categorías");
         return this.categoryService.all();
     }
-    @PostMapping({"","/"})
+
+    @PostMapping({"", "/"})
     public Category newCategory(@RequestBody Category category) {
         return this.categoryService.save(category);
     }
@@ -39,7 +40,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public Category replaceCategory(@PathVariable("id") Long id, @RequestBody Category category) {
-        System.out.println(id + " en el controlador "+ category.toString());
+        System.out.println(id + " en el controlador " + category.toString());
 
         return this.categoryService.replace(id, category);
     }

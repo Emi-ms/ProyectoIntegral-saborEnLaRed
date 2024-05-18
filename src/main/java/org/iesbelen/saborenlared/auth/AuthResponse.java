@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.iesbelen.saborenlared.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
@@ -12,5 +13,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class AuthResponse {
     private String token;
-    private UserDetails user;
+    private UserDTO userDTO;
 }

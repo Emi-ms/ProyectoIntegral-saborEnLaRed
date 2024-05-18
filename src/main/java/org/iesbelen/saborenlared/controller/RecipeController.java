@@ -29,16 +29,19 @@ public class RecipeController {
         return new ResponseEntity<>(recipeService.all(), HttpStatus.OK);
     }
 
-    @PostMapping({"", "/"})
-    public Recipe newRecipe(@RequestBody Recipe recipe) {
-        System.out.println(recipe);
-        return this.recipeService.save(recipe);
+    @GetMapping({"/recipes-actives"})
+    public ResponseEntity<?> allActive() {
+        log.info("Accediendo a todas las recetas activas");
+        return new ResponseEntity<>(recipeService.AllActiveRecipes(), HttpStatus.OK);
     }
 
-    //    @GetMapping("/{id}")
-//    public Recipe one(@PathVariable("id") Long id) {
-//        return this.recipeService.one(id);
-//    }
+    @PostMapping({"", "/"})
+    public ResponseEntity<RecipeDTO> newRecipe(@RequestBody Recipe recipe) {
+        Recipe savedRecipe = this.recipeService.save(recipe);
+        RecipeDTO recipeDTO = recipeService.getRecipeDTO(savedRecipe.getIdRecipe());
+        return ResponseEntity.ok(recipeDTO);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RecipeDTO> getRecipeDTO(@PathVariable Long id) {
         RecipeDTO recipeDTO = recipeService.getRecipeDTO(id);
@@ -47,4 +50,12 @@ public class RecipeController {
         }
         return ResponseEntity.ok(recipeDTO);
     }
+
+    @PutMapping("/logic-delete/{id}")
+    public ResponseEntity<RecipeDTO> deactivateRecipe(@PathVariable Long id) {
+        Recipe deactivatedRecipe = recipeService.logicDelete(id);
+        RecipeDTO recipeDTO = recipeService.getRecipeDTO(deactivatedRecipe.getIdRecipe());
+        return ResponseEntity.ok(recipeDTO);
+    }
+
 }

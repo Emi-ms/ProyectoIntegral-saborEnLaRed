@@ -46,9 +46,21 @@ public class RecipeService {
         return null;
     }
 
+    public List<RecipeDTO> all() {
+        List<Recipe> recipes = recipeRepository.findAll();
+        return recipes.stream().
+                map(recipe -> this.getRecipeDTO(recipe.getIdRecipe()))
+                .toList();
+    }
 
-    public List<Recipe> all() {
-        return this.recipeRepository.findAll();
+    public List<RecipeDTO> AllActiveRecipes(){
+        List<Recipe> recipes = recipeRepository.findAll()
+                .stream()
+                .filter(Recipe::getActive)
+                .toList();
+        return recipes.stream().
+                map(recipe -> this.getRecipeDTO(recipe.getIdRecipe()))
+                .toList();
     }
 
     public Recipe save(Recipe recipe) {
@@ -112,4 +124,10 @@ public class RecipeService {
                 .toList();
     }
 
+    public Recipe logicDelete(Long id) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException(id));
+        recipe.setActive(false);
+        return recipeRepository.save(recipe);
+    }
 }

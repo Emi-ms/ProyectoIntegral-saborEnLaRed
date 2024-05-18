@@ -10,12 +10,18 @@ import { UserGuard } from './services/auth/normal-user.guard';
 import { CategoryListComponent } from './components/admin/category-admin/category-list/category-list.component';
 import { CategoryCreateComponent } from './components/admin/category-admin/category-create/category-create.component';
 import { CategoryEditComponent } from './components/admin/category-admin/category-edit/category-edit.component';
+import { RecipeListComponent } from './components/recipe/recipe-list/recipe-list.component';
+import { RecipeDetailComponent } from './components/recipe/recipe-detail/recipe-detail.component';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
+  {path: 'recipes', component: RecipeListComponent},
+  {path:'recipes/detail/:idRecipe', component: RecipeDetailComponent},
+
+
   { path: 'admin-menu', component: AdminSectionComponent, canActivate: [AdminGuard] },
   { path: 'category-admin', component: CategoryListComponent, canActivate: [AdminGuard] },
   {path: 'category/create', component: CategoryCreateComponent, canActivate: [AdminGuard]}, 

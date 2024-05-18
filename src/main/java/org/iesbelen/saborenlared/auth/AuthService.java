@@ -2,9 +2,11 @@ package org.iesbelen.saborenlared.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.iesbelen.saborenlared.domain.User;
+import org.iesbelen.saborenlared.dto.UserDTO;
 import org.iesbelen.saborenlared.exeption.EmailDuplicateException;
 import org.iesbelen.saborenlared.jwt.JwtService;
 import org.iesbelen.saborenlared.repository.UserRepository;
+import org.iesbelen.saborenlared.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private  final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     public AuthResponse register(RegisterRequest request) {
 
@@ -44,11 +47,13 @@ public class AuthService {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        UserDTO userDTO = userService.getUser(user.getIdUser());
 
         System.out.println(user);
+        System.out.println(userDTO);
         String token = jwtService.getToken(user);
 
-        return new AuthResponse(token,user);
+        return new AuthResponse(token,userDTO);
     }
 
 
