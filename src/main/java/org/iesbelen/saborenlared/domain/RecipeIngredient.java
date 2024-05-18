@@ -13,11 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@IdClass(RecipeIngredientKey.class)
-public class RecipeIngredient {
-//    @EmbeddedId
-//    RecipeIngredientKey id;
 
+public class RecipeIngredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

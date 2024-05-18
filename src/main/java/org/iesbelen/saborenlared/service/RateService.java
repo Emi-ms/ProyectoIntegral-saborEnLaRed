@@ -1,5 +1,6 @@
 package org.iesbelen.saborenlared.service;
 
+import lombok.AllArgsConstructor;
 import org.iesbelen.saborenlared.domain.Rate;
 import org.iesbelen.saborenlared.exeption.RateNotFoundException;
 import org.iesbelen.saborenlared.repository.RateRepository;
@@ -11,31 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RateService {
 
     private final RateRepository rateRepository;
     private final UserRepository userRepository;
     private final RecipeRepository recipeRepository;
 
-    public RateService(RateRepository rateRepository, UserRepository userRepository, RecipeRepository recipeRepository) {
-        this.rateRepository = rateRepository;
-        this.userRepository = userRepository;
-        this.recipeRepository = recipeRepository;
-    }
-
     public List<Rate> all() {
         return this.rateRepository.findAll();
     }
 
     public Rate save(Rate rate) {
-      /*  System.out.println(rate.toString());
-        User user = userRepository.findById(rate.getUser().getIdUser())
-                .orElseThrow(() -> new UserNotFoundException(rate.getUser().getIdUser()));
-        Recipe recipe = recipeRepository.findById(rate.getRecipe().getIdRecipe())
-                .orElseThrow(()-> new RecipeNotFoundException(rate.getRecipe().getIdRecipe()));
-
-        rate.setUser(user);
-        rate.setRecipe(recipe);*/
         return this.rateRepository.save(rate);
     }
 

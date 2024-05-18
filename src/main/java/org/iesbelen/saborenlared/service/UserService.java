@@ -50,29 +50,8 @@ public class UserService {
     public UserDTO getUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
 
-
         if (user != null) {
             Set<Recipe> recipes = recipeRepository.findRecipesByUserId(user.getIdUser());
-    /*        List<RecipeDTO> recipeDTOS = recipes.stream()
-                    .map(recipe -> RecipeDTO.builder()
-                            .idRecipe(recipe.getIdRecipe())
-                            .recipeName(recipe.getRecipeName())
-                            .description(recipe.getDescription())
-                            .photo(recipe.getPhoto())
-                            .active(recipe.getActive())
-                            .recipeIngredients(()->{
-                                recipeIngredientRespository.findRecipeIngredientByRecipeId(recipe.getIdRecipe()).stream()
-                                        .map(recipeIngredient -> RecipeIngredientDTO.builder()
-                                                .idRecipeIngredient(recipeIngredient.getIdRecipeIngredient())
-                                                .ingredient(recipeIngredient.getIngredient())
-                                                .quantity(recipeIngredient.getQuantity())
-                                                .unitMeasure(recipeIngredient.getUnitMeasure())
-                                                .build())
-                                        .collect(Collectors.toList()).
-                                    }
-                            )
-                            .build())
-                    .toList(); */
             List<RecipeDTO> recipeDTOS = recipes.stream()
                     .map(recipe -> {
                         List<RecipeIngredientDTO> recipeIngredients = recipeIngredientRespository.findRecipeIngredientByRecipeId(recipe.getIdRecipe()).stream()
@@ -96,8 +75,7 @@ public class UserService {
                     .collect(Collectors.toList());
 
 
-
-            UserDTO userDTO = UserDTO.builder()
+            return UserDTO.builder()
                     .id(user.getIdUser())
                     .userName(user.getUsername())
                     .userSurname(user.getUserSurname())
@@ -107,7 +85,6 @@ public class UserService {
                     .active(user.isActive())
                     .recipes(recipeDTOS)
                     .build();
-            return userDTO;
         }
         return null;
     }
