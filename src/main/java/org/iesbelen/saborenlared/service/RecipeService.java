@@ -26,47 +26,12 @@ public class RecipeService {
 
         if (recipe != null) {
 
-            Set<RecipeIngredient> recipeIngredients = recipeIngredientRepository.findRecipeIngredientByRecipeId(recipe.getIdRecipe());
-            List<RecipeIngredientDTO> recipeIngredientDTOS = recipeIngredients.stream()
-                    .map(recipeIngredient -> RecipeIngredientDTO.builder()
-                            .idRecipeIngredient(recipeIngredient.getIdRecipeIngredient())
-                            .ingredientName(recipeIngredient.getIngredient().getIngredientName())
-                            .quantity(recipeIngredient.getQuantity())
-                            .unitMeasure(recipeIngredient.getUnitMeasure())
-                            .build())
-                    .toList();
+            List<RecipeIngredientDTO> recipeIngredientDTOS = mapToRecipeIngredientDTOs(recipe);
+            List<CommentDTO> commentsDTOS = mapToCommentDTOs(recipe);
+            List<RateDTO> rateDTOS = mapToRateDTOs(recipe);
+            List<CategoryDTO> categoryDTOS = mapToCategoryDTOs(recipe);
 
-            Set<Comment> comments = commentRepository.findCommentByRecipeId(recipe.getIdRecipe());
-            List<CommentDTO> commentsDTOS = comments.stream()
-                    .map(comment -> CommentDTO.builder()
-                            .idComment(comment.getIdComment())
-                            .commentText(comment.getCommentText())
-                            .userName(comment.getUser().getUsername())
-                            .build())
-                    .toList();
-
-            Set<Rate> rates = rateRepository.findRateByRecipeId(recipe.getIdRecipe());
-            List<RateDTO> rateDTOS = rates.stream()
-                    .map(rate -> RateDTO.builder()
-                            .idRate(rate.getIdRate())
-                            .rateValue(rate.getRateValue())
-                            .userName(rate.getUser().getUsername())
-                            .build())
-                    .toList();
-
-            Set<Long> categoriesIds =recipe.getCategories().stream()
-                    .map(Category::getIdCategory)
-                    .collect(Collectors.toSet());
-            List<Category> categories = categoryRepository.findAllById(categoriesIds);
-            List<CategoryDTO> categoryDTOS = categories.stream()
-                    .map(category -> CategoryDTO.builder()
-                            .idCategory(category.getIdCategory())
-                            .categoryName(category.getCategoryName())
-                            .build())
-                    .toList();
-
-
-            RecipeDTO recipeDTO = RecipeDTO.builder()
+            return RecipeDTO.builder()
                     .idRecipe(recipe.getIdRecipe())
                     .recipeName(recipe.getRecipeName())
                     .description(recipe.getDescription())
@@ -77,7 +42,6 @@ public class RecipeService {
                     .rates(rateDTOS)
                     .categories(categoryDTOS)
                     .build();
-            return recipeDTO;
         }
         return null;
     }
@@ -88,11 +52,6 @@ public class RecipeService {
     }
 
     public Recipe save(Recipe recipe) {
-//        User user = userRepository.findById(recipe.getUser().getIdUser())
-//                .orElseThrow(() -> new UserNotFoundException(recipe.getUser().getIdUser()));
-//
-//        Recipe recipeSave = new Recipe();
-//        recipeSave.setUser(user);
         for (RecipeIngredient recipeIngredient : recipe.getRecipeIngredients()) {
             recipeIngredient.setRecipe(recipe);
         }
@@ -105,5 +64,52 @@ public class RecipeService {
                 orElseThrow(() -> new RecipeNotFoundException(id));
     }
 
+
+    private List<CategoryDTO> mapToCategoryDTOs(Recipe recipe) {
+        Set<Long> categoriesIds = recipe.getCategories().stream()
+                .map(Category::getIdCategory)
+                .collect(Collectors.toSet());
+        List<Category> categories = categoryRepository.findAllById(categoriesIds);
+        return categories.stream()
+                .map(category -> CategoryDTO.builder()
+                        .idCategory(category.getIdCategory())
+                        .categoryName(category.getCategoryName())
+                        .build())
+                .toList();
+    }
+
+    private List<RecipeIngredientDTO> mapToRecipeIngredientDTOs(Recipe recipe) {
+        Set<RecipeIngredient> recipeIngredients = recipeIngredientRepository.findRecipeIngredientByRecipeId(recipe.getIdRecipe());
+        return recipeIngredients.stream()
+                .map(recipeIngredient -> RecipeIngredientDTO.builder()
+                        .idRecipeIngredient(recipeIngredient.getIdRecipeIngredient())
+                        .ingredientName(recipeIngredient.getIngredient().getIngredientName())
+                        .quantity(recipeIngredient.getQuantity())
+                        .unitMeasure(recipeIngredient.getUnitMeasure())
+                        .build())
+                .toList();
+    }
+
+    private List<CommentDTO> mapToCommentDTOs(Recipe recipe) {
+        Set<Comment> comments = commentRepository.findCommentByRecipeId(recipe.getIdRecipe());
+        return comments.stream()
+                .map(comment -> CommentDTO.builder()
+                        .idComment(comment.getIdComment())
+                        .commentText(comment.getCommentText())
+                        .userName(comment.getUser().getUsername())
+                        .build())
+                .toList();
+    }
+
+    private List<RateDTO> mapToRateDTOs(Recipe recipe) {
+        Set<Rate> rates = rateRepository.findRateByRecipeId(recipe.getIdRecipe());
+        return rates.stream()
+                .map(rate -> RateDTO.builder()
+                        .idRate(rate.getIdRate())
+                        .rateValue(rate.getRateValue())
+                        .userName(rate.getUser().getUsername())
+                        .build())
+                .toList();
+    }
 
 }
