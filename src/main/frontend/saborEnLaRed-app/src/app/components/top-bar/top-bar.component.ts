@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import { UserService } from '../../services/user.service';
@@ -25,17 +25,17 @@ export class TopBarComponent implements OnInit{
   user?:User;
   userLoginOn:boolean = false;
   currentUser?:User;
-  
+
   protected readonly RouterLink = RouterLink;
 
   constructor(
     private userService:UserService,
     private loginService:LoginService,
-  
+
   ) { }
 
   ngOnInit(): void {
-    this.loginService.currentUserLoginOn.subscribe({    
+    this.loginService.currentUserLoginOn.subscribe({
       next: (loginOn) => {
         this.userLoginOn = loginOn;
       }

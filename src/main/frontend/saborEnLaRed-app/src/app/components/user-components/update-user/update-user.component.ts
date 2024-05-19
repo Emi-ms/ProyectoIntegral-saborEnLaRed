@@ -83,7 +83,7 @@ export class UpdateUserComponent implements OnInit {
         });
         this.router.navigate(['/perfil-user']);
       },
-      error: (error) => {
+      error: () => {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
