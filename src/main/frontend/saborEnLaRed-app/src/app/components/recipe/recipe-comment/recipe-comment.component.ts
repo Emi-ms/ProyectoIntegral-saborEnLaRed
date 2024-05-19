@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { RecipeService } from '../../../services/recipe.service';
 import { CommentService } from '../../../services/comment.service';
@@ -17,6 +17,7 @@ import { NgIf, NgOptimizedImage } from '@angular/common';
     ReactiveFormsModule,
     NgIf,
     NgOptimizedImage,
+    RouterLink,
   ],
   templateUrl: './recipe-comment.component.html',
   styleUrl: './recipe-comment.component.css'
@@ -69,7 +70,7 @@ export class RecipeCommentComponent implements OnInit {
       next: (res: any) => {
         console.log('Comentario registrado correctamente');
         Swal.fire("Gracias por tu comentario cocinilla!!", ": )", "success")
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/recipes/detail/' + this.recipe?.idRecipe)
           .then();
       },
       error: (error: any) => {
