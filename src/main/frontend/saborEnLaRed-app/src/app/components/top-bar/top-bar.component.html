@@ -30,7 +30,7 @@
       <div class="nav-item" style="margin-top: 5px;margin-left: 13%">
         <a *ngIf="!userLoginOn"  class="btn btn-close-white" style="font-size: 20px; font-weight: bold;color: #000000A6;" routerLink="/login" >Iniciar Sesión</a>
         <a *ngIf="userLoginOn"  class="btn btn-close-white" style="font-size: 20px; font-weight: bold;color: #000000A6;" (click)="logout()" >Cerrar Sesión</a>
-        <a *ngIf="userLoginOn && currentUser && currentUser.rol==='NORMAL_USER'" class="btn btn-custom"  style="font-size: 20px;" routerLink="/perfil-user">Mi Perfil: {{ currentUser.username }}</a>
+        <a *ngIf="userLoginOn && currentUser && currentUser.rol==='NORMAL_USER'" class="btn btn-custom"  style="font-size: 20px;" routerLink="/perfil-user">Mi Perfil: {{ currentUser.userName }}</a>
         <a *ngIf="userLoginOn && currentUser && currentUser.rol==='ADMIN'" class="btn btn-dark"  style="font-size: 20px;" routerLink="/admin-menu">MENU ADMIN</a>
         <a *ngIf="!userLoginOn"  style="margin-left: 5px" class="btn-custom" routerLink="/signup">Regístrate</a>
       </div>

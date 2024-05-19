@@ -10,6 +10,7 @@ import { UserService } from "../../../services/user.service";
 import { LoginService } from "../../../services/login-user.service";
 
 import Swal from 'sweetalert2';
+import { User } from '../../../models/User';
 
 
 @Component({
@@ -29,6 +30,9 @@ import Swal from 'sweetalert2';
 })
 export class UpdateUserComponent implements OnInit {
   id: number = 0;
+  rol: string = "";
+  active: boolean = false;
+  currentUser?: User;
 
   constructor(
     public userService: UserService,
@@ -39,12 +43,17 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.loginService.currentUser.subscribe({
       next: (currentUser) => {
-
-        this.id = currentUser.idUser;
-        console.log(this.id);
+        this.currentUser = currentUser;
+        this.id = currentUser.id;
+        this.rol = currentUser.rol;
+        this.active = currentUser.active;
+        this.form.patchValue({
+          userName: currentUser.userName,
+          userSurname: currentUser.userSurname,
+          email: currentUser.email,
+        });
       }
     })
-
   }
 
   form: FormGroup = new FormGroup({
@@ -53,12 +62,15 @@ export class UpdateUserComponent implements OnInit {
     userSurname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
     email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), Validators.maxLength(255)]),
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d!@#$%^&*()-_=+{};:,<.>]{8,}$'), Validators.maxLength(255), Validators.minLength(8)]),
-
+    rol: new FormControl(''),
+    active: new FormControl('')
   });
 
 
   submit() {
     this.form.patchValue({ id: this.id });
+    this.form.patchValue({ rol: this.rol });
+    this.form.patchValue({ active: this.active });
 
     this.userService.updateUser(this.form.value).subscribe({
 

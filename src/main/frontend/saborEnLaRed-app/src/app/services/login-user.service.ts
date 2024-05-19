@@ -42,12 +42,13 @@ export class LoginService {
   public login(userCredencials: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
       tap((userData) => {
+        console.log(userData);
         sessionStorage.setItem("token", userData.token);
-        sessionStorage.setItem("user", JSON.stringify(userData.user));
+        sessionStorage.setItem("user", JSON.stringify(userData.userDTO));
         this.currentUserLoginOn.next(true);
         this.currentUserToken.next(userData);
-        if (userData.user) {
-          this.currentUser.next(userData.user);
+        if (userData.userDTO) {
+          this.currentUser.next(userData.userDTO);
         }
       }),
       map((userData) => userData.token),

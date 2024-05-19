@@ -25,30 +25,14 @@ export class TopBarComponent implements OnInit{
   user?:User;
   userLoginOn:boolean = false;
   currentUser?:User;
-
   
   protected readonly RouterLink = RouterLink;
 
   constructor(
     private userService:UserService,
-    private loginService:LoginService
+    private loginService:LoginService,
   
-  ) {
-
-  //   this.userService.getUser(68).subscribe({
-  //     next: (user) => {
-  //       this.user = user;
-  //       console.log(user);
-  //     },
-  //     error: (error) => {
-  //       this.errorMessage = error;
-  //       console.log(error);
-  //     },
-  //     complete: () => {
-  //       console.log("Completed, no errors.");
-  //     }
-  //   })
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loginService.currentUserLoginOn.subscribe({    
@@ -70,6 +54,4 @@ export class TopBarComponent implements OnInit{
     Swal.fire("Hasta luego cocinilla!!", "Esperamos verte pronto ; )", "success");
     this.loginService.logout();
   }
-
-
 }

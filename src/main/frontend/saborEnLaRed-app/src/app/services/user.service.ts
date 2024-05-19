@@ -41,9 +41,9 @@ export class UserService {
 
   public updateUser(user: User): Observable<any> {
     // this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
-    // console.log("en el update user el user service")
+    console.log("en el update user el user service")
     // console.log(this.headers)
-    // console.log(JSON.stringify(user))
+    console.log(JSON.stringify(user))
 
     return this.httpClient.put<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers})
       .pipe(
