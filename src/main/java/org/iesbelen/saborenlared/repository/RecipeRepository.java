@@ -10,6 +10,6 @@ import java.util.Set;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe,Long> {
-    @Query("SELECT r FROM Recipe r WHERE r.user.idUser = :userId")
-    Set<Recipe> findRecipesByUserId(@Param("userId") Long userId);
+    @Query("SELECT r FROM Recipe r WHERE r.user.id = :id")
+    Set<Recipe> findRecipesByUserId(@Param("id") Long id);
 }

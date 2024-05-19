@@ -12,6 +12,7 @@ import { CategoryCreateComponent } from './components/admin/category-admin/categ
 import { CategoryEditComponent } from './components/admin/category-admin/category-edit/category-edit.component';
 import { RecipeListComponent } from './components/recipe/recipe-list/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe/recipe-detail/recipe-detail.component';
+import { RecipeCommentComponent } from './components/recipe/recipe-comment/recipe-comment.component';
 
 
 export const routes: Routes = [
@@ -28,5 +29,6 @@ export const routes: Routes = [
   {path: 'category/edit/:idCategory', component: CategoryEditComponent, canActivate: [AdminGuard]}, 
   
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
-  { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] }
+  { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },
+  {path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard]},
 ];

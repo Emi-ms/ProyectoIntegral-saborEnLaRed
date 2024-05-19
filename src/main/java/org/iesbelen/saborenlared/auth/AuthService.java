@@ -47,7 +47,7 @@ public class AuthService {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        UserDTO userDTO = userService.getUser(user.getIdUser());
+        UserDTO userDTO = userService.getUser(user.getId());
 
         System.out.println(user);
         System.out.println(userDTO);

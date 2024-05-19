@@ -33,7 +33,7 @@ public class UserService {
     public UserResponse updateUser(UserRequest userRequest) {
 
         User user = User.builder()
-                .idUser(userRequest.getId())
+                .id(userRequest.getId())
                 .userName(userRequest.getUserName())
                 .userSurname(userRequest.getUserSurname())
                 .email(userRequest.getEmail())
@@ -42,7 +42,7 @@ public class UserService {
                 .active(userRequest.isActive())
                 .build();
 
-        userRepository.updateUser(user.getIdUser(), user.getUsername(), user.getUserSurname(), user.getEmail(), user.getPassword());
+        userRepository.updateUser(user.getId(), user.getUsername(), user.getUserSurname(), user.getEmail(), user.getPassword());
 
         return new UserResponse("El usuario se actualizó correctamente");
     }
@@ -51,7 +51,7 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
 
         if (user != null) {
-            Set<Recipe> recipes = recipeRepository.findRecipesByUserId(user.getIdUser());
+            Set<Recipe> recipes = recipeRepository.findRecipesByUserId(user.getId());
             List<RecipeDTO> recipeDTOS = recipes.stream()
                     .map(recipe -> {
                         List<RecipeIngredientDTO> recipeIngredients = recipeIngredientRespository.findRecipeIngredientByRecipeId(recipe.getIdRecipe()).stream()
@@ -76,7 +76,7 @@ public class UserService {
 
 
             return UserDTO.builder()
-                    .id(user.getIdUser())
+                    .id(user.getId())
                     .userName(user.getUsername())
                     .userSurname(user.getUserSurname())
                     .email(user.getEmail())
@@ -105,7 +105,7 @@ public class UserService {
     }
 
     public User replace(Long id, User user) {
-        return this.userRepository.findById(id).map(u -> (id.equals(user.getIdUser()) ?
+        return this.userRepository.findById(id).map(u -> (id.equals(user.getId()) ?
                         this.userRepository.save(user) : null))
                 .orElseThrow(() -> new UserNotFoundException(id));
     }

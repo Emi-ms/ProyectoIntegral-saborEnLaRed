@@ -6,18 +6,33 @@
         <img [src]="'assets/images/recipes/'+recipe?.photo" alt="imagen">
     </div>
     <div id="detail-body">
-
-
-        <div id="contact-div" >
+        <div id="ingredients-div">
             <h3>INGREDIENTES</h3>
             <ul>
-                <li *ngFor="let ingredient of recipe?.recipeIngredients">{{ ingredient.ingredientName }}: {{ ingredient.quantity }} {{ ingredient.unitMeasure }}  </li>
+                <li *ngFor="let ingredient of recipe?.recipeIngredients">{{ ingredient.ingredientName }}: {{
+                    ingredient.quantity }} {{ ingredient.unitMeasure }} </li>
             </ul>
-
         </div>
-                <div id="description-div">
-                    <p>{{ recipe?.description }}</p>
-                </div>
-        
+        <div id="description-div">
+            <p>{{ recipe?.description }}</p>
+        </div>
+        <a *ngIf="userLoginOn" class="btn btn-custom" style="font-size: 20px;"
+            routerLink="/recipes/comment/{{ idRecipe }}">Realiza un comentario</a>
     </div>
+    <div id="comments-div">
+        <h3>COMENTARIOS</h3>
+        <div *ngIf="comments && comments.length > 0; else noComments"></div>
+        <div *ngFor="let comment  of comments" class="comment">
+            <div class="comment-header">
+
+                <h4>{{ comment.userName }}</h4>
+            </div>
+            <div class="comment-body">
+                <p>{{ comment.commentText }}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template #noComments>
+        <p>Esta receta todavía no tiene comentarios.</p>
+    </ng-template>
 </div>
