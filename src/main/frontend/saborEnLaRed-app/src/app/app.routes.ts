@@ -13,6 +13,7 @@ import { CategoryEditComponent } from './components/admin/category-admin/categor
 import { RecipeListComponent } from './components/recipe/recipe-list/recipe-list.component';
 import { RecipeDetailComponent } from './components/recipe/recipe-detail/recipe-detail.component';
 import { RecipeCommentComponent } from './components/recipe/recipe-comment/recipe-comment.component';
+import { RecipeRateComponent } from './components/recipe/recipe-rate/recipe-rate.component';
 
 
 export const routes: Routes = [
@@ -31,4 +32,5 @@ export const routes: Routes = [
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
   { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },
   {path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard]},
+  {path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserGuard]},
 ];

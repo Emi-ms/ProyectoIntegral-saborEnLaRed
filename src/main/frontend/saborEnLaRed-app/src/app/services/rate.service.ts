@@ -1,24 +1,23 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import baserUrl from './helper';
-
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {  catchError, throwError } from 'rxjs';
-import { CommentRequest } from '../models/commentRequest';
+import { RateRequest } from '../models/RateRequest';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentService {
+export class RateService {
   private apiURL = baserUrl;
 
   constructor(private httpClient: HttpClient) { }
 
-
-  save(comment: CommentRequest) {
-    return this.httpClient.post(this.apiURL + '/comments', comment)
+  save(rate: RateRequest) {
+    return this.httpClient.post(this.apiURL + '/rates', rate)
     .pipe(
       catchError(this.errorHandler));
   }
+
 
   private errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -32,4 +31,3 @@ export class CommentService {
     return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
 }
-
