@@ -8,7 +8,7 @@ import { User } from '../../../models/User';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-recipe-comment',
@@ -16,6 +16,7 @@ import { NgIf } from '@angular/common';
   imports: [
     ReactiveFormsModule,
     NgIf,
+    NgOptimizedImage,
   ],
   templateUrl: './recipe-comment.component.html',
   styleUrl: './recipe-comment.component.css'
