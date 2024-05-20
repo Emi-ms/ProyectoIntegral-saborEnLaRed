@@ -3,6 +3,7 @@ package org.iesbelen.saborenlared.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.saborenlared.domain.Category;
+import org.iesbelen.saborenlared.dto.CategoryDTO;
 import org.iesbelen.saborenlared.service.CategoryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping({"", "/"})
-    public List<Category> all() {
+    public List<CategoryDTO> all() {
         log.info("Accediendo a todas las categorías");
         return this.categoryService.all();
     }

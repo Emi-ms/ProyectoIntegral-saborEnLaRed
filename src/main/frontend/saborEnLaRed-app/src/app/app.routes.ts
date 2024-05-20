@@ -14,6 +14,7 @@ import { RecipeListComponent } from './components/recipe/recipe-list/recipe-list
 import { RecipeDetailComponent } from './components/recipe/recipe-detail/recipe-detail.component';
 import { RecipeCommentComponent } from './components/recipe/recipe-comment/recipe-comment.component';
 import { RecipeRateComponent } from './components/recipe/recipe-rate/recipe-rate.component';
+import { RecipeCreateComponent } from './components/recipe/recipe-create/recipe-create.component';
 
 
 export const routes: Routes = [
@@ -33,4 +34,5 @@ export const routes: Routes = [
   { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },
   {path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard]},
   {path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserGuard]},
+  {path: 'create-recipe', component: RecipeCreateComponent, canActivate: [UserGuard]}
 ];

@@ -1,6 +1,6 @@
 import { Category } from "./Category";
 import { Rate } from "./Rate";
-import { RecipeIgnredient } from "./RecipeIngredient";
+import { RecipeIngredient } from "./RecipeIngredient";
 
 export interface Recipe {
     idRecipe: number;
@@ -9,7 +9,7 @@ export interface Recipe {
     userName: string;
     photo: string;
     active: boolean;
-    recipeIngredients: RecipeIgnredient[];
+    recipeIngredients: RecipeIngredient[];
     comments: Comment[];
     rates: Rate[];
     categories: Category[];

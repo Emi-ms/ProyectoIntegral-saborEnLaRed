@@ -1,6 +1,7 @@
 package org.iesbelen.saborenlared.service;
 
 import org.iesbelen.saborenlared.domain.Category;
+import org.iesbelen.saborenlared.dto.CategoryDTO;
 import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> all() {
-        return this.categoryRepository.findAll();
+    public List<CategoryDTO> all() {
+        List<Category> categories = this.categoryRepository.findAll();
+        List<CategoryDTO> categoryDTOS = categories.stream().
+                map(category -> CategoryDTO.builder()
+                        .idCategory(category.getIdCategory())
+                        .categoryName(category.getCategoryName())
+                        .build())
+                .toList();
+        return categoryDTOS;
     }
 
     public Category save(Category category) {
@@ -30,7 +38,7 @@ public class CategoryService {
     }
 
     public Category replace(Long id, Category category) {
-        System.out.println(id +" en el servicio "+ category.getIdCategory());
+        System.out.println(id + " en el servicio " + category.getIdCategory());
         return this.categoryRepository.findById(id).map(p -> (id.equals(category.getIdCategory()) ?
                         this.categoryRepository.save(category) : null))
                 .orElseThrow(() -> new CategoryNotFoundException(id));

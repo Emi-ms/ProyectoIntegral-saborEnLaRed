@@ -3,6 +3,7 @@ import baserUrl from './helper';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Recipe } from '../models/Recipe';
+import { RecipeRequest } from '../models/RecipeRequest';
 
 
 @Injectable({
@@ -11,10 +12,7 @@ import { Recipe } from '../models/Recipe';
 export class RecipeService {
   private apiURL = baserUrl;
 
-
   constructor(private httpClient: HttpClient) { }
-
-
 
   getAll(): Observable<Recipe[]> {
     return this.httpClient.get<Recipe[]>(this.apiURL + '/recipes/recipes-actives')
@@ -24,6 +22,11 @@ export class RecipeService {
 
   find(id: number): Observable<Recipe> {
     return this.httpClient.get<Recipe>(this.apiURL + "/recipes/" + id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  save(RecipeRequest:RecipeRequest): Observable<RecipeRequest> {
+    return this.httpClient.post<RecipeRequest>(this.apiURL + "/recipes", RecipeRequest)
       .pipe(catchError(this.errorHandler));
   }
 
