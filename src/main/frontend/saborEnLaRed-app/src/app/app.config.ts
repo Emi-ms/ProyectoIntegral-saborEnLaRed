@@ -6,6 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import { authInterceptor } from './services/auth/auth.interceptor';
+import { SpinnerInterceptor } from './services/auth/spinner.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -16,7 +17,7 @@ export const appConfig: ApplicationConfig = {
   provideAnimationsAsync(),
   provideHttpClient(withFetch(), 
   
-  withInterceptors([authInterceptor])
+  withInterceptors([authInterceptor,SpinnerInterceptor])
 ),
 
   ]
