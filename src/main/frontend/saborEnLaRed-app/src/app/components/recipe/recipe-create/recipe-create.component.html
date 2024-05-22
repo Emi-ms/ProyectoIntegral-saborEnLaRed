@@ -1,1 +1,81 @@
-<p>recipe-create works!</p>
+<div class="white-box"></div>
+
+<div class="form-div">
+    <div class="form-group row">
+        <form class="form" [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
+            <div class="form-group row">
+                <div class="col-md-6 ">
+                    <label for="recipeName">Nombre de la Receta:</label>
+                    <input formControlName="recipeName" id="recipeName" type="text" placeholder="Nombre de la receta"
+                        class="form-control">
+                    <div *ngIf="f['recipeName'].touched && f['recipeName'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['recipeName'].errors?.['required']">*Nombre es requerido.</div>
+                        <div *ngIf="f['recipeName'].errors?.['pattern']">*El nombre sólo puede contener letras.</div>
+                        <div *ngIf="f['recipeName'].errors?.['maxlength']">*El nombre debe tener menos de 255 caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="description">Descripción:</label>
+                    <textarea formControlName="description" id="description" class="form-control"
+                        placeholder="Descripción de la receta"></textarea>
+                    <div *ngIf="f['description'].touched && f['description'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['description'].errors?.['required']">*La descripción de la receta es requerida.
+                        </div>
+                        <div *ngIf="f['description'].errors?.['maxlength']">*La descripción debe tener menos de 255
+                            caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="photo">Foto:</label>
+                    <input formControlName="photo" id="photo" type="text" placeholder="Nombre del archivo de la foto"
+                        class="form-control">
+                    <div *ngIf="f['photo'].touched && f['photo'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['photo'].errors?.['required']">*La foto de la receta es requerida.</div>
+                        <div *ngIf="f['photo'].errors?.['maxlength']">*El nombre de la foto debe tener menos de 255
+                            caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="select-wrapper">
+                    <select [formControl]="selectedIngredientControl">
+                        <option *ngFor="let ingredient of ingredientsFromAPI" [ngValue]="ingredient">
+                            {{ingredient.ingredientName}}
+                        </option>
+                    </select>
+                    <input #quantity type="number" placeholder="Cantidad">
+                    <input #unitMeasure type="text" placeholder="Unidad de medida">
+                    <button type="button"
+                        (click)="addIngredient(selectedIngredientControl.value!, quantity.value, unitMeasure.value)">Agregar
+                        ingrediente</button>
+                </div>
+                <div class="select-wrapper">
+                    <select [formControl]="selectedCategoryControl">
+                        <option *ngFor="let category of categoriesFromAPI" [ngValue]="category">
+                            {{category.categoryName}}
+                        </option>
+                    </select>
+                    <button type="button" (click)="addCategory(selectedCategoryControl.value!)">Agregar
+                        categoría</button>
+                </div>
+
+                <div formArrayName="recipeIngredients">
+                    <div *ngFor="let ingredientCtrl of recipeIngredientsFromForm.controls; index as i"
+                        [formGroupName]="i">
+                        <p>Ingrediente: {{ ingredientCtrl.value.ingredient.ingredientName }}</p>
+                        <p>Cantidad: {{ ingredientCtrl.value.quantity }}</p>
+                        <p>Unidad de medida: {{ ingredientCtrl.value.unitMeasure }}</p>
+                    </div>
+                </div>
+
+                <div formArrayName="categories">
+                    <div *ngFor="let categoryCtrl of categoriesFromForm.controls; index as i" [formGroupName]="i">
+                        <p>Categoría: {{ categoryCtrl.value.categoryName }}</p>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Crear Receta</button>
+        </form>
+    </div>
