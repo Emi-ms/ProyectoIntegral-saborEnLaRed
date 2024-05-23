@@ -38,38 +38,43 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="select-wrapper">
-                    <select [formControl]="selectedIngredientControl">
-                        <option *ngFor="let ingredient of ingredientsFromAPI" [ngValue]="ingredient">
-                            {{ingredient.ingredientName}}
-                        </option>
-                    </select>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Ingrediente</mat-label>
+                        <input type="text" matInput [formControl]="ingredientControl" [matAutocomplete]="auto">
+                        <mat-autocomplete [displayWith]="displayFn" autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
+                                {{ ingredient.ingredientName }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                     <input #quantity type="number" placeholder="Cantidad">
                     <input #unitMeasure type="text" placeholder="Unidad de medida">
                     <button type="button"
-                        (click)="addIngredient(selectedIngredientControl.value!, quantity.value, unitMeasure.value)">Agregar
+                        (click)="addIngredient(ingredientControl.value, quantity.value, unitMeasure.value)">Agregar
                         ingrediente</button>
                 </div>
                 <div class="select-wrapper">
-                    <select [formControl]="selectedCategoryControl">
-                        <option *ngFor="let category of categoriesFromAPI" [ngValue]="category">
-                            {{category.categoryName}}
-                        </option>
-                    </select>
+                    <mat-form-field>
+                        <mat-label>Categorías</mat-label>
+                        <mat-select [formControl]="selectedCategoryControl">
+                            @for (category of categoriesFromAPI; track categoriesFromAPI) {
+                            <mat-option [value]="category">{{category.categoryName}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
                     <button type="button" (click)="addCategory(selectedCategoryControl.value!)">Agregar
                         categoría</button>
                 </div>
-
                 <div formArrayName="recipeIngredients">
                     <div *ngFor="let ingredientCtrl of recipeIngredientsFromForm.controls; index as i"
                         [formGroupName]="i">
-                        <p>Ingrediente: {{ ingredientCtrl.value.ingredient.ingredientName }}</p>
-                        <p>Cantidad: {{ ingredientCtrl.value.quantity }}</p>
-                        <p>Unidad de medida: {{ ingredientCtrl.value.unitMeasure }}</p>
+                        <span>Ingrediente: {{ ingredientCtrl.value.ingredient.ingredientName }} </span>
+                        <span> Cantidad: {{ ingredientCtrl.value.quantity }} </span>
+                        <span> Unidad de medida: {{ ingredientCtrl.value.unitMeasure }}</span>
+                        <button type="button" (click)="removeIngredient(i)"><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
-
                 <div formArrayName="categories">
                     <div *ngFor="let categoryCtrl of categoriesFromForm.controls; index as i" [formGroupName]="i">
                         <p>Categoría: {{ categoryCtrl.value.categoryName }}</p>
