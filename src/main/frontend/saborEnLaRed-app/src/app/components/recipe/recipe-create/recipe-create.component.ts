@@ -15,8 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable, map, startWith } from 'rxjs';
-import {MatSelectModule} from '@angular/material/select';
+import { Observable, debounceTime, map, startWith } from 'rxjs';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-recipe-create',
@@ -72,8 +72,6 @@ export class RecipeCreateComponent implements OnInit {
       this.filteredIngredients = this.ingredientControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value))
-
-
       );
     });
 
@@ -91,14 +89,22 @@ export class RecipeCreateComponent implements OnInit {
     const quantityNumber = Number(quantity);
 
     if (ingredient && quantityNumber && unitMeasure) {
-      this.recipeIngredientsFromForm.push(this.fb.group({
-        ingredient: [ingredient, Validators.required],
-        quantity: [quantityNumber, Validators.required],
-        unitMeasure: [unitMeasure, Validators.required]
-      }));
 
-      console.log(this.recipeIngredientsFromForm.value);
-      this.ingredientControl.reset();
+      const duplicatedIngredient = this.recipeIngredientsFromForm.value.find((ingredientFromForm: any) => ingredientFromForm.ingredient.idIngredient === ingredient.idIngredient);
+      if (duplicatedIngredient) {
+        Swal.fire('Lo siento', 'Este ingrediente ya está incluído', 'error');
+
+      } else {
+
+        this.recipeIngredientsFromForm.push(this.fb.group({
+          ingredient: [ingredient, Validators.required],
+          quantity: [quantityNumber, Validators.required],
+          unitMeasure: [unitMeasure, Validators.required]
+        }));
+
+        console.log(this.recipeIngredientsFromForm.value);
+        this.ingredientControl.reset();
+      }
     } else {
       Swal.fire('Lo siento!!', 'Tienes que rellenar todos los campos del ingrediente', 'error');
     }
@@ -110,17 +116,23 @@ export class RecipeCreateComponent implements OnInit {
 
   addCategory(category: Category) {
     if (category) {
-      this.categoriesFromForm.push(this.fb.group({
-        idCategory: [category.idCategory, Validators.required],
-        categoryName: [category.categoryName, Validators.required],
-        active: true
 
+      const duplicatedCategory = this.categoriesFromForm.value.find((categoryFromForm: any) => categoryFromForm.idCategory === category.idCategory);
 
-      }));
-      console.log(this.categoriesFromForm.value);
+      if (duplicatedCategory) {
+        Swal.fire('Lo siento', 'Esta categoría ya está incluída', 'error');
 
+      } else {
+        this.categoriesFromForm.push(this.fb.group({
+          idCategory: [category.idCategory, Validators.required],
+          categoryName: [category.categoryName, Validators.required],
+          active: true
+
+        }));
+        console.log(this.categoriesFromForm.value);
+      }
     } else {
-      Swal.fire('Error', 'Please select a category', 'error');
+      Swal.fire('Error', 'Por favorr, selecciona una categoría', 'error');
     }
   }
 
