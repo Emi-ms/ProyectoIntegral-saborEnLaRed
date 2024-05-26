@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable, debounceTime, map, startWith } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -33,7 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './recipe-create.component.html',
   styleUrls: ['./recipe-create.component.css']
@@ -46,6 +46,7 @@ export class RecipeCreateComponent implements OnInit {
   filteredIngredients: Observable<Ingredient[]> = new Observable<Ingredient[]>();
   ingredientControl = new FormControl();
   recipeForm: FormGroup;
+  photoFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -57,12 +58,16 @@ export class RecipeCreateComponent implements OnInit {
   ) {
     this.recipeForm = this.fb.group({
       recipeName: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]],
-      description: ['', [Validators.required, Validators.maxLength(255)]],
-      photo: ['', [Validators.required, Validators.maxLength(255)]],
+      description: ['', [Validators.required, Validators.maxLength(1000)]],
+      photo: null,
       active: [true],
       recipeIngredients: this.fb.array([]),
       categories: this.fb.array([]),
-      user: [this.userService.getUserFromSessionStorage()]
+      user: {
+        id: this.userService.getUserFromSessionStorage().id
+      },
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      unitMeasure: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]],
     });
   }
 
@@ -98,7 +103,7 @@ export class RecipeCreateComponent implements OnInit {
 
         this.recipeIngredientsFromForm.push(this.fb.group({
           ingredient: [ingredient, Validators.required],
-          quantity: [quantityNumber, Validators.required],
+          quantity: [quantityNumber, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')]],
           unitMeasure: [unitMeasure, Validators.required]
         }));
 
@@ -132,17 +137,22 @@ export class RecipeCreateComponent implements OnInit {
         console.log(this.categoriesFromForm.value);
       }
     } else {
-      Swal.fire('Error', 'Por favorr, selecciona una categoría', 'error');
+      Swal.fire('Error', 'Por favor, selecciona una categoría', 'error');
     }
   }
 
   createRecipe() {
     if (this.recipeForm.valid) {
+      console.log(this.photoFile);
       console.log(this.recipeForm.value);
-      this.recipeService.save(this.recipeForm.value).subscribe(() => {
-        Swal.fire('Receta creada', 'Gracias por tu aportación cocinilla!!', 'success');
-        this.router.navigate(['/recipes']);
-      });
+      if (this.photoFile) {
+        this.recipeService.save(this.recipeForm.value, this.photoFile).subscribe(() => {
+          Swal.fire('Receta creada', 'Gracias por tu aportación cocinilla!!', 'success');
+          this.router.navigate(['/recipes']);
+        });
+      } else {
+        Swal.fire('Lo siento!!', 'Tienes que seleccionar una foto', 'error');
+      }
     } else {
       Swal.fire('Lo siento!!', 'Tienes que rellenar todos los campos', 'error');
     }
@@ -163,5 +173,14 @@ export class RecipeCreateComponent implements OnInit {
   removeIngredient(index: number) {
     this.recipeIngredientsFromForm.removeAt(index);
     console.log(this.recipeIngredientsFromForm.value);
+  }
+
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      console.log(file);
+      this.photoFile = file;
+    }
   }
 }

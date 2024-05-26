@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
 import { NgFor, NgIf } from '@angular/common';
 import { LoginService } from '../../../services/login-user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -22,13 +23,15 @@ export class RecipeDetailComponent implements OnInit {
   idRecipe = -1;
   userLoginOn: boolean = false;
   comments: any[] = [];
-  recipeCurrentRate: number = 0;
   recipeDoubleCurrentRate: number = 0;
+  imageSrc: any;
+
 
   constructor(
     public route: ActivatedRoute,
     private recipeService: RecipeService,
     private loginService: LoginService,
+    private sanitizer: DomSanitizer
   ) {
 
   }
@@ -39,26 +42,26 @@ export class RecipeDetailComponent implements OnInit {
       this.recipe = data;
       this.comments = this.recipe.comments;
       if (this.recipe.rates && this.recipe.rates.length > 0) {
-        this.recipeCurrentRate = Math.min(5, Math.round(this.recipe.rates.map(rate => rate.rateValue).reduce((a, b) => a + b, 0) / this.recipe.rates.length));
+
         this.recipeDoubleCurrentRate = this.recipe.rates.map(rate => rate.rateValue).reduce((a, b) => a + b, 0) / this.recipe.rates.length;
       } else {
-        this.recipeCurrentRate = 0;
+
         this.recipeDoubleCurrentRate = 0;
       }
-      console.log(this.recipeCurrentRate);
-      console.log(this.recipe);
-    });
 
-    this.loginService.currentUserLoginOn.subscribe({
-      next: (loginOn) => {
-        this.userLoginOn = loginOn;
-        console.log("En el detalle de receta: " + this.userLoginOn);
+      this.loginService.isUserLoggedIn.subscribe((value) => {
+        this.userLoginOn = value;
+      });
+
+      if (this.recipe.photo) {
+        this.recipeService.getRecipeImage(this.recipe.photo).subscribe(image => {
+          let urlCreator = window.URL;
+          this.imageSrc = this.sanitizer.bypassSecurityTrustUrl(
+            urlCreator.createObjectURL(image)
+          );
+        });
       }
-    })
-
-
+    });
   }
-
-
-
 }
+

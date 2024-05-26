@@ -15,6 +15,7 @@ import { RecipeDetailComponent } from './components/recipe/recipe-detail/recipe-
 import { RecipeCommentComponent } from './components/recipe/recipe-comment/recipe-comment.component';
 import { RecipeRateComponent } from './components/recipe/recipe-rate/recipe-rate.component';
 import { RecipeCreateComponent } from './components/recipe/recipe-create/recipe-create.component';
+import { RecipeAdminListComponent } from './components/admin/recipe-admin/recipe-list/recipe-admin-list/recipe-admin-list.component';
 
 
 export const routes: Routes = [
@@ -28,7 +29,8 @@ export const routes: Routes = [
   { path: 'admin-menu', component: AdminSectionComponent, canActivate: [AdminGuard] },
   { path: 'category-admin', component: CategoryListComponent, canActivate: [AdminGuard] },
   {path: 'category/create', component: CategoryCreateComponent, canActivate: [AdminGuard]}, 
-  {path: 'category/edit/:idCategory', component: CategoryEditComponent, canActivate: [AdminGuard]}, 
+  {path: 'category/edit/:idCategory', component: CategoryEditComponent, canActivate: [AdminGuard]},
+  {path: 'recipes-admin', component:RecipeAdminListComponent, canActivate: [AdminGuard]}, 
   
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
   { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },

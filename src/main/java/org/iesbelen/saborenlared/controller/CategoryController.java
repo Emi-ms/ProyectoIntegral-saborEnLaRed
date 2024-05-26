@@ -3,10 +3,13 @@ package org.iesbelen.saborenlared.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.saborenlared.domain.Category;
+import org.iesbelen.saborenlared.domain.Recipe;
 import org.iesbelen.saborenlared.dto.CategoryDTO;
+import org.iesbelen.saborenlared.dto.RecipeDTO;
 import org.iesbelen.saborenlared.service.CategoryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +32,12 @@ public class CategoryController {
         return this.categoryService.all();
     }
 
+    @GetMapping({"/categories-actives"})
+    public ResponseEntity<?> allActive() {
+        log.info("Accediendo a todas las categorias activas");
+        return new ResponseEntity<>(categoryService.AllActiveCategory(), HttpStatus.OK);
+    }
+
     @PostMapping({"", "/"})
     public Category newCategory(@RequestBody Category category) {
         return this.categoryService.save(category);
@@ -44,6 +53,13 @@ public class CategoryController {
         System.out.println(id + " en el controlador " + category.toString());
 
         return this.categoryService.replace(id, category);
+    }
+
+    @PutMapping("/logic-delete/{id}")
+    public ResponseEntity<CategoryDTO> deactivateCategory(@PathVariable Long id) {
+        Category deactivatedCategory = categoryService.logicDelete(id);
+        CategoryDTO categoryDTODTO = categoryService.getCategoryDTO(deactivatedCategory.getIdCategory());
+        return ResponseEntity.ok(categoryDTODTO);
     }
 
     @ResponseBody

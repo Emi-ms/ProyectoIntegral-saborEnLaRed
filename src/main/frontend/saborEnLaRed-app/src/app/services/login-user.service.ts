@@ -24,14 +24,6 @@ export class LoginService {
     }),
   }
 
-  // httpOptionsAuth = {
-
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ' + localStorage.getItem("token")
-  //   }),
-  // }
-
   constructor(private httpClient: HttpClient) {
     this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token") !== null);
     this.currentUserToken = new BehaviorSubject<string>(sessionStorage.getItem("token") || "");
@@ -96,50 +88,6 @@ export class LoginService {
   }
 
 
-
-  // //generamos el token para el usuario
-  // public generateToken(userCredencials: any): Observable<User> {
-  //   console.log(userCredencials)
-  //   return this.httpClient.post<User>(this.apiURL + "/users/login", JSON.stringify(userCredencials), this.httpOptions)
-  //     .pipe(catchError(this.errorHandler));
-  // }
-
-  // errorHandler(error: any) {
-  //   return throwError(error);
-  // }
-
-  // //iniciamos sesion y establecemos el token en el localstorage
-  // public loginUser(token: any) {
-  //   localStorage.setItem("token", token);
-  // }
-
-  // public isLoggedIn() {
-  //   let tokenStr = localStorage.getItem("token");
-  //   if (tokenStr === undefined || tokenStr === '' || tokenStr === null) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
-  // //cerramos sesion y eliminamos el token del localstorage
-  // public logout() {
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("user");
-  //   return true;
-  // }
-
-  // //obtenemos el token del localstorage 
-  // public getToken() {
-  //   return localStorage.getItem("token");
-  // }
-
-  //guardamos el usuario en el localstorage
-  // public setUser(user: User) {
-  //   sessionStorage.setItem("user", JSON.stringify(user));
-  // }
-
-  //obtenemos el usuario del localstorage
   public getUser() {
     let userStr = sessionStorage.getItem("user");
     if (userStr !== null) {
@@ -150,7 +98,6 @@ export class LoginService {
     }
   }
 
-  //obtenemos el rol del usuario
   public getUserRole() {
 
     let user = this.getUser();
@@ -159,10 +106,7 @@ export class LoginService {
     }
   }
 
-  // public getCurrentUser(){
 
-  //   return this.httpClient.get(this.apiURL + "/users/current-user", this.httpOptionsAuth)
-  // }
 
 
 }

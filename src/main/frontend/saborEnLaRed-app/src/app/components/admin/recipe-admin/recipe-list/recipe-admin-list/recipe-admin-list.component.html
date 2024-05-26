@@ -1,0 +1,27 @@
+<div class="white-box"></div>
+<div class="container">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-6 mt-5">
+          <h2>Lista de Recetas</h2>
+        </div>
+        
+      </div>
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recipe of recipes" >
+            <td>{{ recipe.idRecipe }}</td>
+            <td>{{ recipe.recipeName }}</td>
+           
+            <td><button type="button" (click)="deleteRecipe(recipe.idRecipe)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

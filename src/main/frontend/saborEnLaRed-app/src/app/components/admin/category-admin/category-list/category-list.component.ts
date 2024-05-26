@@ -29,8 +29,8 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  deleteCategory(id: any){
-    this.categoryService.delete(id).subscribe(res => {
+  deleteCategory(id: any) {
+    this.categoryService.logicDelete(id).subscribe(res => {
       this.catergories = this.catergories.filter(cat => cat.idCategory !== id);
       console.log('Categoria id =' + id + ' eliminada satisfactoriamente!');
     })

@@ -1,7 +1,9 @@
 package org.iesbelen.saborenlared.service;
 
 import org.iesbelen.saborenlared.domain.Category;
+import org.iesbelen.saborenlared.domain.Recipe;
 import org.iesbelen.saborenlared.dto.CategoryDTO;
+import org.iesbelen.saborenlared.dto.RecipeDTO;
 import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,18 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
+    public CategoryDTO getCategoryDTO(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new CategoryNotFoundException(id));
+        if(category != null){
+            return CategoryDTO.builder()
+                    .idCategory(category.getIdCategory())
+                    .categoryName(category.getCategoryName())
+                    .build();
+        }
+        return null;
+    }
+
     public List<CategoryDTO> all() {
         List<Category> categories = this.categoryRepository.findAll();
         List<CategoryDTO> categoryDTOS = categories.stream().
@@ -25,6 +39,16 @@ public class CategoryService {
                         .build())
                 .toList();
         return categoryDTOS;
+    }
+
+    public List<CategoryDTO> AllActiveCategory() {
+        List<Category> categories = categoryRepository.findAll()
+                .stream()
+                .filter(Category::getActive)
+                .toList();
+        return categories.stream().
+                map(category -> this.getCategoryDTO(category.getIdCategory()))
+                .toList();
     }
 
     public Category save(Category category) {
@@ -50,5 +74,12 @@ public class CategoryService {
                     return category;
                 })
                 .orElseThrow(() -> new CategoryNotFoundException(id));
+    }
+
+    public Category logicDelete(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new CategoryNotFoundException(id));
+        category.setActive(false);
+        return categoryRepository.save(category);
     }
 }

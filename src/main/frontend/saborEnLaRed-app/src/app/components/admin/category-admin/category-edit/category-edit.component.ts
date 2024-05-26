@@ -19,7 +19,7 @@ import { NgIf } from '@angular/common';
 export class CategoryEditComponent implements OnInit {
 
   id:number = 0;
-  category: Category = {idCategory: 0, categoryName: 'VOID',active: false};
+  category: Category = {idCategory: 0, categoryName: 'VOID', active: true};
 
   form: FormGroup = new FormGroup({
     categoryName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+')])
@@ -33,6 +33,7 @@ export class CategoryEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['idCategory'];
+    this.category.idCategory = this.id;
 
     this.categoryService.find(this.id).subscribe((data: Category) => {
       this.category = data;

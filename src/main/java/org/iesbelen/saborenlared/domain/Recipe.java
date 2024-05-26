@@ -25,6 +25,8 @@ public class Recipe {
     @Column(name = "id_recipe")
     private Long idRecipe;
     private String recipeName;
+
+    @Column(length = 1000)
     private String description;
     private String photo;
     private Boolean active;
@@ -32,13 +34,6 @@ public class Recipe {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-//    @JoinTable(
-//            name = "recipe_ingredient",
-//            joinColumns = @JoinColumn(name = "id_recipe", referencedColumnName = "id_recipe"),
-//            inverseJoinColumns = @JoinColumn(name = "id_ingredient", referencedColumnName = "id_ingredient")
-//    )
-//    private Set<Ingredient> ingredients;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(

@@ -2,7 +2,7 @@
 
 <div class="form-div">
     <div class="form-group row">
-        <form class="form" [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
+        <form class="form" [formGroup]="recipeForm" (ngSubmit)="createRecipe()" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-md-6 ">
                     <label for="recipeName">Nombre de la Receta:</label>
@@ -22,21 +22,15 @@
                     <div *ngIf="f['description'].touched && f['description'].invalid" class="alert alert-danger">
                         <div *ngIf="f['description'].errors?.['required']">*La descripción de la receta es requerida.
                         </div>
-                        <div *ngIf="f['description'].errors?.['maxlength']">*La descripción debe tener menos de 255
+                        <div *ngIf="f['description'].errors?.['maxlength']">*La descripción debe tener menos de 1000
                             caracteres
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 ">
                     <label for="photo">Foto:</label>
-                    <input formControlName="photo" id="photo" type="text" placeholder="Nombre del archivo de la foto"
-                        class="form-control">
-                    <div *ngIf="f['photo'].touched && f['photo'].invalid" class="alert alert-danger">
-                        <div *ngIf="f['photo'].errors?.['required']">*La foto de la receta es requerida.</div>
-                        <div *ngIf="f['photo'].errors?.['maxlength']">*El nombre de la foto debe tener menos de 255
-                            caracteres
-                        </div>
-                    </div>
+                    <input id="photo" type="file" placeholder="Nombre del archivo de la foto" class="form-control"
+                        (change)="onFileChange($event)">
                 </div>
                 <div class="select-wrapper">
                     <mat-form-field class="example-full-width">
@@ -48,8 +42,22 @@
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-                    <input #quantity type="number" placeholder="Cantidad">
-                    <input #unitMeasure type="text" placeholder="Unidad de medida">
+
+                    <input formControlName="quantity" #quantity type="text" placeholder="Cantidad" required>
+                    <div *ngIf="f['quantity'].touched && f['quantity'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['quantity'].errors?.['required']">*La cantidad es requerida.</div>
+                        <div *ngIf="f['quantity'].errors?.['pattern']">*La cantidad debe ser un número válido.</div>
+                    </div>
+
+                    <input formControlName="unitMeasure" #unitMeasure type="text" placeholder="Unidad de medida">
+                    <div *ngIf="f['unitMeasure'].touched && f['unitMeasure'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['unitMeasure'].errors?.['required']">*La cantidad es requerida.</div>
+                        <div *ngIf="f['unitMeasure'].errors?.['pattern']">*La unidad de medida sólo puede contener
+                            letras</div>
+                        <div *ngIf="f['unitMeasure'].errors?.['maxlength']">*La unidad de medida debe tener menos de 255
+                            caracteres
+                        </div>
+                    </div>
                     <button type="button"
                         (click)="addIngredient(ingredientControl.value, quantity.value, unitMeasure.value)">Agregar
                         ingrediente</button>
@@ -63,6 +71,7 @@
                             }
                         </mat-select>
                     </mat-form-field>
+
                     <button type="button" (click)="addCategory(selectedCategoryControl.value!)">Agregar
                         categoría</button>
                 </div>
@@ -84,4 +93,3 @@
             <button type="submit">Crear Receta</button>
         </form>
     </div>
-</div>

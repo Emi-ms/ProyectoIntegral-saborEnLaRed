@@ -5,7 +5,9 @@ import org.iesbelen.saborenlared.domain.*;
 import org.iesbelen.saborenlared.dto.*;
 import org.iesbelen.saborenlared.exeption.RecipeNotFoundException;
 import org.iesbelen.saborenlared.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
+    @Autowired
+    public FileStorageService fileStorageService;
+
     private final RecipeRepository recipeRepository;
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final CommentRepository commentRepository;
@@ -53,7 +58,7 @@ public class RecipeService {
                 .toList();
     }
 
-    public List<RecipeDTO> AllActiveRecipes(){
+    public List<RecipeDTO> AllActiveRecipes() {
         List<Recipe> recipes = recipeRepository.findAll()
                 .stream()
                 .filter(Recipe::getActive)
@@ -63,7 +68,18 @@ public class RecipeService {
                 .toList();
     }
 
-    public Recipe save(Recipe recipe) {
+    public Recipe save(Recipe recipe, MultipartFile file) {
+
+        if(!file.isEmpty()){
+            try {
+                String imgName = fileStorageService.store(file);
+                recipe.setPhoto(imgName);
+            }catch (Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
         for (RecipeIngredient recipeIngredient : recipe.getRecipeIngredients()) {
             recipeIngredient.setRecipe(recipe);
         }
@@ -130,4 +146,6 @@ public class RecipeService {
         recipe.setActive(false);
         return recipeRepository.save(recipe);
     }
+
+
 }
