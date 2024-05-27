@@ -48,9 +48,15 @@ public class UserController {
 
 
     @GetMapping({"", "/"})
-    public List<User> all() {
-        log.info("Accediendo a todas los usuarios");
+    public List<UserDTO> all() {
+        log.info("Accediendo a todos los usuarios");
         return this.userService.all();
+    }
+
+    @GetMapping({"/users-actives"})
+    public ResponseEntity<?> allActive(){
+        log.info("Accediendo a todos los usuarios activos");
+        return new ResponseEntity<>(userService.AllActiveUser(), HttpStatus.OK);
     }
 
 
@@ -62,6 +68,13 @@ public class UserController {
     @PutMapping("/{id}")
     public User replaceUSer(@PathVariable("id") Long id, @RequestBody User user) {
         return this.userService.replace(id, user);
+    }
+
+    @PutMapping("/logic-delete/{id}")
+    public ResponseEntity<UserDTO> deactivateUser(@PathVariable Long id){
+        User deactivateUser = userService.logicDelete(id);
+        UserDTO userDTO = userService.getUser(deactivateUser.getId());
+        return ResponseEntity.ok(userDTO);
     }
 
     @ResponseBody

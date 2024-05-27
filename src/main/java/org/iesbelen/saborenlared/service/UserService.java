@@ -89,9 +89,23 @@ public class UserService {
         return null;
     }
 
-    public List<User> all() {
-        return this.userRepository.findAll();
+    public List<UserDTO> all() {
+        List<User> users = this.userRepository.findAll();
+        List<UserDTO> userDTOS = users.stream()
+                .map(user -> getUser(user.getId())
+                ).toList();
+        return userDTOS;
     }
+
+    public List<UserDTO> AllActiveUser(){
+        List<User> users = this.userRepository.findAll().
+                stream().filter(User::isActive)
+                .toList();
+        return users.stream().
+                map(user -> this.getUser(user.getId()))
+                .toList();
+    }
+
 
     public User save(User user) {
         return this.userRepository.save(user);
@@ -116,5 +130,12 @@ public class UserService {
                     return user;
                 })
                 .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    public User logicDelete(Long id){
+        User user = userRepository.findById(id).
+                orElseThrow(()->new UserNotFoundException(id));
+        user.setActive(false);
+        return userRepository.save(user);
     }
 }

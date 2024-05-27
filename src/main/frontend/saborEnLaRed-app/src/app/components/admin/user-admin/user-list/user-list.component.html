@@ -1,0 +1,29 @@
+<div class="white-box"></div>
+<div class="container">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-6 mt-5">
+          <h2>Lista de Usuarios</h2>
+        </div>
+        <div class="col-md-6 mt-5">
+          <a routerLink="/user/create" class="btn btn-success float-md-end" style="margin-left: 2px; margin-top: 2px;">Crear Nuevo Usuario</a>
+        </div>
+      </div>
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users" >
+            <td>{{ user.id }}</td>
+            <td>{{ user.userName }}</td>
+            <td><button type="button" [routerLink]="['/user/', 'edit', user.id  ]" class="btn btn-secondary" style="margin-left: 2px; margin-top: 2px;">Editar</button></td>
+            <td><button type="button" (click)="deleteUser(user.id)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

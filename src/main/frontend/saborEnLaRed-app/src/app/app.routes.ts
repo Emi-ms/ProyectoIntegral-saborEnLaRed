@@ -19,6 +19,7 @@ import { RecipeAdminListComponent } from './components/admin/recipe-admin/recipe
 import { IngredientListComponent } from './components/admin/ingredient-admin/ingredient-list/ingredient-list.component';
 import { IngredientCreateComponent } from './components/admin/ingredient-admin/ingredient-create/ingredient-create.component';
 import { IngredientEditComponent } from './components/admin/ingredient-admin/ingredient-edit/ingredient-edit.component';
+import { UserListComponent } from './components/admin/user-admin/user-list/user-list.component';
 
 
 export const routes: Routes = [
@@ -37,6 +38,7 @@ export const routes: Routes = [
   { path: 'ingredients-admin', component: IngredientListComponent, canActivate: [AdminGuard] },
   { path: 'ingredient/create', component: IngredientCreateComponent, canActivate: [AdminGuard] },
   { path: 'ingredient/edit/:idIngredient', component: IngredientEditComponent, canActivate: [AdminGuard] },
+  { path: 'user-admin', component: UserListComponent, canActivate: [AdminGuard] },
 
 
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
