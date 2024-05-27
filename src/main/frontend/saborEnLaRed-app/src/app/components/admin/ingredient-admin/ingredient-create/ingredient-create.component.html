@@ -1,0 +1,30 @@
+<div class="white-box"></div>
+<div class="container">
+    <div class="d-flex justify-content-between mt-5">
+        <h4>Crear Ingrediente</h4>
+        <a href="#" routerLink="/ingredients-admin" class="btn btn-primary">Volver</a>
+      </div>
+    
+      <hr/>
+    
+      <form [formGroup]="form" (ngSubmit)="submit()">
+    
+        <div class="form-group row">
+          <div class="col-md-6 ">
+            <label for="ingredientName">Nombre:</label>
+            <input
+              formControlName="ingredientName"
+              id="ingredientName"
+              type="text"
+              class="form-control w-auto">
+            <div *ngIf="f['ingredientName'].touched && f['ingredientName'].invalid" class="alert alert-danger">
+              <div *ngIf="f['ingredientName'].errors?.['required']">*Nombre es requerido.</div>
+              <div *ngIf="f['ingredientName'].errors?.['pattern']">*El nombre sólo puede contener letras.</div>
+            </div>
+          </div>
+        </div>
+    
+        <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+      </form>
+
+</div>

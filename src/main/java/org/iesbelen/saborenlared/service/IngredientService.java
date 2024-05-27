@@ -1,6 +1,10 @@
 package org.iesbelen.saborenlared.service;
 
+import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Ingredient;
+import org.iesbelen.saborenlared.dto.CategoryDTO;
+import org.iesbelen.saborenlared.dto.IngredientDTO;
+import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.exeption.IngredientNotFoundException;
 import org.iesbelen.saborenlared.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
@@ -15,8 +19,30 @@ public class IngredientService {
         this.ingredientRepository = ingredientRepository;
     }
 
+    public IngredientDTO getIngredientDTO(Long id){
+        Ingredient ingredient = ingredientRepository.findById(id)
+                .orElseThrow(()-> new IngredientNotFoundException(id));
+        if(ingredient != null){
+            return IngredientDTO.builder()
+                    .idIngredient(ingredient.getIdIngredient())
+                    .ingredientName(ingredient.getIngredientName())
+                    .build();
+        }
+        return null;
+    }
+
     public List<Ingredient> all() {
         return this.ingredientRepository.findAll();
+    }
+
+    public List<IngredientDTO> AllActiveIngredient() {
+        List<Ingredient> ingredients = ingredientRepository.findAll()
+                .stream()
+                .filter(Ingredient::getActive)
+                .toList();
+        return ingredients.stream().
+                map(ingredient -> this.getIngredientDTO(ingredient.getIdIngredient()))
+                .toList();
     }
 
     public Ingredient save(Ingredient ingredient) {
@@ -42,5 +68,12 @@ public class IngredientService {
                     return ingredient;
                 })
                 .orElseThrow(() -> new IngredientNotFoundException(id));
+    }
+
+    public Ingredient logicDelete(Long id){
+        Ingredient ingredient = ingredientRepository.findById(id)
+                .orElseThrow(()-> new IngredientNotFoundException(id));
+        ingredient.setActive(false);
+        return ingredientRepository.save(ingredient);
     }
 }

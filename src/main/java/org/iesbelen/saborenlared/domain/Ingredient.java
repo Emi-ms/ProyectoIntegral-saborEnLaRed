@@ -23,9 +23,6 @@ public class Ingredient {
     private String ingredientName;
     private Boolean active;
 
-//    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "ingredients")
-//    private Set<Recipe> recipes=new HashSet<>();
-
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "ingredient"

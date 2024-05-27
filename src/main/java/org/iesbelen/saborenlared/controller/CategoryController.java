@@ -58,8 +58,8 @@ public class CategoryController {
     @PutMapping("/logic-delete/{id}")
     public ResponseEntity<CategoryDTO> deactivateCategory(@PathVariable Long id) {
         Category deactivatedCategory = categoryService.logicDelete(id);
-        CategoryDTO categoryDTODTO = categoryService.getCategoryDTO(deactivatedCategory.getIdCategory());
-        return ResponseEntity.ok(categoryDTODTO);
+        CategoryDTO categoryDTO = categoryService.getCategoryDTO(deactivatedCategory.getIdCategory());
+        return ResponseEntity.ok(categoryDTO);
     }
 
     @ResponseBody

@@ -16,25 +16,32 @@ import { RecipeCommentComponent } from './components/recipe/recipe-comment/recip
 import { RecipeRateComponent } from './components/recipe/recipe-rate/recipe-rate.component';
 import { RecipeCreateComponent } from './components/recipe/recipe-create/recipe-create.component';
 import { RecipeAdminListComponent } from './components/admin/recipe-admin/recipe-list/recipe-admin-list/recipe-admin-list.component';
+import { IngredientListComponent } from './components/admin/ingredient-admin/ingredient-list/ingredient-list.component';
+import { IngredientCreateComponent } from './components/admin/ingredient-admin/ingredient-create/ingredient-create.component';
+import { IngredientEditComponent } from './components/admin/ingredient-admin/ingredient-edit/ingredient-edit.component';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  {path: 'recipes', component: RecipeListComponent},
-  {path:'recipes/detail/:idRecipe', component: RecipeDetailComponent},
+  { path: 'recipes', component: RecipeListComponent },
+  { path: 'recipes/detail/:idRecipe', component: RecipeDetailComponent },
 
 
   { path: 'admin-menu', component: AdminSectionComponent, canActivate: [AdminGuard] },
   { path: 'category-admin', component: CategoryListComponent, canActivate: [AdminGuard] },
-  {path: 'category/create', component: CategoryCreateComponent, canActivate: [AdminGuard]}, 
-  {path: 'category/edit/:idCategory', component: CategoryEditComponent, canActivate: [AdminGuard]},
-  {path: 'recipes-admin', component:RecipeAdminListComponent, canActivate: [AdminGuard]}, 
-  
+  { path: 'category/create', component: CategoryCreateComponent, canActivate: [AdminGuard] },
+  { path: 'category/edit/:idCategory', component: CategoryEditComponent, canActivate: [AdminGuard] },
+  { path: 'recipes-admin', component: RecipeAdminListComponent, canActivate: [AdminGuard] },
+  { path: 'ingredients-admin', component: IngredientListComponent, canActivate: [AdminGuard] },
+  { path: 'ingredient/create', component: IngredientCreateComponent, canActivate: [AdminGuard] },
+  { path: 'ingredient/edit/:idIngredient', component: IngredientEditComponent, canActivate: [AdminGuard] },
+
+
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
   { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },
-  {path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard]},
-  {path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserGuard]},
-  {path: 'create-recipe', component: RecipeCreateComponent, canActivate: [UserGuard]}
+  { path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard] },
+  { path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserGuard] },
+  { path: 'create-recipe', component: RecipeCreateComponent, canActivate: [UserGuard] }
 ];
