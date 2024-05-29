@@ -7,6 +7,7 @@ import org.iesbelen.saborenlared.auth.UserRequest;
 import org.iesbelen.saborenlared.auth.UserResponse;
 
 
+import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.dto.UserDTO;
 import org.iesbelen.saborenlared.service.UserService;
@@ -63,6 +64,12 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User one(@PathVariable("id") Long id) {
         return this.userService.one(id);
+    }
+
+    @PostMapping({"", "/"})
+    public User newUser(@RequestBody User user) {
+        System.out.println(user);
+        return this.userService.save(user);
     }
 
     @PutMapping("/{id}")

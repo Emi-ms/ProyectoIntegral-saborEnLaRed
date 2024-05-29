@@ -31,6 +31,23 @@ export class LoginService {
   }
 
 
+  // public login(userCredencials: LoginRequest): Observable<any> {
+  //   return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
+  //     tap((userData) => {
+  //       console.log(userData);
+  //       sessionStorage.setItem("token", userData.token);
+  //       sessionStorage.setItem("user", JSON.stringify(userData.userDTO));
+  //       this.currentUserLoginOn.next(true);
+  //       this.currentUserToken.next(userData);
+  //       if (userData.userDTO) {
+  //         this.currentUser.next(userData.userDTO);
+  //       }
+  //     }),
+  //     map((userData) => userData.token),
+  //     catchError(this.errorHandler)
+  //   );
+  // }
+
   public login(userCredencials: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
       tap((userData) => {
@@ -44,7 +61,15 @@ export class LoginService {
         }
       }),
       map((userData) => userData.token),
-      catchError(this.errorHandler)
+      catchError((error: HttpErrorResponse) => {
+        let errorMsg: string;
+        if (error.error instanceof ErrorEvent) {
+          errorMsg = `Error: ${error.error.message}`;
+        } else {
+          errorMsg = `Error Code: ${error.status}, Message: ${error.message}`;
+        }
+        return throwError(errorMsg);
+      })
     );
   }
 

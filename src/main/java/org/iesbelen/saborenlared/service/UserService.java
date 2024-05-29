@@ -8,6 +8,7 @@ import org.iesbelen.saborenlared.domain.Recipe;
 import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.dto.RecipeDTO;
 import org.iesbelen.saborenlared.dto.RecipeIngredientDTO;
+import org.iesbelen.saborenlared.exeption.EmailDuplicateException;
 import org.iesbelen.saborenlared.exeption.UserNotFoundException;
 import org.iesbelen.saborenlared.repository.RecipeIngredientRepository;
 import org.iesbelen.saborenlared.repository.RecipeRepository;
@@ -108,7 +109,19 @@ public class UserService {
 
 
     public User save(User user) {
-        return this.userRepository.save(user);
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new EmailDuplicateException("El email ya se encuentra registrado");
+        }
+
+        User newUser = User.builder()
+                .userName(user.getUsername())
+                .userSurname(user.getUserSurname())
+                .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .rol(user.getRol())
+                .active(true)
+                .build();
+        return this.userRepository.save(newUser);
     }
 
     public User one(Long id) {

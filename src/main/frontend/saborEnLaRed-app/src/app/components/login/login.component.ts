@@ -45,24 +45,49 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
+  // login() {
+  //   console.log(this.form.value);
+  //   this.loginService.login(this.form.value as LoginRequest).subscribe({
+  //     next: (userData) => {
+  //       console.log(userData);
+  //     },
+  //     error: (errorData) => {
+  //       console.log(errorData);
+  //       console.log(errorData.status);
+  //       if (errorData.status === 401) {
+  //         Swal.fire("Acceso denegado", "No tienes permiso para acceder. Por favor, verifica tus credenciales.", "error");
+  //       } else {
+  //         Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error");
+  //       }
+  //       this.loginError = errorData;
+  //     },
+  //     complete: () => {
+  //       console.info("Login completo");
+  //       Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
+  //       this.router.navigateByUrl('/').then();
+  //     }
+
+  //   });
   login() {
     console.log(this.form.value);
     this.loginService.login(this.form.value as LoginRequest).subscribe({
       next: (userData) => {
         console.log(userData);
-      },
-      error: (errorData) => {
-        console.log(errorData);
-        Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error")
-        this.loginError = errorData;
-      },
-      complete: () => {
-        console.info("Login completo");
-        Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
+        Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success");
         this.router.navigateByUrl('/').then();
+      },
+      error: (errorMsg) => {
+        console.log(errorMsg);
+        if (errorMsg.includes('401')) {
+          Swal.fire("Acceso denegado", "No tienes permiso para acceder.", "error");
+          
+        } else {
+          Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error");
+          
+        }
       }
-
     });
+}
 
 
 
@@ -109,4 +134,4 @@ export class LoginComponent implements OnInit {
     //   });
   }
 
-}
+

@@ -25,7 +25,7 @@ export class UserService {
     return this.httpClient.get<User[]>(this.apiURL + '/users/users-actives')
       .pipe(
         catchError(this.errorHandler));
-    
+
   }
 
   public getUser(id: number): Observable<User> {
@@ -43,6 +43,11 @@ export class UserService {
 
   public registerUser(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiURL + "/auth/register", JSON.stringify(user), { headers: this.headers })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  public createUserByAdmin(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers })
       .pipe(catchError(this.errorHandler));
   }
 
@@ -74,7 +79,8 @@ export class UserService {
         `Backend codigo de error: ${error.status}, ` +
         `El cuerpo del error: ${error.error}`);
     }
-    return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
+    return throwError(error);
+    //return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
 
 
