@@ -21,6 +21,7 @@ import { IngredientCreateComponent } from './components/admin/ingredient-admin/i
 import { IngredientEditComponent } from './components/admin/ingredient-admin/ingredient-edit/ingredient-edit.component';
 import { UserListComponent } from './components/admin/user-admin/user-list/user-list.component';
 import { UserCreateComponent } from './components/admin/user-admin/user-create/user-create.component';
+import { UserAdminUpdateComponent } from './components/admin/user-admin/user-admin-update/user-admin-update.component';
 
 
 export const routes: Routes = [
@@ -41,6 +42,7 @@ export const routes: Routes = [
   { path: 'ingredient/edit/:idIngredient', component: IngredientEditComponent, canActivate: [AdminGuard] },
   { path: 'user-admin', component: UserListComponent, canActivate: [AdminGuard] },
   { path: 'user/create', component: UserCreateComponent, canActivate: [AdminGuard] },
+  { path: 'user/edit/:idUser', component: UserAdminUpdateComponent, canActivate: [AdminGuard]},
 
 
   { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },

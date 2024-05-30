@@ -51,7 +51,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
         if(!user.isActive()){
-            return new ResponseEntity<>("El usuario no esta activo", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("El usuario no esta activo", HttpStatus.NOT_IMPLEMENTED);
         }
 
         UserDTO userDTO = userService.getUser(user.getId());

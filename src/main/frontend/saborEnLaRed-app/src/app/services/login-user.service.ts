@@ -17,10 +17,8 @@ export class LoginService {
   currentUser: BehaviorSubject<User>;
 
   httpOptions = {
-
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-
     }),
   }
 
@@ -30,23 +28,6 @@ export class LoginService {
     this.currentUser = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem("user") || "{}"));
   }
 
-
-  // public login(userCredencials: LoginRequest): Observable<any> {
-  //   return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
-  //     tap((userData) => {
-  //       console.log(userData);
-  //       sessionStorage.setItem("token", userData.token);
-  //       sessionStorage.setItem("user", JSON.stringify(userData.userDTO));
-  //       this.currentUserLoginOn.next(true);
-  //       this.currentUserToken.next(userData);
-  //       if (userData.userDTO) {
-  //         this.currentUser.next(userData.userDTO);
-  //       }
-  //     }),
-  //     map((userData) => userData.token),
-  //     catchError(this.errorHandler)
-  //   );
-  // }
 
   public login(userCredencials: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
@@ -61,15 +42,7 @@ export class LoginService {
         }
       }),
       map((userData) => userData.token),
-      catchError((error: HttpErrorResponse) => {
-        let errorMsg: string;
-        if (error.error instanceof ErrorEvent) {
-          errorMsg = `Error: ${error.error.message}`;
-        } else {
-          errorMsg = `Error Code: ${error.status}, Message: ${error.message}`;
-        }
-        return throwError(errorMsg);
-      })
+      catchError(this.errorHandler)
     );
   }
 
@@ -86,14 +59,15 @@ export class LoginService {
 
   private errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
-      console.error("An error occurred:", error.error);
+      console.error("Ha ocurrido un error:", error.error);
     }
     else {
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend codigo de error: ${error.status}, ` +
+        `El cuerpo del error: ${error.error}`);
     }
-    return throwError(() => new Error("Something bad happened; please try again later."));
+    return throwError(error);
+    //return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
 
   get userToken(): Observable<String> {
@@ -124,15 +98,11 @@ export class LoginService {
   }
 
   public getUserRole() {
-
     let user = this.getUser();
     if (user !== null) {
       return user.rol;
     }
   }
-
-
-
 
 }
 

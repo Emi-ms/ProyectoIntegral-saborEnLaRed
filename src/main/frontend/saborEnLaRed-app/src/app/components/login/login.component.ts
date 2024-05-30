@@ -38,100 +38,34 @@ export class LoginComponent implements OnInit {
 
     email: new FormControl('', [Validators.required,]),
     password: new FormControl('', [Validators.required,]),
-
   });
 
   get f() {
     return this.form.controls;
   }
 
-  // login() {
-  //   console.log(this.form.value);
-  //   this.loginService.login(this.form.value as LoginRequest).subscribe({
-  //     next: (userData) => {
-  //       console.log(userData);
-  //     },
-  //     error: (errorData) => {
-  //       console.log(errorData);
-  //       console.log(errorData.status);
-  //       if (errorData.status === 401) {
-  //         Swal.fire("Acceso denegado", "No tienes permiso para acceder. Por favor, verifica tus credenciales.", "error");
-  //       } else {
-  //         Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error");
-  //       }
-  //       this.loginError = errorData;
-  //     },
-  //     complete: () => {
-  //       console.info("Login completo");
-  //       Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
-  //       this.router.navigateByUrl('/').then();
-  //     }
 
-  //   });
   login() {
     console.log(this.form.value);
     this.loginService.login(this.form.value as LoginRequest).subscribe({
       next: (userData) => {
         console.log(userData);
         Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success");
-        this.router.navigateByUrl('/').then();
+        this.router.navigateByUrl('/')
+          .then();
       },
       error: (errorMsg) => {
-        console.log(errorMsg);
-        if (errorMsg.includes('401')) {
-          Swal.fire("Acceso denegado", "No tienes permiso para acceder.", "error");
-          
+        if (errorMsg.status == 501) {
+          Swal.fire({
+            title: 'Acceso denegado',
+            text: 'No tienes permiso para acceder.',
+            icon: 'error',
+            timer: 15000
+          });
         } else {
           Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error");
-          
         }
       }
     });
-}
-
-
-
-
-
-
-
-
-
-
-    //  this.authUserService.generateToken(this.form.value).subscribe({ 
-    //     next: (res: any) => {
-    //       console.log(res);
-    //       this.authUserService.loginUser(res.token);
-
-
-    //       this.authUserService.getCurrentUser().subscribe({
-    //         next: (user: any) => {
-    //           console.log(user);
-    //           this.authUserService.setUser(user);
-
-    //           if(user.rol ==='ADMIN'){
-    //             this.router.navigateByUrl('/admin')
-    //               .then();
-    //           }
-
-    //         },
-    //         error: (error: any) => {
-    //           console.log(error);
-    //           Swal.fire("Datos incorrectos", "Vuelva a intentarlo", "error")
-    //         }
-    //       });
-    //       Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success")
-    //       this.router.navigateByUrl('/')
-    //         .then();
-
-    //     },
-    //     error: (error: any) => {
-    //       console.log(error)
-    //       if (error.status === 400) {
-    //         Swal.fire("Lo siento!", "El email no se encuentra registrado", "error")
-    //       }
-    //     }
-    //   });
   }
-
-
+}

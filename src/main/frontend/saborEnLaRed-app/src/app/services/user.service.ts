@@ -68,8 +68,6 @@ export class UserService {
       .pipe(catchError(this.errorHandler));
   }
 
-
-
   private errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error("Ha ocurrido un error:", error.error);
@@ -82,8 +80,5 @@ export class UserService {
     return throwError(error);
     //return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
-
-
-
 
 }
