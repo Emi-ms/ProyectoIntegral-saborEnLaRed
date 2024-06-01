@@ -1,10 +1,8 @@
 package org.iesbelen.saborenlared.service;
 
-import org.iesbelen.saborenlared.domain.Category;
+import lombok.AllArgsConstructor;
 import org.iesbelen.saborenlared.domain.Ingredient;
-import org.iesbelen.saborenlared.dto.CategoryDTO;
 import org.iesbelen.saborenlared.dto.IngredientDTO;
-import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.exeption.IngredientNotFoundException;
 import org.iesbelen.saborenlared.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
@@ -12,12 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class IngredientService {
     private final IngredientRepository ingredientRepository;
-
-    public IngredientService(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
-    }
 
     public IngredientDTO getIngredientDTO(Long id){
         Ingredient ingredient = ingredientRepository.findById(id)

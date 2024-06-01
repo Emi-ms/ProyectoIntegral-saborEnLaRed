@@ -2,10 +2,9 @@ package org.iesbelen.saborenlared.service;
 
 import lombok.AllArgsConstructor;
 import org.iesbelen.saborenlared.domain.Comment;
+import org.iesbelen.saborenlared.dto.CommentDTO;
 import org.iesbelen.saborenlared.exeption.CommentNotFoundException;
 import org.iesbelen.saborenlared.repository.CommentRepository;
-import org.iesbelen.saborenlared.repository.RecipeRepository;
-import org.iesbelen.saborenlared.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +13,35 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
-    private final RecipeRepository recipeRepository;
+
+    public CommentDTO getCommentDTO(Long id){
+        Comment comment = commentRepository.findById(id).
+                orElseThrow(()-> new CommentNotFoundException(id));
+
+        if (comment != null){
+            return CommentDTO.builder()
+                    .idComment(comment.getIdComment())
+                    .commentText(comment.getCommentText())
+                    .userName(comment.getUser().getUsername()).
+                    active(comment.getActive())
+                    .build();
+        }
+        return null;
+    }
 
     public List<Comment> all() {
         return this.commentRepository.findAll();
+    }
+
+    public List<CommentDTO> AllActiveComment(){
+        List<Comment> comments = commentRepository.findAll()
+                .stream()
+                .filter(Comment::getActive)
+                .toList();
+
+        return comments.stream()
+                .map(comment -> this.getCommentDTO(comment.getIdComment()))
+                .toList();
     }
 
     public Comment save(Comment comment) {
@@ -44,5 +67,12 @@ public class CommentService {
                     return comment;
                 })
                 .orElseThrow(() -> new CommentNotFoundException(id));
+    }
+
+    public Comment logicDelete(Long id){
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(()->new CommentNotFoundException(id));
+        comment.setActive(false);
+        return commentRepository.save(comment);
     }
 }

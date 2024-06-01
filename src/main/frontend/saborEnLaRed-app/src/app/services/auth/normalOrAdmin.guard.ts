@@ -9,7 +9,7 @@ export const normalUserGuard: CanActivateFn = (route, state) => {
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate{
+export class UserOrAdminGuard implements CanActivate{
 
   constructor( private loginService: LoginService, private router: Router) {
       
@@ -18,7 +18,7 @@ export class UserGuard implements CanActivate{
   canActivate(
       route: ActivatedRouteSnapshot, 
       state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-      if(this.loginService.currentUserLoginOn && this.loginService.getUserRole() === 'NORMAL_USER'){
+      if(this.loginService.currentUserLoginOn && (this.loginService.getUserRole() === 'NORMAL_USER' || this.loginService.getUserRole() === 'ADMIN')){
           return true;
       }
       this.router.navigateByUrl('/login');

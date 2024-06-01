@@ -6,7 +6,7 @@ import { AdminSectionComponent } from './components/admin/admin-section/admin-se
 import { UpdateUserComponent } from './components/user-components/update-user/update-user.component';
 import { AdminGuard } from './services/auth/admin-user.guard';
 import { PerfilUserComponent } from './components/user-components/perfil-user/perfil-user.component';
-import { UserGuard } from './services/auth/normal-user.guard';
+import { UserOrAdminGuard } from './services/auth/normalOrAdmin.guard';
 import { CategoryListComponent } from './components/admin/category-admin/category-list/category-list.component';
 import { CategoryCreateComponent } from './components/admin/category-admin/category-create/category-create.component';
 import { CategoryEditComponent } from './components/admin/category-admin/category-edit/category-edit.component';
@@ -22,6 +22,7 @@ import { IngredientEditComponent } from './components/admin/ingredient-admin/ing
 import { UserListComponent } from './components/admin/user-admin/user-list/user-list.component';
 import { UserCreateComponent } from './components/admin/user-admin/user-create/user-create.component';
 import { UserAdminUpdateComponent } from './components/admin/user-admin/user-admin-update/user-admin-update.component';
+import { CommentListComponent } from './components/admin/comment-admin/comment-list/comment-list.component';
 
 
 export const routes: Routes = [
@@ -42,12 +43,13 @@ export const routes: Routes = [
   { path: 'ingredient/edit/:idIngredient', component: IngredientEditComponent, canActivate: [AdminGuard] },
   { path: 'user-admin', component: UserListComponent, canActivate: [AdminGuard] },
   { path: 'user/create', component: UserCreateComponent, canActivate: [AdminGuard] },
-  { path: 'user/edit/:idUser', component: UserAdminUpdateComponent, canActivate: [AdminGuard]},
+  { path: 'user/edit/:idUser', component: UserAdminUpdateComponent, canActivate: [AdminGuard] },
+  { path: 'comment-admin', component: CommentListComponent, canActivate: [AdminGuard] },
 
 
-  { path: 'update-user', component: UpdateUserComponent, canActivate: [UserGuard] },
-  { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserGuard] },
-  { path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserGuard] },
-  { path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserGuard] },
-  { path: 'create-recipe', component: RecipeCreateComponent, canActivate: [UserGuard] }
+  { path: 'update-user', component: UpdateUserComponent, canActivate: [UserOrAdminGuard] },
+  { path: 'perfil-user', component: PerfilUserComponent, canActivate: [UserOrAdminGuard] },
+  { path: 'recipes/comment/:idRecipe', component: RecipeCommentComponent, canActivate: [UserOrAdminGuard] },
+  { path: 'recipes/rate/:idRecipe', component: RecipeRateComponent, canActivate: [UserOrAdminGuard] },
+  { path: 'create-recipe', component: RecipeCreateComponent, canActivate: [UserOrAdminGuard] }
 ];

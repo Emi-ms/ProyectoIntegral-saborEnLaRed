@@ -43,7 +43,7 @@ public class RecipeService {
                     .photo(recipe.getPhoto())
                     .active(recipe.getActive())
                     .recipeIngredients(recipeIngredientDTOS)
-                    .comments(commentsDTOS)
+                    .comments(commentsDTOS.stream().filter(CommentDTO::isActive).toList())
                     .rates(rateDTOS)
                     .categories(categoryDTOS)
                     .build();
@@ -125,6 +125,7 @@ public class RecipeService {
                         .idComment(comment.getIdComment())
                         .commentText(comment.getCommentText())
                         .userName(comment.getUser().getUsername())
+                        .active(comment.getActive())
                         .build())
                 .toList();
     }

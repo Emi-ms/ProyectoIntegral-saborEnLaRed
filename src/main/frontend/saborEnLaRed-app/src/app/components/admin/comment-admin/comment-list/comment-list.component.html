@@ -1,0 +1,26 @@
+<div class="white-box"></div>
+<div class="container">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-6 mt-5">
+          <h2>Lista de Comentarios</h2>
+        </div>
+      </div>
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Comentario</th>
+            <th>Usuario</th>
+            <th></th>    
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let comment of comments" >
+            <td>{{ comment.idComment }}</td>
+            <td>{{ comment.commentText.slice(0, 50) }}...</td>
+            <td>{{ comment.userName }}</td>
+            <td><button type="button" (click)="deleteComment(comment.idComment)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

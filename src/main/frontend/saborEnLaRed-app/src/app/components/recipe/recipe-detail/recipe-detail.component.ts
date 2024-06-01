@@ -42,8 +42,7 @@ export class RecipeDetailComponent implements OnInit {
       this.recipe = data;
       this.comments = this.recipe.comments;
       if (this.recipe.rates && this.recipe.rates.length > 0) {
-
-        this.recipeDoubleCurrentRate = this.recipe.rates.map(rate => rate.rateValue).reduce((a, b) => a + b, 0) / this.recipe.rates.length;
+        this.recipeDoubleCurrentRate = parseFloat((this.recipe.rates.map(rate => rate.rateValue).reduce((a, b) => a + b, 0) / this.recipe.rates.length).toFixed(2));
       } else {
 
         this.recipeDoubleCurrentRate = 0;
