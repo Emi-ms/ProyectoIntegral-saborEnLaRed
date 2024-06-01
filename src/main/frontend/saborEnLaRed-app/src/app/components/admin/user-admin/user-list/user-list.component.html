@@ -13,6 +13,9 @@
           <tr>
             <th>Id</th>
             <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Rol</th>
             <th></th>
             <th></th>
           </tr>
@@ -21,6 +24,9 @@
           <tr *ngFor="let user of users" >
             <td>{{ user.id }}</td>
             <td>{{ user.userName }}</td>
+            <td>{{ user.userSurname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.rol }}</td>
             <td><button type="button" [routerLink]="['/user/', 'edit', user.id  ]" class="btn btn-secondary" style="margin-left: 2px; margin-top: 2px;">Editar</button></td>
             <td><button type="button" (click)="deleteUser(user.id)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
           </tr>

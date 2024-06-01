@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CommentService commentService;
     private final RecipeRepository recipeRepository;
     private final RecipeIngredientRepository recipeIngredientRespository;
 
@@ -43,7 +42,7 @@ public class UserService {
                 .active(userRequest.isActive())
                 .build();
 
-        userRepository.updateUser(user.getId(), user.getUsername(), user.getUserSurname(), user.getEmail(), user.getPassword());
+        userRepository.updateUser(user.getId(), user.getUsername(), user.getUserSurname(), user.getEmail(), user.getPassword(), user.getRol());
 
         return new UserResponse("El usuario se actualizó correctamente");
     }

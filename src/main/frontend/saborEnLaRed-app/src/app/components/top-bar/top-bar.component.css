@@ -6,13 +6,16 @@
 .nav-item .bt:hover {
   font-size: 20px;
   border-radius: 6px;
-  background: linear-gradient(145deg, #8be159, #68f119);
+  background: linear-gradient(145deg, #8be159, #54ad22);
   box-shadow: 4px 4px 8px #ddc1a0,
   -4px -4px 8px #f7e5cc;
+  color: #ffff;
 }
 
 #neubar .dropdown-menu .bt:hover {
-  color: #454545
+  /* color: #454545; */
+  color: #ffff
+  
 }
 
 #neubar .nav-item {

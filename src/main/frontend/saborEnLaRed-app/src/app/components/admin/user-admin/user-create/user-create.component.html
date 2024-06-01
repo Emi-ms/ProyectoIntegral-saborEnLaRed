@@ -4,7 +4,7 @@
     <div class="formulario">
         <div class="d-flex justify-content-between mt-5">
             <h4>Crear usuario</h4>
-            <a href="#" routerLink="" class="btn btn-primary">Volver</a>
+            <a href="#" routerLink="/user-admin" class="btn btn-primary">Volver</a>
         </div>
         <hr />
         <form [formGroup]="form" (ngSubmit)="submit()">
@@ -53,7 +53,7 @@
                             caracteres</div>
                     </div>
                 </div>
-                <div class="col-md-6 ">
+                <div class="col-md-2 ">
                     <label for="rol">Rol:</label>
                     <select formControlName="rol" id="rol" class="form-control">
                         <option value="ADMIN">Administrador</option>

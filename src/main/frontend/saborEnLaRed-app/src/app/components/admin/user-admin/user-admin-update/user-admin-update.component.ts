@@ -58,13 +58,14 @@ export class UserAdminUpdateComponent implements OnInit {
     userSurname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
     email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), Validators.maxLength(255)]),
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d!@#$%^&*()-_=+{};:,<.>]{8,}$'), Validators.maxLength(255), Validators.minLength(8)]),
-    rol: new FormControl(''),
+    rol: new FormControl('', Validators.required),
     active: new FormControl('')
   });
 
   submit() {
     this.form.patchValue({ id: this.id });
- 
+    this.form.patchValue({ active: this.user?.active });
+
 
     this.userService.updateUser(this.form.value).subscribe({
 
@@ -75,7 +76,7 @@ export class UserAdminUpdateComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        this.router.navigate(['/perfil-user']);
+        this.router.navigate(['/user-admin']);
       },
       error: () => {
         Swal.fire({
