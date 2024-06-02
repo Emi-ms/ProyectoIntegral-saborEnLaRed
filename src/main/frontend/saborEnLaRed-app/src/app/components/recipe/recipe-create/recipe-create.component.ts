@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-recipe-create',
@@ -34,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatIconModule
   ],
   templateUrl: './recipe-create.component.html',
   styleUrls: ['./recipe-create.component.css']

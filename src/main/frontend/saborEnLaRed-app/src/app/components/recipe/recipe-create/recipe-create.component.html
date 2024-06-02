@@ -43,21 +43,43 @@
                         </mat-autocomplete>
                     </mat-form-field>
 
+                    <mat-form-field appearance="fill">
+                        <mat-label>Cantidad</mat-label>
+                        <input matInput formControlName="quantity" #quantity placeholder="Cantidad" required>
+                        <mat-error *ngIf="f['quantity'].touched && f['quantity'].invalid">
+                            <div *ngIf="f['quantity'].errors?.['required']">*La cantidad es requerida.</div>
+                            <div *ngIf="f['quantity'].errors?.['pattern']">*La cantidad debe ser un número válido.</div>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- 
+
                     <input formControlName="quantity" #quantity type="text" placeholder="Cantidad" required>
                     <div *ngIf="f['quantity'].touched && f['quantity'].invalid" class="alert alert-danger">
                         <div *ngIf="f['quantity'].errors?.['required']">*La cantidad es requerida.</div>
                         <div *ngIf="f['quantity'].errors?.['pattern']">*La cantidad debe ser un número válido.</div>
-                    </div>
+                    </div> -->
 
-                    <input formControlName="unitMeasure" #unitMeasure type="text" placeholder="Unidad de medida">
+                    <!-- <input formControlName="unitMeasure" #unitMeasure type="text" placeholder="Unidad de medida">
                     <div *ngIf="f['unitMeasure'].touched && f['unitMeasure'].invalid" class="alert alert-danger">
                         <div *ngIf="f['unitMeasure'].errors?.['required']">*La cantidad es requerida.</div>
                         <div *ngIf="f['unitMeasure'].errors?.['pattern']">*La unidad de medida sólo puede contener
                             letras</div>
                         <div *ngIf="f['unitMeasure'].errors?.['maxlength']">*La unidad de medida debe tener menos de 255
                             caracteres
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Unidad de medida</mat-label>
+                        <input matInput formControlName="unitMeasure" #unitMeasure placeholder="Unidad de medida">
+                        <mat-error *ngIf="f['unitMeasure'].touched && f['unitMeasure'].invalid">
+                            <div *ngIf="f['unitMeasure'].errors?.['required']">*La cantidad es requerida.</div>
+                            <div *ngIf="f['unitMeasure'].errors?.['pattern']">*La unidad de medida sólo puede contener
+                                letras</div>
+                            <div *ngIf="f['unitMeasure'].errors?.['maxlength']">*La unidad de medida debe tener menos de
+                                255 caracteres</div>
+                        </mat-error>
+                    </mat-form-field>
                     <button type="button"
                         (click)="addIngredient(ingredientControl.value, quantity.value, unitMeasure.value)">Agregar
                         ingrediente</button>
