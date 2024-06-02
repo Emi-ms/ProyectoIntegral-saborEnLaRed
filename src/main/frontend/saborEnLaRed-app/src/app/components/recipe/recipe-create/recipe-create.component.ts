@@ -72,6 +72,16 @@ export class RecipeCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    Swal.fire({
+      title: '¡Ten en cuenta las siguientes consideraciones!',
+      html:  '<div style="text-align: start;"><li><strong>Foto Atractiva:</strong> Usa buena iluminación y un fondo limpio.</li>' 
+              + '<li><strong>Paso a Paso Detallado:</strong> Describe cada paso claramente.</li>'
+              + '<li><strong>Lista de Ingredientes:</strong> Incluye cantidades exactas.</li>'
+              + '<li><strong>Tiempo Total:</strong> Indica el tiempo de preparación y cocción.</li>'
+              + '<li><strong>Revisar Ortografía y Gramática:</strong> Corrige errores antes de publicar.</li></div>',
+      icon: 'info',
+      confirmButtonText: '¡Vamos a cocinar!'
+    });
     this.ingredientService.getAll().subscribe((data: Ingredient[]) => {
       this.ingredientsFromAPI = data;
       this.filteredIngredients = this.ingredientControl.valueChanges.pipe(
