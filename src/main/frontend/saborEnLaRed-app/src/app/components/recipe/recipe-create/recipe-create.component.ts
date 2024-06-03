@@ -17,7 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-recipe-create',
@@ -35,7 +36,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   templateUrl: './recipe-create.component.html',
   styleUrls: ['./recipe-create.component.css']
@@ -60,7 +62,7 @@ export class RecipeCreateComponent implements OnInit {
   ) {
     this.recipeForm = this.fb.group({
       recipeName: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]],
-      description: ['', [Validators.required, Validators.maxLength(1000)]],
+      description: ['', [Validators.required, Validators.maxLength(3000)]],
       photo: null,
       active: [true],
       recipeIngredients: this.fb.array([]),
@@ -76,11 +78,11 @@ export class RecipeCreateComponent implements OnInit {
   ngOnInit(): void {
     Swal.fire({
       title: '¡Ten en cuenta las siguientes consideraciones!',
-      html:  '<div style="text-align: start;"><li><strong>Foto Atractiva:</strong> Usa buena iluminación y un fondo limpio.</li>' 
-              + '<li><strong>Paso a Paso Detallado:</strong> Describe cada paso claramente.</li>'
-              + '<li><strong>Lista de Ingredientes:</strong> Incluye cantidades exactas.</li>'
-              + '<li><strong>Tiempo Total:</strong> Indica el tiempo de preparación y cocción.</li>'
-              + '<li><strong>Revisar Ortografía y Gramática:</strong> Corrige errores antes de publicar.</li></div>',
+      html: '<div style="text-align: start;"><li><strong>Foto Atractiva:</strong> Usa buena iluminación y un fondo limpio.</li>'
+        + '<li><strong>Paso a Paso Detallado:</strong> Describe cada paso claramente.</li>'
+        + '<li><strong>Lista de Ingredientes:</strong> Incluye cantidades exactas.</li>'
+        + '<li><strong>Tiempo Total:</strong> Indica el tiempo de preparación y cocción.</li>'
+        + '<li><strong>Revisar Ortografía y Gramática:</strong> Corrige errores antes de publicar.</li></div>',
       icon: 'info',
       confirmButtonText: '¡Vamos a cocinar!'
     });
@@ -121,6 +123,9 @@ export class RecipeCreateComponent implements OnInit {
 
         console.log(this.recipeIngredientsFromForm.value);
         this.ingredientControl.reset();
+        this.recipeForm.get('quantity')?.reset(0);
+        this.recipeForm.get('unitMeasure')?.reset(' ');
+
       }
     } else {
       Swal.fire('Lo siento!!', 'Tienes que rellenar todos los campos del ingrediente', 'error');
@@ -154,19 +159,29 @@ export class RecipeCreateComponent implements OnInit {
   }
 
   createRecipe() {
-    if (this.recipeForm.valid) {
-      console.log(this.photoFile);
-      console.log(this.recipeForm.value);
-      if (this.photoFile) {
-        this.recipeService.save(this.recipeForm.value, this.photoFile).subscribe(() => {
-          Swal.fire('Receta creada', 'Gracias por tu aportación cocinilla!!', 'success');
-          this.router.navigate(['/recipes']);
-        });
-      } else {
-        Swal.fire('Lo siento!!', 'Tienes que seleccionar una foto', 'error');
-      }
+
+
+    const categories = this.recipeForm.get('categories') as FormArray;
+    const ingredientes = this.recipeForm.get('recipeIngredients') as FormArray;
+    if (categories.length === 0) {
+      Swal.fire('Lo siento!!', 'Debes asignar al menos una categoría a la receta', 'error');
+    } else if
+      (ingredientes.length === 0) {
+      Swal.fire('Lo siento!!', 'Debes asignar al menos un ingrediente a la receta', 'error');
     } else {
-      Swal.fire('Lo siento!!', 'Tienes que rellenar todos los campos', 'error');
+
+      if (this.recipeForm.valid) {
+        if (this.photoFile) {
+          this.recipeService.save(this.recipeForm.value, this.photoFile).subscribe(() => {
+            Swal.fire('Receta creada', 'Gracias por tu aportación cocinilla!!', 'success');
+            this.router.navigate(['/recipes']);
+          });
+        } else {
+          Swal.fire('Lo siento!!', 'Tienes que seleccionar una foto', 'error');
+        }
+      } else {
+        Swal.fire('Lo siento!!', 'Tienes que rellenar todos los campos', 'error');
+      }
     }
   }
 
@@ -187,6 +202,11 @@ export class RecipeCreateComponent implements OnInit {
     console.log(this.recipeIngredientsFromForm.value);
   }
 
+  removeCategories(index: number) {
+    this.categoriesFromForm.removeAt(index);
+    console.log(this.categoriesFromForm.value);
+  }
+
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
@@ -195,4 +215,11 @@ export class RecipeCreateComponent implements OnInit {
       this.photoFile = file;
     }
   }
+
+  adjustHeight(event?: Event): void {
+    const textarea = event ? event.target as HTMLTextAreaElement : document.querySelector('textarea[matInput]') as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+  }
+
 }

@@ -26,7 +26,7 @@ public class Recipe {
     private Long idRecipe;
     private String recipeName;
 
-    @Column(length = 1000)
+    @Column(length = 3000)
     private String description;
     private String photo;
     private Boolean active;

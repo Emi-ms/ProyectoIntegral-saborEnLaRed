@@ -10,6 +10,11 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../services/login-user.service';
 import { LoginRequest } from '../../models/LoginRequest';
 
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,12 +22,21 @@ import { LoginRequest } from '../../models/LoginRequest';
     NgOptimizedImage,
     NgIf,
     ReactiveFormsModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatIconModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
   loginError: String = "";
+  hide = true;
+  clickEvent(event: MouseEvent) {
+    this.hide = !this.hide;
+    event.stopPropagation();
+  }
 
   constructor(
     public userService: UserService,
@@ -36,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
 
-    email: new FormControl('', [Validators.required,]),
+    email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]),
     password: new FormControl('', [Validators.required,]),
   });
 
