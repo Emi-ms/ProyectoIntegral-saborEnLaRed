@@ -32,7 +32,6 @@ textarea {
     resize: none;
 }
 
-.ingredient-wrapper,
 .category-wrapper {
     /* background-color: #ff0000; */
     display: flex;
@@ -42,6 +41,16 @@ textarea {
     justify-content:start;
     align-content: center;
 }
+
+.ingredient-wrapper{
+    display: flex;
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+    justify-content:start;
+    align-content: center;
+}
+
 
 .btn-delete {
     background-color: #ff0000;

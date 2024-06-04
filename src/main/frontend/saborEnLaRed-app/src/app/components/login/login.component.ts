@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgIf, NgOptimizedImage } from "@angular/common";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { UserService } from "../../services/user.service";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -10,10 +10,10 @@ import Swal from 'sweetalert2';
 import { LoginService } from '../../services/login-user.service';
 import { LoginRequest } from '../../models/LoginRequest';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +21,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   imports: [
     NgOptimizedImage,
     NgIf,
+    RouterLink,
     ReactiveFormsModule,
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatButtonModule, 
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     MatIconModule
   ],
   templateUrl: './login.component.html',
@@ -60,10 +61,8 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    console.log(this.form.value);
     this.loginService.login(this.form.value as LoginRequest).subscribe({
       next: (userData) => {
-        console.log(userData);
         Swal.fire("Bienvenido!!", "Nos alegra volver a verte cocinilla!!", "success");
         this.router.navigateByUrl('/')
           .then();

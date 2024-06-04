@@ -13,5 +13,6 @@ export interface Recipe {
     comments: Comment[];
     rates: Rate[];
     categories: Category[];
+    rate:number;
 
 }

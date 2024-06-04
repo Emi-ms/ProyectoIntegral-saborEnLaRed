@@ -46,7 +46,7 @@ export class RecipeCreateComponent implements OnInit {
   user: User | null | undefined;
   ingredientsFromAPI: Ingredient[] = [];
   categoriesFromAPI: Category[] = [];
-  selectedCategoryControl = new FormControl(null);
+  selectedCategoryControl = new FormControl();
   filteredIngredients: Observable<Ingredient[]> = new Observable<Ingredient[]>();
   ingredientControl = new FormControl();
   recipeForm: FormGroup;
@@ -172,6 +172,7 @@ export class RecipeCreateComponent implements OnInit {
 
       if (this.recipeForm.valid) {
         if (this.photoFile) {
+          console.log(this.recipeForm.value, this.photoFile)
           this.recipeService.save(this.recipeForm.value, this.photoFile).subscribe(() => {
             Swal.fire('Receta creada', 'Gracias por tu aportación cocinilla!!', 'success');
             this.router.navigate(['/recipes']);
@@ -211,8 +212,14 @@ export class RecipeCreateComponent implements OnInit {
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
+      const maxSizeInBytes = 10 * 1048576;
       console.log(file);
-      this.photoFile = file;
+      if (file.size > maxSizeInBytes) {
+        Swal.fire('Error', 'El archivo es demasiado grande. Por favor, selecciona un archivo de menos de 10 MB', 'error');
+      } else {
+        console.log(file);
+        this.photoFile = file;
+      }
     }
   }
 

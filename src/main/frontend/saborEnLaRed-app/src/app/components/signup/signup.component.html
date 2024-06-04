@@ -1,65 +1,58 @@
 <div class="white-box"></div>
 
-  <div class="hero">
-    <div class="hero-container">
-      <h1 class="hero-title">SÉ MIEMBRO DE NUESTRA COMUNIDAD GASTRONÓMICA</h1>
-      <h5>Regístrate para compartir y descubrir las mejores recetas culinarias</h5>
-    </div>
+<div class="hero">
+  <div class="hero-container">
+    <h1 class="hero-title">SÉ MIEMBRO DE NUESTRA COMUNIDAD GASTRONÓMICA</h1>
+    <h5>Regístrate para compartir y descubrir las mejores recetas culinarias</h5>
   </div>
-  <div class="container">
-  <div class="formulario">
-    <div class="d-flex justify-content-between mt-5">
+</div>
+<div class="container">
+  <div class="form">
+    <div class="d-flex justify-content-between mt-5 mb-3">
       <h4></h4>
-      <a href="#" routerLink="" class="btn btn-primary">Volver</a>
+      <a mat-raised-button color="warn" routerLink="">Volver</a>
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-group row">
-        <div class="col-md-6 ">
-          <label for="userName">Nombre:</label>
-          <input
-            formControlName="userName"
-            id="userName"
-            type="text"
-            class="form-control">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="userName" placeholder="Nombre" required>
           <div *ngIf="f['userName'].touched && f['userName'].invalid" class="alert alert-danger">
-            <div *ngIf="f['userName'].errors?.['required']">*Nombre es requerido.</div>
-            <div *ngIf="f['userName'].errors?.['pattern']">*El nombre sólo puede contener letras.</div>
-            <div *ngIf="f['userName'].errors?.['maxlength']">*El nombre debe tener menos de 255 caracteres</div>
+            <div *ngIf="f['userName'].errors?.['required']">*El nombre es requerido.</div>
+            <div *ngIf="f['userName'].errors?.['pattern']">*El nombre sólo puede contener letras. </div>
+            <div *ngIf="f['userName'].errors?.['maxlength']">*El nombre debe tener menos de 255 caracteres.</div>
           </div>
-        </div>
-        <div class="col-md-6 ">
-          <label for="userSurname">Apellido</label>
-          <input
-            formControlName="userSurname"
-            id="userSurname"
-            type="text"
-            class="form-control">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="userSurname" placeholder="Apellido" required>
           <div *ngIf="f['userSurname'].touched && f['userSurname'].invalid" class="alert alert-danger">
-            <div *ngIf="f['userSurname'].errors?.['required']">*Apellido es requerido.</div>
-            <div *ngIf="f['userSurname'].errors?.['pattern']">*El apellido sólo puede contener letras.</div>
-            <div *ngIf="f['userSurname'].errors?.['maxlength']">*El apellido debe tener menos de 255 caracteres</div>
+            <div *ngIf="f['userSurname'].errors?.['required']">*El apellido es requerido.</div>
+            <div *ngIf="f['userSurname'].errors?.['pattern']">*El apellido sólo puede contener letras.
+            </div>
+            <div *ngIf="f['userSurname'].errors?.['maxlength']">*El apellido debe tener menos de 255
+              caracteres
+            </div>
           </div>
-        </div>
-        <div class="col-md-6 ">
-          <label for="email">Email:</label>
-          <input
-            formControlName="email"
-            id="email"
-            type="text"
-            class="form-control">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email" required>
           <div *ngIf="f['email'].touched && f['email'].invalid" class="alert alert-danger">
             <div *ngIf="f['email'].errors?.['required']">*El email es requerido.</div>
-            <div *ngIf="f['email'].errors?.['pattern']">*Formato de email incorrecto</div>
-            <div *ngIf="f['email'].errors?.['maxlength']">*El email debe tener menos de 255 caracteres</div>
+            <div *ngIf="f['email'].errors?.['pattern']">*Formato de email incorrecto
+            </div>
+            <div *ngIf="f['email'].errors?.['maxlength']">*El email debe tener menos de 255 caracteres
+            </div>
           </div>
-        </div>
-        <div class="col-md-6 ">
-          <label for="password">Password</label>
-          <input
-            formControlName="password"
-            id="password"
-            type="password"
-            class="form-control">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input formControlName="password" id="password" type="password" matInput [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide" type="button">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
           <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
             <div *ngIf="f['password'].errors?.['required']">*Contraseña es requerido.</div>
             <div *ngIf="f['password'].errors?.['pattern']">*La contraseña debe contener al menos una letra minúscula,
@@ -69,9 +62,11 @@
             </div>
             <div *ngIf="f['password'].errors?.['maxlength']">*La contraseña debe tener menos de 255 caracteres</div>
           </div>
-        </div>
+        </mat-form-field>
+
+        <button class="btn-custom mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
       </div>
-      <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+
     </form>
   </div>
 </div>

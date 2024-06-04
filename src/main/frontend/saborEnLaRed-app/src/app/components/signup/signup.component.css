@@ -1,4 +1,3 @@
-
 .hero {
     background: url("../../../assets/images/chef-preparing-recipeMODIFICADO.webp") center;
     background-size: cover;
@@ -6,10 +5,10 @@
     width: 100%;
     font-family: Roboto, serif;
     opacity: 1.3;
-    
-  }
-  
-  .hero-container {
+
+}
+
+.hero-container {
     color: #ffffff;
     margin: 0 auto;
     width: 80%;
@@ -19,20 +18,26 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    
-  
-  }
-  
-  .hero-title {
+
+
+}
+
+.hero-title {
     margin-top: 10%;
     font-size: 60px;
     text-align: center;
     font-weight: bold;
     letter-spacing: 2px;
-  }
-  
-  .hero-container h5 {
+}
+
+.hero-container h5 {
     text-align: center;
     letter-spacing: 5px;
-  
-  }
+
+}
+
+.form {
+    margin: 0 auto;
+    width: 60%;
+
+}

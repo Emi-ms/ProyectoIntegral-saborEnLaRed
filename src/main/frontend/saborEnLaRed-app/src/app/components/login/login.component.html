@@ -2,7 +2,10 @@
 <div style="margin-top: 100px">
 
     <div class="form">
-        <a href="#" routerLink="" class="btn btn-primary">Volver</a>
+        <div class="d-flex justify-content-between mt-5 mb-3">
+            <h4></h4>
+            <a mat-raised-button color="warn" routerLink="">Volver</a>
+        </div>
         <div class="title">
             <mat-icon style="font-size: 25px;">login</mat-icon>
             <h2>Login</h2>
@@ -21,10 +24,10 @@
                     <mat-label>Escribe tu contraseña</mat-label>
                     <input formControlName="password" id="password" type="password" matInput
                         [type]="hide ? 'password' : 'text'">
-                    <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
+                        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide" type="button">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    </button>
+                      </button>
                     <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
                         <div *ngIf="f['password'].errors?.['required']">*Contraseña es requerido.</div>
                     </div>
