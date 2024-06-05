@@ -1,5 +1,10 @@
 <div class="white-box"></div>
+
 <div class="wrapper-div">
+    <div class="d-flex justify-content-between">
+        <span></span>
+        <a mat-raised-button color="warn" routerLink="/perfil-user">Volver</a>
+    </div>
     <div class="form-div">
         <div class="form-group row">
             <form class="form" [formGroup]="recipeForm" (ngSubmit)="createRecipe()" enctype="multipart/form-data">

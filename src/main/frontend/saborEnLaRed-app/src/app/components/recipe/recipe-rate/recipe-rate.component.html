@@ -1,27 +1,25 @@
 <div class="white-box"></div>
 <div class="container">
-    <div style="height: 100vh;margin-top: 150px">
-        <img ngSrc="assets/images/login/agregar-usuario.png" alt="icono" height="100" width="100">
-        <div class="formulario">
-            <div class="d-flex justify-content-between mt-5">
-                <h4>Da una puntuación a esta receta</h4>
-                <a routerLink="/recipes/detail/{{ idRecipe }}" class="btn btn-primary">Volver</a>
+    <div style="height: 70vh;margin-top: 50px">
+        <img ngSrc="assets/images/puntuaciones.webp" alt="icono" height="300" width="500">
+        <div class="form">
+            <div class="title mt-3">
+                <h4>¿Qué puntuación le das a esta receta?</h4>
+                <a mat-raised-button color="warn" routerLink="/recipes/detail/{{ idRecipe }}">Volver</a>
             </div>
-            <hr />
-            <form [formGroup]="form" (ngSubmit)="submit()">
-                <div class="form-group row">
-                    <div class="col-md-6 ">
-                        <label for="rateValue">Puntuación: </label>
-                        <input formControlName="rateValue" id="rateValue" type="text" class="form-control">
-                        <div *ngIf="f['rateValue'].touched && f['rateValue'].invalid" class="alert alert-danger">
-                            <div *ngIf="f['rateValue'].errors?.['required']">*La puntuación es requerida</div>
-                            <div *ngIf="f['rateValue'].errors?.['min']">*La puntuación debe ser mayor o igual a 0</div>
-                            <div *ngIf="f['rateValue'].errors?.['max']">*La puntuación debe ser menor o igual a 10</div>
-                            <div *ngIf="f['rateValue'].errors?.['pattern']">*Sólo se admiten números</div>
-                        </div>
+            <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex flex-column justify-content-center">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Puntuación</mat-label>
+                    <input formControlName="rateValue" id="rateValue" type="text" matInput>
+                    <div *ngIf="f['rateValue'].touched && f['rateValue'].invalid" class="alert alert-danger">
+                        <div *ngIf="f['rateValue'].errors?.['required']">*La puntuación es requerida</div>
+                        <div *ngIf="f['rateValue'].errors?.['min']">*La puntuación debe ser mayor o igual a 0</div>
+                        <div *ngIf="f['rateValue'].errors?.['max']">*La puntuación debe ser menor o igual a 10</div>
+                        <div *ngIf="f['rateValue'].errors?.['pattern']">*Sólo se admiten números</div>
                     </div>
-                </div>
-                <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Enviar</button>
             </form>
         </div>
     </div>

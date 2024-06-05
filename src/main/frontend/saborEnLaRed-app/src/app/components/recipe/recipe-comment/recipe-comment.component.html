@@ -1,25 +1,26 @@
 <div class="white-box"></div>
-<div style="height: 100vh;margin-top: 150px">
-    <img ngSrc="assets/images/login/agregar-usuario.png" alt="icono" height="100" width="100">
-    <div class="formulario">
-        <div class="d-flex justify-content-between mt-5">
-            <h4>Realiza un comentario</h4>
-            <a routerLink="/recipes/detail/{{ idRecipe }}" class="btn btn-primary">Volver</a>
-        </div>
-        <hr />
-        <form [formGroup]="form" (ngSubmit)="submit()">
-            <div class="form-group row">
-                <div class="col-md-6 ">
-                    <label for="commentText">Comentario:</label>
-                    <input formControlName="commentText" id="commentText" type="text" class="form-control">
+<div class="container">
+    <div style="height: 85vh;margin-top: 50px">
+        <img ngSrc="assets/images/comentarios.webp" alt="imagen de comentarios" height="300" width="500">
+        <div class="form">
+            <div class="title mt-3">
+                <h4>Cuéntanos qué te ha parecido la receta</h4>
+                <a mat-raised-button color="warn" routerLink="/recipes/detail/{{ idRecipe }}">Volver</a>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex flex-column justify-content-center">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Comentario</mat-label>
+                    <textarea (input)="adjustHeight($event)" formControlName="commentText" id="commentText" type="text" matInput></textarea>
                     <div *ngIf="f['commentText'].touched && f['commentText'].invalid" class="alert alert-danger">
-                        <div *ngIf="f['commentText'].errors?.['required']">*No se puede enviar un comentario en blanco</div>
+                        <div *ngIf="f['commentText'].errors?.['required']">*No se puede enviar un comentario en blanco
+                        </div>
                         <div *ngIf="f['commentText'].errors?.['maxlength']">*El comentario no debe exceder de 255
                             caracteres</div>
                     </div>
-                </div>
-            </div>
-            <button class="btn btn-primary mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
-        </form>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Enviar</button>
+            </form>
+        </div>
     </div>
 </div>

@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: #4A4A4A;
+    flex-direction: column;
+    
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    border-radius: 10px;
+}
+
+.form {
+    margin: 0 auto;
+    width: 80%;
+
+}
+
+@media (max-width: 600px) {
+    .white-box{
+        margin-bottom: 100px;
+    }
+    .container {
+        margin: 0 auto; 
+        height: 110vh;
+    }
+
+    img {
+        border-radius: 10px;
+        width: 100%;
+        
+    }
+}

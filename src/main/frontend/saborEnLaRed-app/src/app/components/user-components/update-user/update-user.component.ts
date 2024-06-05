@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf, NgOptimizedImage } from "@angular/common";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from "@angular/material/input";
-import { MatButton } from "@angular/material/button";
+import { MatInput, MatInputModule } from "@angular/material/input";
+import { MatButton, MatButtonModule } from "@angular/material/button";
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from "../../../services/user.service";
 import { LoginService } from "../../../services/login-user.service";
 
 import Swal from 'sweetalert2';
 import { User } from '../../../models/User';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -23,7 +24,11 @@ import { User } from '../../../models/User';
     MatButton,
     RouterLink,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    MatInputModule,
+    MatIconModule,
+    FormsModule,
+    MatButtonModule, 
   ],
   templateUrl: './update-user.component.html',
   styleUrl: './update-user.component.css'
@@ -33,6 +38,11 @@ export class UpdateUserComponent implements OnInit {
   rol: string = "";
   active: boolean = false;
   currentUser?: User;
+  hide = true;
+  clickEvent(event: MouseEvent) {
+    this.hide = !this.hide;
+    event.stopPropagation();
+  }
 
   constructor(
     public userService: UserService,

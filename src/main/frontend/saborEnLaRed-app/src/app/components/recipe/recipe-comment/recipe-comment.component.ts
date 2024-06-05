@@ -9,6 +9,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import Swal from 'sweetalert2';
 import { Router } from "@angular/router";
 import { NgIf, NgOptimizedImage } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-recipe-comment',
@@ -18,6 +22,10 @@ import { NgIf, NgOptimizedImage } from '@angular/common';
     NgIf,
     NgOptimizedImage,
     RouterLink,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './recipe-comment.component.html',
   styleUrl: './recipe-comment.component.css'
@@ -87,4 +95,9 @@ export class RecipeCommentComponent implements OnInit {
     return this.form.controls;
   }
 
+  adjustHeight(event?: Event): void {
+    const textarea = event ? event.target as HTMLTextAreaElement : document.querySelector('textarea[matInput]') as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+  }
 }

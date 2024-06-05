@@ -5,6 +5,9 @@ import { RecipeService } from '../../../services/recipe.service';
 import { NgFor, NgIf } from '@angular/common';
 import { LoginService } from '../../../services/login-user.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -13,6 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     NgFor,
     NgIf,
     RouterLink,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './recipe-detail.component.html',
   styleUrl: './recipe-detail.component.css'

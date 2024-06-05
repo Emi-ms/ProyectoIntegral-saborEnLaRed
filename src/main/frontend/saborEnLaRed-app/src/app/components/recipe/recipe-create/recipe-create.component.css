@@ -14,8 +14,6 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    /* background-color: #ae1414; */
-
 }
 
 .form {
@@ -33,21 +31,20 @@ textarea {
 }
 
 .category-wrapper {
-    /* background-color: #ff0000; */
     display: flex;
     gap: 10px;
     justify-items: center;
     align-items: center;
-    justify-content:start;
+    justify-content: start;
     align-content: center;
 }
 
-.ingredient-wrapper{
+.ingredient-wrapper {
     display: flex;
     gap: 10px;
     justify-items: center;
     align-items: center;
-    justify-content:start;
+    justify-content: start;
     align-content: center;
 }
 
@@ -69,7 +66,7 @@ textarea {
     justify-content: space-between;
 }
 
-.category-list{
+.category-list {
     display: flex;
     flex-direction: row;
     align-items: center;

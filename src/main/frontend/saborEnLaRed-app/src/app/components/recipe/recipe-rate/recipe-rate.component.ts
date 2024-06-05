@@ -8,6 +8,10 @@ import { RecipeService } from '../../../services/recipe.service';
 import { UserService } from '../../../services/user.service';
 import { RateService } from '../../../services/rate.service';
 import Swal from 'sweetalert2';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-recipe-rate',
@@ -17,6 +21,11 @@ import Swal from 'sweetalert2';
     NgIf,
     NgOptimizedImage,
     RouterLink,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+
   ],
   templateUrl: './recipe-rate.component.html',
   styleUrl: './recipe-rate.component.css'
