@@ -6,7 +6,7 @@
         <img [src]="imageSrc" alt="imagen">
     </div>
     <div id="rate-div">
-        <h1>{{ recipe?.recipeName }}</h1>
+        <h1>{{ recipe?.recipeName }}<span style="font-size: small;"> subida por {{recipe?.user?.userName}} {{recipe?.user?.userSurname}}</span></h1>
         <p class="card-text d-flex "><mat-icon
                 style="color: rgb(230, 230, 91);margin-right: 2px;">stars</mat-icon>Puntuación: {{
             recipeDoubleCurrentRate }} / 10</p>

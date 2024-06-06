@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.iesbelen.saborenlared.domain.*;
 import org.iesbelen.saborenlared.dto.*;
 import org.iesbelen.saborenlared.exeption.RecipeNotFoundException;
+import org.iesbelen.saborenlared.exeption.UserNotFoundException;
 import org.iesbelen.saborenlared.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class RecipeService {
     private final CommentRepository commentRepository;
     private final RateRepository rateRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    @Autowired
+    public UserService userService;
 
     public RecipeDTO getRecipeDTO(Long id) {
         Recipe recipe = recipeRepository.findById(id)
@@ -35,13 +39,15 @@ public class RecipeService {
             List<CommentDTO> commentsDTOS = mapToCommentDTOs(recipe);
             List<RateDTO> rateDTOS = mapToRateDTOs(recipe);
             List<CategoryDTO> categoryDTOS = mapToCategoryDTOs(recipe);
-
+            User user = userRepository.findById(recipe.getUser().getId()).orElseThrow(()->new UserNotFoundException(recipe.getUser().getId()));
+            UserDTO userDTO = userService.getUser(user.getId());
             return RecipeDTO.builder()
                     .idRecipe(recipe.getIdRecipe())
                     .recipeName(recipe.getRecipeName())
                     .description(recipe.getDescription())
                     .photo(recipe.getPhoto())
                     .active(recipe.getActive())
+                    .user(userDTO)
                     .recipeIngredients(recipeIngredientDTOS)
                     .comments(commentsDTOS.stream().filter(CommentDTO::isActive).toList())
                     .rates(rateDTOS)

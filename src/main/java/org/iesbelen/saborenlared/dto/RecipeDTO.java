@@ -17,6 +17,7 @@ public class RecipeDTO {
     private String description;
     private String photo;
     private Boolean active;
+    private UserDTO user;
     private List<RecipeIngredientDTO> recipeIngredients;
     private List<CommentDTO> comments;
     private List<RateDTO> rates;
