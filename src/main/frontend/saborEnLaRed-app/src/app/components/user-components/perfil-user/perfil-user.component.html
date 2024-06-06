@@ -11,19 +11,11 @@
     </div>
     <h2 class="mt-3">Estos son tus datos</h2>
     <div class="user-container">
-      
-        
-          <div>
-          <p><span>NOMBRE </span>{{ currentUser?.userName }}</p>
-        
-   
-          <p><span>APELLIDO </span>{{ currentUser?.userSurname }}</p>
-        
-   
-          <p><span>EMAIL </span>{{ currentUser?.email }}</p>
-        </div>
-      
-      
+      <div>
+        <p><span>NOMBRE </span>{{ currentUser?.userName }}</p>
+        <p><span>APELLIDO </span>{{ currentUser?.userSurname }}</p>
+        <p><span>EMAIL </span>{{ currentUser?.email }}</p>
+      </div>
       <a mat-raised-button color="primary" routerLink="/update-user">Modificar Datos</a>
     </div>
   </div>

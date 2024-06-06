@@ -1,26 +1,50 @@
 <div class="white-box"></div>
 <div class="container">
-    <div style="height: 70vh;margin-top: 50px">
-        <img ngSrc="assets/images/puntuaciones.webp" alt="icono" height="300" width="500">
-        <div class="form">
-            <div class="title mt-3">
-                <h4>¿Qué puntuación le das a esta receta?</h4>
-                <a mat-raised-button color="warn" routerLink="/recipes/detail/{{ idRecipe }}">Volver</a>
-            </div>
-            <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex flex-column justify-content-center">
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Puntuación</mat-label>
-                    <input formControlName="rateValue" id="rateValue" type="text" matInput>
-                    <div *ngIf="f['rateValue'].touched && f['rateValue'].invalid" class="alert alert-danger">
-                        <div *ngIf="f['rateValue'].errors?.['required']">*La puntuación es requerida</div>
-                        <div *ngIf="f['rateValue'].errors?.['min']">*La puntuación debe ser mayor o igual a 0</div>
-                        <div *ngIf="f['rateValue'].errors?.['max']">*La puntuación debe ser menor o igual a 10</div>
-                        <div *ngIf="f['rateValue'].errors?.['pattern']">*Sólo se admiten números</div>
-                    </div>
-                </mat-form-field>
-                <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Enviar</button>
-            </form>
+    <img ngSrc="assets/images/puntuaciones.webp" alt="icono" height="300" width="500">
+    <div class="mt-3 d-flex justify-content-between btn-container">
+        <span></span>
+        <a mat-raised-button color="warn" routerLink="/recipes/detail/{{ idRecipe }}">Volver</a>
+    </div>
+    <div class="form">
+        <div class="title mt-3">
+            <h4>¿Qué puntuación le das a esta receta?</h4>
         </div>
+        <form [formGroup]="form" (ngSubmit)="submit()" class="d-flex flex-column justify-content-center">
+            <!-- <mat-form-field appearance="outline">
+                <mat-label>Puntuación</mat-label>
+                <input formControlName="rateValue" id="rateValue" type="text" matInput>
+                <div *ngIf="f['rateValue'].touched && f['rateValue'].invalid" class="alert alert-danger">
+                    <div *ngIf="f['rateValue'].errors?.['required']">*La puntuación es requerida</div>
+                    <div *ngIf="f['rateValue'].errors?.['min']">*La puntuación debe ser mayor o igual a 0</div>
+                    <div *ngIf="f['rateValue'].errors?.['max']">*La puntuación debe ser menor o igual a 10</div>
+                    <div *ngIf="f['rateValue'].errors?.['pattern']">*Sólo se admiten números</div>
+                </div>
+            </mat-form-field> -->
+            
+            <div class="rating">
+                <input type="radio" id="star10" name="rateValue" value="10" formControlName="rateValue">
+                <label for="star10" title="10">10 stars</label>
+                <input type="radio" id="star9" name="rateValue" value="9" formControlName="rateValue">
+                <label for="star9" title="9">9 stars</label>
+                <input type="radio" id="star8" name="rateValue" value="8" formControlName="rateValue">
+                <label for="star8" title="8">8 stars</label>
+                <input type="radio" id="star7" name="rateValue" value="7" formControlName="rateValue">
+                <label for="star7" title="7">7 stars</label>
+                <input type="radio" id="star6" name="rateValue" value="6" formControlName="rateValue">
+                <label for="star6" title="6">6 stars</label>
+                <input type="radio" id="star5" name="rateValue" value="5" formControlName="rateValue">
+                <label for="star5" title="5">5 stars</label>
+                <input type="radio" id="star4" name="rateValue" value="4" formControlName="rateValue">
+                <label for="star4" title="4">4 stars</label>
+                <input type="radio" id="star3" name="rateValue" value="3" formControlName="rateValue">
+                <label for="star3" title="3">3 stars</label>
+                <input type="radio" id="star2" name="rateValue" value="2" formControlName="rateValue">
+                <label for="star2" title="2">2 stars</label>
+                <input type="radio" id="star1" name="rateValue" value="1" formControlName="rateValue">
+                <label for="star1" title="1">1 star</label>
+            </div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Enviar</button>
+
+        </form>
     </div>
 </div>

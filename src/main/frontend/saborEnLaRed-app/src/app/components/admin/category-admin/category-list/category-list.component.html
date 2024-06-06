@@ -1,29 +1,53 @@
 <div class="white-box"></div>
 <div class="container">
-    <div class="d-flex justify-content-center row">
-        <div class="col-md-6 mt-5">
-          <h2>Lista de Categorías</h2>
-        </div>
-        <div class="col-md-6 mt-5">
-          <a routerLink="/category/create" class="btn btn-success float-md-end" style="margin-left: 2px; margin-top: 2px;">Crear Nueva Categoría</a>
-        </div>
-      </div>
-      <table id="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let category of catergories" >
-            <td>{{ category.idCategory }}</td>
-            <td>{{ category.categoryName }}</td>
-            <td><button type="button" [routerLink]="['/category/', 'edit', category.idCategory  ]" class="btn btn-secondary" style="margin-left: 2px; margin-top: 2px;">Editar</button></td>
-            <td><button type="button" (click)="deleteCategory(category.idCategory)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="d-flex justify-content-center row">
+    <div class="mt-5">
+      <h2>Lista de Categorías</h2>
+    </div>
+    <a routerLink="/category/create" class="btn btn-success float-md-end"
+      style="margin-left: 2px; margin-top: 2px;">Crear Nueva Categoría</a>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filtra por nombre" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.idCategory}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Editar </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button type="button" color="primary" [routerLink]="['/category/', 'edit', element.idCategory]">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="warn" type="button" (click)="deleteCategory(element.idCategory)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No se encuentran datos con "{{input.value}}"</td>
+    </tr>
+  </table>
 </div>

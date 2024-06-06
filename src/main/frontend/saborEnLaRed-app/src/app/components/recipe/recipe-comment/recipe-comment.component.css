@@ -1,14 +1,15 @@
 .container {
-    margin-top: 300px;
+    margin-top: 150px;
+    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
     color: #4A4A4A;
+    flex-direction: column;
 }
 
 .form {
-    width: 100%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -17,9 +18,11 @@
 .title {
     width: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    text-align: center;
+}
+
+.btn-container{
+    width: 60%;
 }
 
 
@@ -36,13 +39,14 @@ img{
 
     @media (max-width: 600px) {
         .container {
-            margin: 0 auto; 
+            height: 85vh;
         }
 
         .form {
             gap: 10px;
             width: 80%; 
             margin: 0 auto; 
+           
         }
 
         .title {
@@ -51,6 +55,11 @@ img{
             width: 90%; 
             margin: 0 auto; 
             text-align: center;
+        }
+
+
+        .btn-container{
+            width: 100%;
         }
 
         img {

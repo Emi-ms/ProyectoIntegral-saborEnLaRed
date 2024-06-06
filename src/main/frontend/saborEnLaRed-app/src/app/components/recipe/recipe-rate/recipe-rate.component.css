@@ -1,36 +1,77 @@
 .container {
-    margin-top: 300px;
+    margin-top: 150px;
+    height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
     color: #4A4A4A;
-    
+    flex-direction: column;
 }
 
 .form{
-    
-    width: 100%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
+    gap: 20px;
 }
+
 .title{
-   
     width: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    text-align: center;
+}
+
+.btn-container{
+    width: 60%;
 }
 
 img{
     border-radius: 10px;
 }
 
+
+.rating:not(:checked) > input {
+    position: absolute;
+    appearance: none;
+}
+
+.rating:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #f70;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+
 @media (max-width: 600px) {
-    .container {
-        margin: 0 auto; 
+    .container { 
+        height: 85vh;
     }
 
     .form {

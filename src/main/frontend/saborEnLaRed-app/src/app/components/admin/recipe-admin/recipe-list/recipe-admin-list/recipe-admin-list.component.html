@@ -1,27 +1,42 @@
 <div class="white-box"></div>
 <div class="container">
-    <div class="d-flex justify-content-center row">
-        <div class="col-md-6 mt-5">
-          <h2>Lista de Recetas</h2>
-        </div>
-        
-      </div>
-      <table id="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let recipe of recipes" >
-            <td>{{ recipe.idRecipe }}</td>
-            <td>{{ recipe.recipeName }}</td>
-           
-            <td><button type="button" (click)="deleteRecipe(recipe.idRecipe)" class="btn btn-danger" style="margin-left: 2px; margin-top: 2px;">Eliminar</button></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="d-flex justify-content-center row">
+    <div class="mt-5">
+      <h1>Lista de Recetas</h1>
+    </div>
+
+  </div>
+  <mat-form-field>
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filtra por nombre" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.idRecipe}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="recipeName">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.recipeName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="warn" type="button" (click)="deleteRecipe(element.idRecipe)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No se encuentran datos con "{{input.value}}"</td>
+    </tr>
+  </table>
 </div>
