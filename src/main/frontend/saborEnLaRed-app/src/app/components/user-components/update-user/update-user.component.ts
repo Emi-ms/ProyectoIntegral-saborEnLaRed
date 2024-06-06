@@ -51,8 +51,12 @@ export class UpdateUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("en el onInit")
+    console.log(this.currentUser);
     this.loginService.currentUser.subscribe({
       next: (currentUser) => {
+        console.log("en el onInit despues del next")
+        console.log(currentUser);
         this.currentUser = currentUser;
         this.id = currentUser.id;
         this.rol = currentUser.rol;
@@ -91,6 +95,7 @@ export class UpdateUserComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+        
         this.router.navigate(['/perfil-user']);
       },
       error: () => {

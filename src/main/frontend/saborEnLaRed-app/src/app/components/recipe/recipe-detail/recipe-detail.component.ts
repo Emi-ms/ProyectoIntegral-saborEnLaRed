@@ -30,6 +30,7 @@ export class RecipeDetailComponent implements OnInit {
   comments: any[] = [];
   recipeDoubleCurrentRate: number = 0;
   imageSrc: any;
+  formatedDescription: string = '';
 
 
   constructor(
@@ -45,6 +46,7 @@ export class RecipeDetailComponent implements OnInit {
     this.idRecipe = Number(this.route.snapshot.params['idRecipe']);
     this.recipeService.find(this.idRecipe).subscribe((data: Recipe) => {
       this.recipe = data;
+      console.log(this.recipe);
       this.comments = this.recipe.comments;
       if (this.recipe.rates && this.recipe.rates.length > 0) {
         this.recipeDoubleCurrentRate = parseFloat((this.recipe.rates.map(rate => rate.rateValue).reduce((a, b) => a + b, 0) / this.recipe.rates.length).toFixed(2));
@@ -65,7 +67,17 @@ export class RecipeDetailComponent implements OnInit {
           );
         });
       }
+
+      this.formatedDescription = this.formatRecipeDescription(this.recipe.description);
     });
+  }
+
+
+  formatRecipeDescription(description: string): string {
+    if (description) {
+      return description.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }
+    return '';
   }
 }
 

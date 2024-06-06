@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 import baserUrl from "./helper";
 import { User } from "../models/User";
 import { catchError, Observable, throwError, tap } from "rxjs";
+import { LoginService } from './login-user.service';
 
 
 @Injectable({
@@ -18,7 +19,10 @@ export class UserService {
   });
 
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private loginService: LoginService
+  ) {
   }
 
   getAll(): Observable<User[]> {
@@ -58,10 +62,13 @@ export class UserService {
         tap(updateUser => {
           console.log("updateUser", updateUser)
           sessionStorage.setItem("user", JSON.stringify(user));
+          this.loginService.currentUser.next(user);
         }),
         catchError(this.errorHandler)
       );
   }
+
+
 
   logicDelete(id: number) {
     return this.httpClient.put<User>(this.apiURL + '/users/logic-delete/' + id, { headers: this.headers })
@@ -78,7 +85,7 @@ export class UserService {
         `El cuerpo del error: ${error.error}`);
     }
     return throwError(error);
-    //return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
+    
   }
 
 }

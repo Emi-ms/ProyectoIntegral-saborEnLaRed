@@ -10,6 +10,8 @@ import { UserService } from "../../services/user.service";
 
 import Swal from 'sweetalert2';
 import { MatIconModule } from '@angular/material/icon';
+import { LoginService } from '../../services/login-user.service';
+import { LoginRequest } from '../../models/LoginRequest';
 
 
 @Component({
@@ -26,7 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatIconModule,
     FormsModule,
-    MatButtonModule, 
+    MatButtonModule,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
@@ -40,7 +42,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public loginService: LoginService
   ) {
   }
 
@@ -56,14 +59,45 @@ export class SignupComponent implements OnInit {
   });
 
 
+  // submit() {
+  //   console.log(this.form.value);
+  //   this.userService.registerUser(this.form.value).subscribe({
+  //     next: (res: any) => {
+  //       console.log('Usuario creado correctamente!');
+  //       Swal.fire("Enhorabuena!!", "Usuario registrado con éxito!!", "success")
+  //       this.router.navigateByUrl('/')
+  //         .then();
+  //     },
+  //     error: (error: any) => {
+  //       console.log("en el error del registro", error)
+  //       if (error.status == 400) {
+  //         Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
+  //       } else {
+  //         console.log("otro tipo de error de servidor")
+  //         Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
+  //       }
+  //     }
+  //   });
+  // }
+
   submit() {
     console.log(this.form.value);
     this.userService.registerUser(this.form.value).subscribe({
       next: (res: any) => {
         console.log('Usuario creado correctamente!');
         Swal.fire("Enhorabuena!!", "Usuario registrado con éxito!!", "success")
-        this.router.navigateByUrl('/')
-          .then();
+
+        this.loginService.login(this.form.value as LoginRequest).subscribe({
+          next: (res: any) => {
+            console.log('Usuario logueado correctamente!');
+            this.router.navigateByUrl('/')
+              .then();
+          },
+          error: (error: any) => {
+            console.log("en el error del login", error)
+            Swal.fire("Error!", "Se produjo un error al iniciar sesión", "error")
+          }
+        });
       },
       error: (error: any) => {
         console.log("en el error del registro", error)
@@ -78,6 +112,7 @@ export class SignupComponent implements OnInit {
   }
 
   get f() {
-    return this.form.controls;
+      return this.form.controls;
+    }
   }
-}
+

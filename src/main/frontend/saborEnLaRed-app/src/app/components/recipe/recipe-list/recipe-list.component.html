@@ -8,17 +8,17 @@
     <mat-hint></mat-hint>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label>Filtra por categoría</mat-label>
-    <input matInput placeholder="Filtra por categoría" [(ngModel)]="categoryFilter" (input)="filterRecipes()">
-    <mat-icon matSuffix>search</mat-icon>
-    <mat-hint></mat-hint>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
     <mat-label>Filtra por ingrediente</mat-label>
     <input matInput placeholder="Filtra por ingrediente" [(ngModel)]="ingredientFilter" (input)="filterRecipes()">
     <mat-icon matSuffix>search</mat-icon>
     <mat-hint></mat-hint>
   </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Filtra por categoría</mat-label>
+    <mat-select [(value)]="categoryFilter" (selectionChange)="filterRecipes()">
+        <mat-option *ngFor="let category of categories" [value]="category.categoryName">{{category.categoryName}}</mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
 <div class="container">
   <div *ngIf="recipesFiltered.length === 0" class="alert alert-danger" role="alert">

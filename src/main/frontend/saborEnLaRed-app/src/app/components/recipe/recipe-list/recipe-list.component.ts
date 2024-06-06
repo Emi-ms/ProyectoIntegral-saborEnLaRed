@@ -9,6 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../models/Category';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-recipe-list',
@@ -22,7 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.css'
@@ -36,18 +40,24 @@ export class RecipeListComponent implements OnInit {
   nameFilter: string = '';
   categoryFilter: string = '';
   ingredientFilter: string = '';
+  categories: Category[] = [];
 
   constructor(
     private recipeService: RecipeService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private categoriesService: CategoryService,
 
   ) { }
 
   ngOnInit(): void {
+    this.categoriesService.getAll().subscribe((data: Category[]) => {
+      this.categories = data;
+      console.log(this.categories);
+    });
     this.recipeService.getAll().subscribe((data: Recipe[]) => {
       this.recipes = data;
       this.recipesFiltered = this.recipes;
-      console.log(this.recipes);
+     
 
       this.recipesFiltered.forEach((recipe) => {
         recipe.rate = recipe.rates.length > 0
