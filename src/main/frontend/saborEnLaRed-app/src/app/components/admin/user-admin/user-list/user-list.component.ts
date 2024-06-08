@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit{
     })
   }
 
-  displayedColumns: string[] = ['id', 'userName', 'userSurname', 'email', 'rol', 'delete'];
+  displayedColumns: string[] = ['id', 'userName', 'userSurname', 'email', 'rol','edit', 'delete'];
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

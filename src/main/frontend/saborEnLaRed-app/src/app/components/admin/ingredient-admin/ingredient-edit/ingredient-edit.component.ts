@@ -1,9 +1,12 @@
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Ingredient } from '../../../../models/Ingredient';
 import { IngredientService } from '../../../../services/ingredient.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-ingredient-edit',
@@ -11,7 +14,11 @@ import { IngredientService } from '../../../../services/ingredient.service';
   imports: [
     ReactiveFormsModule,
     RouterLink,
-    NgIf
+    NgIf,
+    NgOptimizedImage,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './ingredient-edit.component.html',
   styleUrl: './ingredient-edit.component.css'

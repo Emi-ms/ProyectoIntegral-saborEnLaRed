@@ -1,13 +1,14 @@
 import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { Router, ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { User } from '../../../../models/User';
 import { UserService } from '../../../../services/user.service';
 import Swal from 'sweetalert2';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-user-admin-update',
@@ -19,7 +20,10 @@ import Swal from 'sweetalert2';
     MatButton,
     RouterLink,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './user-admin-update.component.html',
   styleUrl: './user-admin-update.component.css'
@@ -27,6 +31,16 @@ import Swal from 'sweetalert2';
 export class UserAdminUpdateComponent implements OnInit {
   id: number = 0;
   user?: User;
+
+  form: FormGroup = new FormGroup({
+    id: new FormControl(''),
+    userName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
+    userSurname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
+    email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), Validators.maxLength(255)]),
+    password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d!@#$%^&*()-_=+{};:,<.>]{8,}$'), Validators.maxLength(255), Validators.minLength(8)]),
+    rol: new FormControl('', Validators.required),
+    active: new FormControl('')
+  });
 
 
   constructor(
@@ -52,15 +66,7 @@ export class UserAdminUpdateComponent implements OnInit {
     });
   }
 
-  form: FormGroup = new FormGroup({
-    id: new FormControl(''),
-    userName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
-    userSurname: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]),
-    email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'), Validators.maxLength(255)]),
-    password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d!@#$%^&*()-_=+{};:,<.>]{8,}$'), Validators.maxLength(255), Validators.minLength(8)]),
-    rol: new FormControl('', Validators.required),
-    active: new FormControl('')
-  });
+
 
   submit() {
     this.form.patchValue({ id: this.id });

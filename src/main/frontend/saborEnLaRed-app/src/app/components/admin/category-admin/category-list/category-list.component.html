@@ -1,13 +1,13 @@
 <div class="white-box"></div>
 <div class="container">
-  <div class="d-flex justify-content-center row">
-    <div class="mt-5">
-      <h2>Lista de Categorías</h2>
-    </div>
-    <a routerLink="/category/create" class="btn btn-success float-md-end"
-      style="margin-left: 2px; margin-top: 2px;">Crear Nueva Categoría</a>
-  </div>
+  <h1>Lista de Categorías</h1>
+  <a routerLink="/category/create" class="btn btn-success float-md-end" style="margin-left: 2px; margin-top: 2px;">Crear
+    Nueva Categoría</a>
 
+  <div class="d-flex justify-content-between" style="width: 100%;">
+    <span></span>
+    <a mat-raised-button color="warn" routerLink="/admin-menu">Volver</a>
+  </div>
   <mat-form-field>
     <mat-label>Filtro</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filtra por nombre" #input>

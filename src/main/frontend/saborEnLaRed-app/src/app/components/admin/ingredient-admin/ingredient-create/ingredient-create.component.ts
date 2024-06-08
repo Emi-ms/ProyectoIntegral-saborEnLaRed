@@ -1,16 +1,26 @@
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IngredientService } from '../../../../services/ingredient.service';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-ingredient-create',
   standalone: true,
   imports: [
+    NgOptimizedImage,
+    MatFormFieldModule,
+    MatInput,
+    MatButton,
     RouterLink,
+    ReactiveFormsModule,
     NgIf,
-    ReactiveFormsModule,],
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './ingredient-create.component.html',
   styleUrl: './ingredient-create.component.css'
 })
@@ -26,15 +36,15 @@ export class IngredientCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  
   }
 
-  
-  get f(){
+
+  get f() {
     return this.form.controls;
   }
 
-  submit(){
+  submit() {
     console.log(this.form.value);
     this.ingredientService.create(this.form.value).subscribe(res => {
       console.log('Ingrediente creado correctamente!' + res.ingredientName);

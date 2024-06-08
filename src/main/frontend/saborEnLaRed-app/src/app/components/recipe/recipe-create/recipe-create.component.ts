@@ -62,7 +62,7 @@ export class RecipeCreateComponent implements OnInit {
   ) {
     this.recipeForm = this.fb.group({
       recipeName: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]],
-      description: ['', [Validators.required, Validators.maxLength(3000)]],
+      description: ['', [Validators.required, Validators.maxLength(5000)]],
       photo: null,
       active: [true],
       recipeIngredients: this.fb.array([]),

@@ -44,8 +44,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category one(@PathVariable("id") Long id) {
-        return this.categoryService.one(id);
+    public CategoryDTO one(@PathVariable("id") Long id) {
+        return this.categoryService.getCategoryDTO(id);
     }
 
     @PutMapping("/{id}")
