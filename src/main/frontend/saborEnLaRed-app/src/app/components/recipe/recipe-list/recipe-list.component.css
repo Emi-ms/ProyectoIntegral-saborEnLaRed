@@ -8,6 +8,7 @@
   align-items: center;
   justify-items: center;
   margin: 50px auto 0;
+  min-height: 40vh;
 }
 
 .card:hover {

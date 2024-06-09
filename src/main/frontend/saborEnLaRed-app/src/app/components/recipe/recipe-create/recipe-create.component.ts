@@ -70,8 +70,8 @@ export class RecipeCreateComponent implements OnInit {
       user: {
         id: this.userService.getUserFromSessionStorage().id
       },
-      quantity: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      unitMeasure: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'), Validators.maxLength(255)]],
+      quantity: ['', [Validators.required, Validators.pattern('^[0-9,]*$')]],
+      unitMeasure: ['', [Validators.required, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\(\)]+'), Validators.maxLength(255)]],
     });
   }
 
