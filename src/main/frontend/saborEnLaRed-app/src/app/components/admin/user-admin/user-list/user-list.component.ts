@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { User } from '../../../../models/User';
@@ -20,6 +20,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    NgIf
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'

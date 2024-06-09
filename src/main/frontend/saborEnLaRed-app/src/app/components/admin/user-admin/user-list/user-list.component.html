@@ -51,7 +51,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Borrar </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="warn" type="button" (click)="deleteUser(element.id)" *ngIf="element.rol !== 'ADMIN'">
+        <button mat-icon-button color="warn" type="button" (click)="deleteUser(element.id)" *ngIf="element.rol === 'NORMAL_USER'">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
