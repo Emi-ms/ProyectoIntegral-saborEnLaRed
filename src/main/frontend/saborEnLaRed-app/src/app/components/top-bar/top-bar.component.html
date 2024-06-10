@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-light fixed-top" id="neubar">
   <div class="container">
-<!--    <a class="navbar-brand" href="#"><img ngSrc="assets/images/logo2.webp" width="154" height="99" alt="logo" priority/></a>-->
     <a class="navbar-brand" href="#" routerLink="/"><img ngSrc="assets/images/vertical-logo.png" width="150" height="150" alt="logo" priority/></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,19 +15,8 @@
           <a class="nav-link mx-2 bt" href="#" routerLink="recipes">RECETAS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link mx-2 bt" href="" routerLink="/" fragment="about-div">SOBRE NOSOTROS</a>
+          <a class="nav-link mx-2 bt" href="#" routerLink="/" fragment="about-div">SOBRE NOSOTROS</a>
         </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link mx-2 dropdown-toggle bt" href="#" id="navbarDropdownMenuLink" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            SOBRE NOSOTROS
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item bt" href="#">Blog</a></li>
-            <li><a class="dropdown-item bt" href="#">About Us</a></li>
-            <li><a class="dropdown-item bt" href="#">Contact us</a></li>
-          </ul>
-        </li> -->
       </ul>
       <div class="nav-item" style="margin-top: 5px;margin-left: 13%">
         <a *ngIf="!userLoginOn"  class="btn btn-close-white" style="font-size: 20px; font-weight: bold;color: #000000A6;" routerLink="/login" >Iniciar sesión</a>
