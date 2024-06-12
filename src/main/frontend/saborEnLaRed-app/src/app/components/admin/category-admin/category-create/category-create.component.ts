@@ -1,16 +1,25 @@
-import { NgIf } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../../../services/category.service';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-category-create',
   standalone: true,
   imports: [
+    NgOptimizedImage,
+    MatFormFieldModule,
+    MatInput,
+    MatButton,
     RouterLink,
-    NgIf,
     ReactiveFormsModule,
+    NgIf,
+    MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './category-create.component.html',
   styleUrl: './category-create.component.css'
@@ -27,7 +36,7 @@ constructor(
 ) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   
   }
 
 

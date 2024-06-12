@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -19,18 +20,19 @@ import java.util.Set;
 
 @NamedQuery(name="User.findByEmail", query = "select u from User u where u.email=:email ")
 
+
 @Entity
 @Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User  implements UserDetails {
+public class User  implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    private Long idUser;
+    private Long id;
     private String userName;
     private String userSurname;
     @Column(nullable = false)
@@ -41,21 +43,22 @@ public class User  implements UserDetails {
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
+
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Rate> rates = new HashSet<>();
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Recipe> recipes = new HashSet<>();

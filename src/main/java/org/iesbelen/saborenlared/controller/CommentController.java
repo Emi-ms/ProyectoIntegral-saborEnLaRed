@@ -2,11 +2,12 @@ package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Comment;
+import org.iesbelen.saborenlared.dto.CommentDTO;
 import org.iesbelen.saborenlared.service.CommentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,14 +24,22 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Comment> all() {
         log.info("Accediendo a todas los comentarios");
         return this.commentService.all();
     }
-    @PostMapping({"","/"})
-    public Comment newComment(@RequestBody Comment comment) {
-        return this.commentService.save(comment);
+
+    @GetMapping({"/comments-actives"})
+    public ResponseEntity<?> allActive() {
+        log.info("Accediendo a todas los comentarios activos");
+        return new ResponseEntity<>(commentService.AllActiveComment(), HttpStatus.OK);
+    }
+
+    @PostMapping({"", "/"})
+    public ResponseEntity<Comment> newComment(@RequestBody Comment comment) {
+        Comment savedComment = this.commentService.save(comment);
+        return ResponseEntity.ok(savedComment);
     }
 
     @GetMapping("/{id}")
@@ -40,9 +49,14 @@ public class CommentController {
 
     @PutMapping("/{id}")
     public Comment replaceComment(@PathVariable("id") Long id, @RequestBody Comment comment) {
-        System.out.println(id + " en el controlador "+ comment.toString());
-
         return this.commentService.replace(id, comment);
+    }
+
+    @PutMapping("/logic-delete/{id}")
+    public ResponseEntity<CommentDTO> deactivateComment(@PathVariable Long id) {
+        Comment deactivatedComment = commentService.logicDelete(id);
+        CommentDTO commentDTO = commentService.getCommentDTO(deactivatedComment.getIdComment());
+        return ResponseEntity.ok(commentDTO);
     }
 
     @ResponseBody

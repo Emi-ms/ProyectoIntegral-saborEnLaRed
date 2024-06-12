@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import { UserService } from '../../services/user.service';
@@ -6,6 +6,7 @@ import { User } from '../../models/User';
 import { LoginService } from '../../services/login-user.service';
 import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,32 +27,17 @@ export class TopBarComponent implements OnInit{
   userLoginOn:boolean = false;
   currentUser?:User;
 
-  
   protected readonly RouterLink = RouterLink;
 
   constructor(
     private userService:UserService,
-    private loginService:LoginService
-  
-  ) {
+    private loginService:LoginService,
+    private router: Router
 
-  //   this.userService.getUser(68).subscribe({
-  //     next: (user) => {
-  //       this.user = user;
-  //       console.log(user);
-  //     },
-  //     error: (error) => {
-  //       this.errorMessage = error;
-  //       console.log(error);
-  //     },
-  //     complete: () => {
-  //       console.log("Completed, no errors.");
-  //     }
-  //   })
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.loginService.currentUserLoginOn.subscribe({    
+    this.loginService.currentUserLoginOn.subscribe({
       next: (loginOn) => {
         this.userLoginOn = loginOn;
       }
@@ -71,5 +57,7 @@ export class TopBarComponent implements OnInit{
     this.loginService.logout();
   }
 
-
+  navigateToAboutDiv() {
+    this.router.navigate(['/'], { fragment: 'about-div' });
+  }
 }

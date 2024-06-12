@@ -3,9 +3,13 @@ package org.iesbelen.saborenlared.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.saborenlared.domain.Category;
+import org.iesbelen.saborenlared.domain.Recipe;
+import org.iesbelen.saborenlared.dto.CategoryDTO;
+import org.iesbelen.saborenlared.dto.RecipeDTO;
 import org.iesbelen.saborenlared.service.CategoryService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,26 +26,40 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping({"","/"})
-    public List<Category> all() {
+    @GetMapping({"", "/"})
+    public List<CategoryDTO> all() {
         log.info("Accediendo a todas las categorías");
         return this.categoryService.all();
     }
-    @PostMapping({"","/"})
+
+    @GetMapping({"/categories-actives"})
+    public ResponseEntity<?> allActive() {
+        log.info("Accediendo a todas las categorias activas");
+        return new ResponseEntity<>(categoryService.AllActiveCategory(), HttpStatus.OK);
+    }
+
+    @PostMapping({"", "/"})
     public Category newCategory(@RequestBody Category category) {
         return this.categoryService.save(category);
     }
 
     @GetMapping("/{id}")
-    public Category one(@PathVariable("id") Long id) {
-        return this.categoryService.one(id);
+    public CategoryDTO one(@PathVariable("id") Long id) {
+        return this.categoryService.getCategoryDTO(id);
     }
 
     @PutMapping("/{id}")
     public Category replaceCategory(@PathVariable("id") Long id, @RequestBody Category category) {
-        System.out.println(id + " en el controlador "+ category.toString());
+        System.out.println(id + " en el controlador " + category.toString());
 
         return this.categoryService.replace(id, category);
+    }
+
+    @PutMapping("/logic-delete/{id}")
+    public ResponseEntity<CategoryDTO> deactivateCategory(@PathVariable Long id) {
+        Category deactivatedCategory = categoryService.logicDelete(id);
+        CategoryDTO categoryDTO = categoryService.getCategoryDTO(deactivatedCategory.getIdCategory());
+        return ResponseEntity.ok(categoryDTO);
     }
 
     @ResponseBody

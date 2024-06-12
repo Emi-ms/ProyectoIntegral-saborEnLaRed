@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 import baserUrl from "./helper";
 import { User } from "../models/User";
 import { catchError, Observable, throwError, tap } from "rxjs";
+import { LoginService } from './login-user.service';
 
 
 @Injectable({
@@ -18,41 +19,60 @@ export class UserService {
   });
 
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private loginService: LoginService
+  ) {
+  }
+
+  getAll(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.apiURL + '/users/users-actives')
+      .pipe(
+        catchError(this.errorHandler));
+
   }
 
   public getUser(id: number): Observable<User> {
-    return this.httpClient.get<User>(this.apiURL + "/users/" + id, { headers: this.headers})
+    return this.httpClient.get<User>(this.apiURL + "/users/" + id, { headers: this.headers })
       .pipe(catchError(this.errorHandler));
 
   }
 
   public getUserFromSessionStorage(): User {
     const user = sessionStorage.getItem("user");
-    return  JSON.parse(user || "{}");
+    return JSON.parse(user || "{}");
 
   }
 
 
   public registerUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.apiURL + "/auth/register", JSON.stringify(user),{ headers: this.headers})
+    return this.httpClient.post<User>(this.apiURL + "/auth/register", JSON.stringify(user), { headers: this.headers })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  public createUserByAdmin(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers })
       .pipe(catchError(this.errorHandler));
   }
 
   public updateUser(user: User): Observable<any> {
-    // this.headers = this.headers.set('Authorization', 'Bearer ' + sessionStorage.getItem("token"));
-    // console.log("en el update user el user service")
-    // console.log(this.headers)
-    // console.log(JSON.stringify(user))
 
-    return this.httpClient.put<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers})
+    return this.httpClient.put<User>(this.apiURL + "/users", JSON.stringify(user), { headers: this.headers })
       .pipe(
-        tap(updateUser=>{
-          console.log("updateUser",updateUser)
+        tap(updateUser => {
+          console.log("updateUser", updateUser)
           sessionStorage.setItem("user", JSON.stringify(user));
+          this.loginService.currentUser.next(user);
         }),
         catchError(this.errorHandler)
       );
+  }
+
+
+
+  logicDelete(id: number) {
+    return this.httpClient.put<User>(this.apiURL + '/users/logic-delete/' + id, { headers: this.headers })
+      .pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: HttpErrorResponse) {
@@ -64,10 +84,8 @@ export class UserService {
         `Backend codigo de error: ${error.status}, ` +
         `El cuerpo del error: ${error.error}`);
     }
-    return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
+    return throwError(error);
+    
   }
-
-
-
 
 }

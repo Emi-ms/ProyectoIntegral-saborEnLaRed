@@ -13,3 +13,10 @@ footer {
 }
 
 
+@media (max-width: 768px) {
+  .footer-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}

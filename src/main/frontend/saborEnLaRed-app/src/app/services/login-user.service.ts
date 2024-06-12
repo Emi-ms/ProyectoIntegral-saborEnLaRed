@@ -17,20 +17,10 @@ export class LoginService {
   currentUser: BehaviorSubject<User>;
 
   httpOptions = {
-
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-
     }),
   }
-
-  // httpOptionsAuth = {
-
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ' + localStorage.getItem("token")
-  //   }),
-  // }
 
   constructor(private httpClient: HttpClient) {
     this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token") !== null);
@@ -42,12 +32,13 @@ export class LoginService {
   public login(userCredencials: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(this.apiURL + "/auth/login", userCredencials).pipe(
       tap((userData) => {
+        console.log(userData);
         sessionStorage.setItem("token", userData.token);
-        sessionStorage.setItem("user", JSON.stringify(userData.user));
+        sessionStorage.setItem("user", JSON.stringify(userData.userDTO));
         this.currentUserLoginOn.next(true);
         this.currentUserToken.next(userData);
-        if (userData.user) {
-          this.currentUser.next(userData.user);
+        if (userData.userDTO) {
+          this.currentUser.next(userData.userDTO);
         }
       }),
       map((userData) => userData.token),
@@ -68,14 +59,15 @@ export class LoginService {
 
   private errorHandler(error: HttpErrorResponse) {
     if (error.status === 0) {
-      console.error("An error occurred:", error.error);
+      console.error("Ha ocurrido un error:", error.error);
     }
     else {
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend codigo de error: ${error.status}, ` +
+        `El cuerpo del error: ${error.error}`);
     }
-    return throwError(() => new Error("Something bad happened; please try again later."));
+    return throwError(error);
+    //return throwError(() => new Error("Algo salio mal; por favor, intente de nuevo."));
   }
 
   get userToken(): Observable<String> {
@@ -95,50 +87,6 @@ export class LoginService {
   }
 
 
-
-  // //generamos el token para el usuario
-  // public generateToken(userCredencials: any): Observable<User> {
-  //   console.log(userCredencials)
-  //   return this.httpClient.post<User>(this.apiURL + "/users/login", JSON.stringify(userCredencials), this.httpOptions)
-  //     .pipe(catchError(this.errorHandler));
-  // }
-
-  // errorHandler(error: any) {
-  //   return throwError(error);
-  // }
-
-  // //iniciamos sesion y establecemos el token en el localstorage
-  // public loginUser(token: any) {
-  //   localStorage.setItem("token", token);
-  // }
-
-  // public isLoggedIn() {
-  //   let tokenStr = localStorage.getItem("token");
-  //   if (tokenStr === undefined || tokenStr === '' || tokenStr === null) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
-  // //cerramos sesion y eliminamos el token del localstorage
-  // public logout() {
-  //   localStorage.removeItem("token");
-  //   localStorage.removeItem("user");
-  //   return true;
-  // }
-
-  // //obtenemos el token del localstorage 
-  // public getToken() {
-  //   return localStorage.getItem("token");
-  // }
-
-  //guardamos el usuario en el localstorage
-  // public setUser(user: User) {
-  //   sessionStorage.setItem("user", JSON.stringify(user));
-  // }
-
-  //obtenemos el usuario del localstorage
   public getUser() {
     let userStr = sessionStorage.getItem("user");
     if (userStr !== null) {
@@ -149,20 +97,12 @@ export class LoginService {
     }
   }
 
-  //obtenemos el rol del usuario
   public getUserRole() {
-
     let user = this.getUser();
     if (user !== null) {
       return user.rol;
     }
   }
-
-  // public getCurrentUser(){
-
-  //   return this.httpClient.get(this.apiURL + "/users/current-user", this.httpOptionsAuth)
-  // }
-
 
 }
 

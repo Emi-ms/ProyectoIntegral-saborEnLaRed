@@ -22,6 +22,6 @@ public class Category {
     private String categoryName;
     private Boolean active;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "categories")
     private Set<Recipe> recipes;
 }

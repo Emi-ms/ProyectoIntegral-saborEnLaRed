@@ -1,0 +1,22 @@
+<div class="white-box"></div>
+<div class="container">
+  <img ngSrc="assets/images/editar.jpg" alt="icono" height="350" width="500">
+  <div class="d-flex justify-content-between w-75">
+    <span></span>
+    <a mat-raised-button color="warn" routerLink="/ingredients-admin">Volver</a>
+  </div>
+  <h1 class="mt-2">Crear nuevo Ingrediente</h1>
+  <div class="form-wrapper">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input formControlName="ingredientName" id="ingredientName" type="text" matInput>
+        <div *ngIf="f['ingredientName'].touched && f['ingredientName'].invalid" class="alert alert-danger">
+          <div *ngIf="f['ingredientName'].errors?.['required']">*Nombre es requerido.</div>
+          <div *ngIf="f['ingredientName'].errors?.['pattern']">*El nombre sólo puede contener letras.</div>
+        </div>
+    </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Enviar</button>
+    </form>
+  </div>
+</div>

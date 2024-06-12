@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,8 +23,9 @@ public class Ingredient {
     private String ingredientName;
     private Boolean active;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private Set<Recipe> recipes;
-
-
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "ingredient"
+    )
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 }

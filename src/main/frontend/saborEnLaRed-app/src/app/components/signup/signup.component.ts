@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf, NgOptimizedImage } from "@angular/common";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from "@angular/material/input";
-import { MatButton } from "@angular/material/button";
+import { MatInput, MatInputModule } from "@angular/material/input";
+import { MatButton, MatButtonModule } from "@angular/material/button";
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from "../../services/user.service";
 
 import Swal from 'sweetalert2';
+import { MatIconModule } from '@angular/material/icon';
+import { LoginService } from '../../services/login-user.service';
+import { LoginRequest } from '../../models/LoginRequest';
+
 
 @Component({
   selector: 'app-signup',
@@ -20,16 +24,26 @@ import Swal from 'sweetalert2';
     MatButton,
     RouterLink,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    MatInputModule,
+    MatIconModule,
+    FormsModule,
+    MatButtonModule,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
+  hide = true;
+  clickEvent(event: MouseEvent) {
+    this.hide = !this.hide;
+    event.stopPropagation();
+  }
 
   constructor(
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    public loginService: LoginService
   ) {
   }
 
@@ -44,18 +58,27 @@ export class SignupComponent implements OnInit {
 
   });
 
-
-  submit() {
+  register() {
     console.log(this.form.value);
     this.userService.registerUser(this.form.value).subscribe({
       next: (res: any) => {
         console.log('Usuario creado correctamente!');
         Swal.fire("Enhorabuena!!", "Usuario registrado con éxito!!", "success")
-        this.router.navigateByUrl('/')
-          .then();
+
+        this.loginService.login(this.form.value as LoginRequest).subscribe({
+          next: (res: any) => {
+            console.log('Usuario logueado correctamente!');
+            this.router.navigateByUrl('/')
+              .then();
+          },
+          error: (error: any) => {
+            console.log("en el error del login", error)
+            Swal.fire("Error!", "Se produjo un error al iniciar sesión", "error")
+          }
+        });
       },
-      error: (error:any) => {
-        console.log("en el error del registro",error)
+      error: (error: any) => {
+        console.log("en el error del registro", error)
         if (error.status == 400) {
           Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
         } else {
@@ -67,6 +90,7 @@ export class SignupComponent implements OnInit {
   }
 
   get f() {
-    return this.form.controls;
+      return this.form.controls;
+    }
   }
-}
+

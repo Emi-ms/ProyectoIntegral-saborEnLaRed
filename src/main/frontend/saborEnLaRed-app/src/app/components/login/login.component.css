@@ -1,0 +1,18 @@
+.form{
+    margin: 0 auto;
+    width: 30%;
+    height: 38vh;
+}
+
+.title{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    gap: 5px;
+}
+
+.form a{
+    margin-left: 60%;
+}
