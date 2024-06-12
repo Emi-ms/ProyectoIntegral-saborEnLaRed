@@ -19,6 +19,7 @@ import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-recipe-create',
@@ -37,7 +38,8 @@ import { MatListModule } from '@angular/material/list';
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDividerModule
   ],
   templateUrl: './recipe-create.component.html',
   styleUrls: ['./recipe-create.component.css']
@@ -159,8 +161,6 @@ export class RecipeCreateComponent implements OnInit {
   }
 
   createRecipe() {
-
-
     const categories = this.recipeForm.get('categories') as FormArray;
     const ingredientes = this.recipeForm.get('recipeIngredients') as FormArray;
     if (categories.length === 0) {
@@ -169,7 +169,6 @@ export class RecipeCreateComponent implements OnInit {
       (ingredientes.length === 0) {
       Swal.fire('Lo siento!!', 'Debes asignar al menos un ingrediente a la receta', 'error');
     } else {
-
       if (this.recipeForm.valid) {
         if (this.photoFile) {
           console.log(this.recipeForm.value, this.photoFile)

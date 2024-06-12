@@ -13,7 +13,6 @@
 }
 
 #neubar .dropdown-menu .bt:hover {
-  /* color: #454545; */
   color: #ffff
   
 }
@@ -38,15 +37,4 @@
   height: 40%;
 }
 
-/*.btn-custom {*/
-/*  background-color: #54ad22;*/
-/*  color: #ffffff;*/
-/*  font-weight: bold;*/
-/*  letter-spacing: 2px;*/
-/*  padding-top: 10px;*/
-/*  padding-bottom: 10px;*/
-/*}*/
 
-/*.btn-custom:hover {*/
-/*  background-color: #3c7c19;*/
-/*}*/

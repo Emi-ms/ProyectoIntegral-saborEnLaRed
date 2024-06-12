@@ -16,7 +16,6 @@ export const appConfig: ApplicationConfig = {
   provideAnimationsAsync(),
   provideAnimationsAsync(),
   provideHttpClient(withFetch(), 
-  
   withInterceptors([authInterceptor,SpinnerInterceptor])
 ), provideAnimationsAsync(),
 

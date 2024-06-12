@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink, Router} from "@angular/router";
+import { AnyCnameRecord } from 'dns';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,16 @@ import {RouterLink} from "@angular/router";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit  {
+  constructor(private route: ActivatedRoute, private router: Router) { }
+
+  ngOnInit() {
+    this.route.fragment.subscribe(fragment => { this.scrollTo(fragment); });
+  }
+
+  scrollTo(id:any) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView();
+  }
 
 }

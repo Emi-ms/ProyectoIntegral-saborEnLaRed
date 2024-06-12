@@ -58,29 +58,7 @@ export class SignupComponent implements OnInit {
 
   });
 
-
-  // submit() {
-  //   console.log(this.form.value);
-  //   this.userService.registerUser(this.form.value).subscribe({
-  //     next: (res: any) => {
-  //       console.log('Usuario creado correctamente!');
-  //       Swal.fire("Enhorabuena!!", "Usuario registrado con éxito!!", "success")
-  //       this.router.navigateByUrl('/')
-  //         .then();
-  //     },
-  //     error: (error: any) => {
-  //       console.log("en el error del registro", error)
-  //       if (error.status == 400) {
-  //         Swal.fire("Lo siento!", "El email ya se encuentra registrado", "error")
-  //       } else {
-  //         console.log("otro tipo de error de servidor")
-  //         Swal.fire("Error!", "Se produjo un error al procesar su solicitud", "error")
-  //       }
-  //     }
-  //   });
-  // }
-
-  submit() {
+  register() {
     console.log(this.form.value);
     this.userService.registerUser(this.form.value).subscribe({
       next: (res: any) => {

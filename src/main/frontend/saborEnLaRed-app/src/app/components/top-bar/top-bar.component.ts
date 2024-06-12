@@ -6,6 +6,7 @@ import { User } from '../../models/User';
 import { LoginService } from '../../services/login-user.service';
 import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class TopBarComponent implements OnInit{
   constructor(
     private userService:UserService,
     private loginService:LoginService,
+    private router: Router
 
   ) { }
 
@@ -53,5 +55,9 @@ export class TopBarComponent implements OnInit{
   logout() {
     Swal.fire("Hasta luego cocinilla!!", "Esperamos verte pronto ; )", "success");
     this.loginService.logout();
+  }
+
+  navigateToAboutDiv() {
+    this.router.navigate(['/'], { fragment: 'about-div' });
   }
 }

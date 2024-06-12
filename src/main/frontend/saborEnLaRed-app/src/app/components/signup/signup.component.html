@@ -12,7 +12,7 @@
       <h4></h4>
       <a mat-raised-button color="warn" routerLink="">Volver</a>
     </div>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="register()">
       <div class="form-group row">
         <mat-form-field appearance="fill">
           <mat-label>Nombre</mat-label>
@@ -63,10 +63,8 @@
             <div *ngIf="f['password'].errors?.['maxlength']">*La contraseña debe tener menos de 255 caracteres</div>
           </div>
         </mat-form-field>
-
-        <button class="btn-custom mt-1" type="submit" [disabled]="!form.valid">Enviar</button>
+        <button  mat-raised-button color="primary" type="submit" [disabled]="!form.valid" >Enviar</button>
       </div>
-
     </form>
   </div>
 </div>
