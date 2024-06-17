@@ -51,9 +51,9 @@
                 <div *ngFor="let categoryCtrl of categoriesFromForm.controls; index as i" [formGroupName]="i"
                     class="category-list">
                     <mat-list-item> {{ categoryCtrl.value.categoryName }}</mat-list-item>
-                    <mat-list-item>
+                    <mat-list-item *ngIf="recipeIngredientsFromForm.controls.length  == 0">
                         <button mat-icon-button color="warn" type="button" (click)="removeCategories(i)">
-                            <mat-icon>delete</mat-icon>
+                            <mat-icon>delete</mat-icon> 
                         </button>
                     </mat-list-item>
                 </div>
@@ -70,7 +70,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Cantidad</mat-label>
-                    <input matInput formControlName="quantity" #quantity placeholder="Cantidad">
+                    <input matInput formControlName="quantity" #quantity placeholder="Cantidad" (focus)="clearInput(quantity)">
                     <div *ngIf="f['quantity'].touched && f['quantity'].invalid" class="alert alert-danger">
                         <div *ngIf="f['quantity'].errors?.['required']">*La cantidad es requerida.</div>
                         <div *ngIf="f['quantity'].errors?.['pattern']">*La cantidad debe ser un número válido.

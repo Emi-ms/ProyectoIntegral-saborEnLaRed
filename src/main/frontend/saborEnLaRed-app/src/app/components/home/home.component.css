@@ -35,18 +35,6 @@
 
 }
 
-/*.btn-custom {*/
-/*  background-color: #54ad22;*/
-/*  color: #ffffff;*/
-/*  font-weight: bold;*/
-/*  letter-spacing: 2px;*/
-/*  padding-top: 10px;*/
-/*  padding-bottom: 10px;*/
-/*}*/
-
-/*.btn-custom:hover {*/
-/*  background-color: #3c7c19;*/
-/*}*/
 
 .categories {
   margin: 0 auto;
@@ -81,8 +69,6 @@
 }
 
 .categories-cards img:hover {
-  /*border-radius: 50%;*/
-  /*border: 5px solid dimgrey;*/
   box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 

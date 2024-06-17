@@ -207,6 +207,11 @@ export class RecipeCreateComponent implements OnInit {
     console.log(this.categoriesFromForm.value);
   }
 
+  clearInput(input: HTMLInputElement): void {
+    input.value = '';
+    this.recipeForm.get('quantity')?.setValue('');
+}
+
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
