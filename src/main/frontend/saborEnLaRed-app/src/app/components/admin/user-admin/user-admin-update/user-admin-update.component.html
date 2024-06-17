@@ -40,7 +40,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" id="password" type="text" matInput>
+                <input formControlName="password" id="password" type="password" matInput>
                 <div *ngIf="f['password'].touched && f['password'].invalid" class="alert alert-danger">
                     <div *ngIf="f['password'].errors?.['required']">*Contraseña es requerido.</div>
                     <div *ngIf="f['password'].errors?.['pattern']">*La contraseña debe contener al menos una letra

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {ActivatedRoute, RouterLink, Router} from "@angular/router";
-import { AnyCnameRecord } from 'dns';
 
 @Component({
   selector: 'app-home',

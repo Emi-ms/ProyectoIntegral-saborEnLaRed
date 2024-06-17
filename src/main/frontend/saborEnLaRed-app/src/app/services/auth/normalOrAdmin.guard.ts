@@ -21,7 +21,7 @@ export class UserOrAdminGuard implements CanActivate{
       if(this.loginService.currentUserLoginOn && (this.loginService.getUserRole() === 'NORMAL_USER' || this.loginService.getUserRole() === 'ADMIN')){
           return true;
       }
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/');
       return false;
   }
 }
