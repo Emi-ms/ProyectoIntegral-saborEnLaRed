@@ -2,16 +2,11 @@ package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.iesbelen.saborenlared.auth.UserRequest;
 import org.iesbelen.saborenlared.auth.UserResponse;
-
-
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.User;
 import org.iesbelen.saborenlared.dto.UserDTO;
 import org.iesbelen.saborenlared.service.UserService;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +26,16 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id)
-    {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
         UserDTO userDTO = userService.getUser(id);
-        if (userDTO==null)
-        {
+        if (userDTO == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userDTO);
     }
 
     @PutMapping()
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest)
-    {
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userService.updateUser(userRequest));
     }
 
@@ -55,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping({"/users-actives"})
-    public ResponseEntity<?> allActive(){
+    public ResponseEntity<?> allActive() {
         log.info("Accediendo a todos los usuarios activos");
         return new ResponseEntity<>(userService.AllActiveUser(), HttpStatus.OK);
     }
@@ -78,7 +70,7 @@ public class UserController {
     }
 
     @PutMapping("/logic-delete/{id}")
-    public ResponseEntity<UserDTO> deactivateUser(@PathVariable Long id){
+    public ResponseEntity<UserDTO> deactivateUser(@PathVariable Long id) {
         User deactivateUser = userService.logicDelete(id);
         UserDTO userDTO = userService.getUser(deactivateUser.getId());
         return ResponseEntity.ok(userDTO);

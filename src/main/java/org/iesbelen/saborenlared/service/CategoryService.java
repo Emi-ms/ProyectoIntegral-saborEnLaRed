@@ -1,9 +1,7 @@
 package org.iesbelen.saborenlared.service;
 
 import org.iesbelen.saborenlared.domain.Category;
-import org.iesbelen.saborenlared.domain.Recipe;
 import org.iesbelen.saborenlared.dto.CategoryDTO;
-import org.iesbelen.saborenlared.dto.RecipeDTO;
 import org.iesbelen.saborenlared.exeption.CategoryNotFoundException;
 import org.iesbelen.saborenlared.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
