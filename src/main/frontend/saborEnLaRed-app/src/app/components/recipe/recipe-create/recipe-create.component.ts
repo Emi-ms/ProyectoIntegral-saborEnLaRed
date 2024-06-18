@@ -19,7 +19,7 @@ import { Observable, map, startWith } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-recipe-create',
@@ -210,7 +210,7 @@ export class RecipeCreateComponent implements OnInit {
   clearInput(input: HTMLInputElement): void {
     input.value = '';
     this.recipeForm.get('quantity')?.setValue('');
-}
+  }
 
 
   onFileChange(event: any) {
