@@ -21,12 +21,12 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private  final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
     public AuthResponse register(RegisterRequest request) {
 
-        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new EmailDuplicateException("El email ya se encuentra registrado");
         }
 
@@ -34,7 +34,7 @@ public class AuthService {
                 .userName(request.getUserName())
                 .userSurname(request.getUserSurname())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode( request.getPassword()))
+                .password(passwordEncoder.encode(request.getPassword()))
                 .rol("NORMAL_USER")
                 .active(true)
                 .build();
@@ -47,10 +47,10 @@ public class AuthService {
 
     public ResponseEntity<?> login(LoginRequest request) {
 
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
-        if(!user.isActive()){
+        if (!user.isActive()) {
             return new ResponseEntity<>("El usuario no esta activo", HttpStatus.NOT_IMPLEMENTED);
         }
 
@@ -60,7 +60,7 @@ public class AuthService {
         System.out.println(userDTO);
         String token = jwtService.getToken(user);
 
-        return new ResponseEntity<>(new AuthResponse(token,userDTO), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthResponse(token, userDTO), HttpStatus.OK);
     }
 
 

@@ -55,31 +55,31 @@ img {
 }
 
 #btn-1::before {
-    background-image: url('../../../../assets/images/recetas.webp');
+    background-image: url('../../../../assets/images/recetasEscal.webp');
     content: "Recetas";
     
 
 }
 
 #btn-2::before {
-    background-image: url('../../../../assets/images/ingredientes.webp');
+    background-image: url('../../../../assets/images/ingredientesEscal.webp');
     content: "Ingredientes";
 
 }
 
 #btn-3::before {
-    background-image: url('../../../../assets/images/categorias.webp');
+    background-image: url('../../../../assets/images/categoriasEscal.webp');
     content: "Categorías";
 
 }
 
 #btn-4::before {
-    background-image: url('../../../../assets/images/usuarios.webp');
+    background-image: url('../../../../assets/images/usuariosEscal.webp');
     content: "Usuarios";
 }
 
 #btn-5::before {
-    background-image: url('../../../../assets/images/comentarios2.webp');
+    background-image: url('../../../../assets/images/comentarios2Escal.webp');
     content: "Comentarios";
 
 }

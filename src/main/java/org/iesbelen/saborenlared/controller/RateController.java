@@ -23,12 +23,13 @@ public class RateController {
     private final RateService rateService;
 
 
-    @GetMapping({"","/"})
+    @GetMapping({"", "/"})
     public List<Rate> all() {
         log.info("Accediendo a todas las puntuaciones");
         return this.rateService.all();
     }
-    @PostMapping({"","/"})
+
+    @PostMapping({"", "/"})
     public Rate newRate(@RequestBody Rate rate) {
         return this.rateService.save(rate);
     }
@@ -40,7 +41,7 @@ public class RateController {
 
     @PutMapping("/{id}")
     public Rate replaceRate(@PathVariable("id") Long id, @RequestBody Rate rate) {
-        System.out.println(id + " en el controlador "+ rate.toString());
+        System.out.println(id + " en el controlador " + rate.toString());
 
         return this.rateService.replace(id, rate);
     }

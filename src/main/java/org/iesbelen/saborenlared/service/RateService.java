@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import org.iesbelen.saborenlared.domain.Rate;
 import org.iesbelen.saborenlared.exeption.RateNotFoundException;
 import org.iesbelen.saborenlared.repository.RateRepository;
-
-import org.iesbelen.saborenlared.repository.RecipeRepository;
-import org.iesbelen.saborenlared.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +13,6 @@ import java.util.List;
 public class RateService {
 
     private final RateRepository rateRepository;
-    private final UserRepository userRepository;
-    private final RecipeRepository recipeRepository;
 
     public List<Rate> all() {
         return this.rateRepository.findAll();

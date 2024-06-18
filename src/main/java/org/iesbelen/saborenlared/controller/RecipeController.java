@@ -45,7 +45,7 @@ public class RecipeController {
 
     @PostMapping({"", "/"})
     public ResponseEntity<RecipeDTO> newRecipe(@RequestPart("data") Recipe recipe, @RequestPart("file") MultipartFile file) {
-        Recipe savedRecipe = this.recipeService.save(recipe,file);
+        Recipe savedRecipe = this.recipeService.save(recipe, file);
         RecipeDTO recipeDTO = recipeService.getRecipeDTO(savedRecipe.getIdRecipe());
         return ResponseEntity.ok(recipeDTO);
     }
@@ -69,21 +69,21 @@ public class RecipeController {
 
     @GetMapping("/file/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename, HttpServletRequest request){
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename, HttpServletRequest request) {
         Resource file = fileStorageService.loadResource(filename);
 
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(file.getFile().getAbsolutePath());
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.err.println("No se encontro el tipo del fichero");
         }
-        if(contentType == null){
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
 
 
-        return  ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
     }
 
 }

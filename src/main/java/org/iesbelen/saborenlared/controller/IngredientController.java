@@ -2,9 +2,7 @@ package org.iesbelen.saborenlared.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.iesbelen.saborenlared.domain.Category;
 import org.iesbelen.saborenlared.domain.Ingredient;
-import org.iesbelen.saborenlared.dto.CategoryDTO;
 import org.iesbelen.saborenlared.dto.IngredientDTO;
 import org.iesbelen.saborenlared.service.IngredientService;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,13 +25,13 @@ public class IngredientController {
 
     @GetMapping({"", "/"})
     public List<Ingredient> all() {
-        log.info("Accediendo a todas las ingredientes");
+        log.info("Accediendo a todos los ingredientes");
         return this.ingredientService.all();
     }
 
     @GetMapping({"/ingredients-actives"})
     public ResponseEntity<?> allActive() {
-        log.info("Accediendo a todas los ingredientes activos");
+        log.info("Accediendo a todos los ingredientes activos");
         return new ResponseEntity<>(ingredientService.AllActiveIngredient(), HttpStatus.OK);
     }
 
